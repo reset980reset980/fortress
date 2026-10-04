@@ -46,7 +46,7 @@ export class BattlefieldEnvironment {
     this.renderer = new WebGLRenderer({ canvas: this.canvas, antialias: true,
       context, alpha: false, preserveDrawingBuffer: true, powerPreference: 'low-power' });
     this.renderer.setPixelRatio(1);
-    this.renderer.setSize(Math.min(1280, Math.max(640, width)), Math.round(Math.min(1280, Math.max(640, width)) / 1.8), false);
+    this.resize(width);
     this.renderer.outputColorSpace = SRGBColorSpace;
     this.renderer.toneMapping = ACESFilmicToneMapping;
     const p = THEMES[this.theme]; this.renderer.toneMappingExposure = p.exposure;
@@ -92,9 +92,17 @@ export class BattlefieldEnvironment {
     this.lastTime = -Infinity;
   }
 
+  resize(width) {
+    const size = Math.min(1280, Math.max(640, Math.round(width)));
+    this.smallScreen = width < 1000;
+    if (this.canvas.width === size) return;
+    this.renderer.setSize(size, Math.round(size / 1.8), false);
+    this.lastTime = -Infinity;
+  }
+
   render(elapsed, playerX = 205, reducedMotion = false) {
     if (!this.ready || this.destroyed) return null;
-    if (elapsed - this.lastTime < (this.lowQuality ? 1 / 12 : 1 / 24)) return this.canvas;
+    if (elapsed - this.lastTime < (this.lowQuality || this.smallScreen ? 1 / 12 : 1 / 24)) return this.canvas;
     this.lastTime = elapsed;
     // Only the distant environment moves. Tanks, terrain and trajectory stay aligned.
     const pan = reducedMotion ? 0 : (playerX - 205) / 1440 * 1.6;

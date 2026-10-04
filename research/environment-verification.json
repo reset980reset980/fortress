@@ -14,7 +14,7 @@
     {
       "ready": true,
       "theme": "coast",
-      "frames": 9,
+      "frames": 10,
       "triangles": 51144,
       "drawCalls": 11,
       "textures": 3,

@@ -3,6 +3,7 @@
   "checks": [
     "Campaign menu reloads offline",
     "Blender GLB and textures render offline",
+    "Old pre-3D cache cannot override the current offline build",
     "All12 audio buffers decode offline",
     "No browser exceptions"
   ],
@@ -11,7 +12,7 @@
   "environment": {
     "ready": true,
     "theme": "coast",
-    "frames": 3,
+    "frames": 2,
     "triangles": 51144,
     "drawCalls": 11,
     "textures": 3,

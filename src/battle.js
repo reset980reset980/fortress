@@ -262,6 +262,7 @@ export class Battle {
     this.scale = Math.min(width / WORLD_WIDTH, height / WORLD_HEIGHT);
     this.offsetX = (width - WORLD_WIDTH * this.scale) / 2;
     this.offsetY = (height - WORLD_HEIGHT * this.scale) / 2;
+    this.environment?.resize(width * Math.min(window.devicePixelRatio || 1, 1.5));
     this.draw();
   }
   getSnapshot() {

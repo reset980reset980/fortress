@@ -7,7 +7,7 @@ const report={checks:[],consoleErrors:[],pageErrors:[],requestsFailed:[]};
 const context=await browser.newContext({viewport:{width:1440,height:1100}});
 const page=await context.newPage();
 page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text())});page.on('requestfailed',r=>report.requestsFailed.push(r.url()));
-const base='http://localhost:4173';
+const base=process.env.BASE_URL||'http://localhost:4173';
 try{
  await page.goto(base);await page.locator('#deploy-button').waitFor();
  assert.equal(await page.locator('[data-mission][disabled]').count(),8);report.checks.push('Fresh profile locks 8 missions');
@@ -19,7 +19,7 @@ try{
  await page.click('[data-ability="scan"]');assert.equal(await page.evaluate(()=>FortressAfterlight.state.abilities.scan),0);
  await page.keyboard.down('ArrowRight');await page.waitForTimeout(500);await page.keyboard.up('ArrowRight');assert.ok(await page.evaluate(()=>FortressAfterlight.state.fuel<85));report.checks.push('Keyboard movement consumes fuel');
  await page.click('#pause-button');const elapsed=await page.evaluate(()=>FortressAfterlight.battle.elapsed);await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>FortressAfterlight.battle.elapsed),elapsed);await page.click('#resume-button');report.checks.push('Pause freezes simulation');
- await page.setViewportSize({width:390,height:844});await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.ok(await page.evaluate(()=>Math.abs(FortressAfterlight.battle.canvas.width/Math.min(devicePixelRatio,2)-document.querySelector('#battle-canvas').getBoundingClientRect().width)<2));
+ await page.setViewportSize({width:390,height:844});await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.ok(await page.evaluate(()=>Math.abs(FortressAfterlight.battle.canvas.width/Math.min(devicePixelRatio,2)-document.querySelector('#battle-canvas').getBoundingClientRect().width)<2));await page.waitForFunction(()=>FortressAfterlight.battle.environment?.ready);assert.ok(await page.evaluate(()=>FortressAfterlight.battle.environment.canvas.width<=640));
  await page.screenshot({path:'research/battle-mobile.png',fullPage:true});report.checks.push('Portrait390px fits and resizes backing canvas');
  // Plan a legitimate shot using the same deterministic ballistic helper; actual UI fires it.
  for(let turn=0;turn<6;turn++){
