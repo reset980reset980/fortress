@@ -259,7 +259,12 @@ export class Battle {
     this.canvas.width = Math.round(width * dpr);
     this.canvas.height = Math.round(height * dpr);
     this.pixelRatio = dpr;
+    this.viewWidth = width; this.viewHeight = height;
+    this.mobileZoom = width < 600 && height > width && !this.overview;
+    this.mobileCrop = window.innerWidth <= 1000 && window.innerHeight < 600 && width > height;
     this.scale = Math.min(width / WORLD_WIDTH, height / WORLD_HEIGHT);
+    if (this.mobileZoom) this.scale = Math.min(width / WORLD_WIDTH * 3, height / WORLD_HEIGHT);
+    if (this.mobileCrop) this.scale = width / WORLD_WIDTH;
     this.offsetX = (width - WORLD_WIDTH * this.scale) / 2;
     this.offsetY = (height - WORLD_HEIGHT * this.scale) / 2;
     this.environment?.resize(width * Math.min(window.devicePixelRatio || 1, 1.5));
@@ -559,6 +564,17 @@ export class Battle {
 
   draw() {
     if (!this.ctx || this.destroyed) return;
+    if (this.mobileZoom) {
+      const target = this.projectiles[0] || (this.phase === 'enemy' ? this.enemies.find(e => e.hp > 0) : this.player) || this.player;
+      const half = this.viewWidth / this.scale / 2;
+      const center = clamp(target.x, half, WORLD_WIDTH - half);
+      this.offsetX = this.viewWidth / 2 - center * this.scale;
+    }
+    if (this.mobileCrop) {
+      const target = this.projectiles[0] || this.player;
+      const half = this.viewHeight / this.scale / 2;
+      this.offsetY = this.viewHeight / 2 - clamp(target.y, half, WORLD_HEIGHT - half) * this.scale;
+    }
     const ctx = this.ctx;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.fillStyle = '#07121e';

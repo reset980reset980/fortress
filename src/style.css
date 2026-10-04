@@ -3,3 +3,73 @@
 @media(max-width:430px){.hero h1{font-size:31px}.hero-copy{width:100%}.hero:before{background:linear-gradient(90deg,#080e15eb,#08121b55),linear-gradient(0deg,#080e15,transparent)}.hero-description{font-size:12px}.hero-kicker{letter-spacing:4px}.hero{min-height:470px}.hero-meta{gap:18px}.section-heading{align-items:flex-start}.section-heading h2{font-size:18px}.progress-summary{margin-top:27px}.progress-summary>span:last-child{display:none}.mission-card{padding:11px;min-height:108px}.mission-card .mission-number{margin-bottom:12px;font-size:8px}.mission-card strong{font-size:10px}.region-title{font-size:10px}.tank-card{padding:14px}.tank-card p{font-size:10px}.tank-card h3{font-size:17px}.tank-card canvas{height:95px}.tank-card.selected:after{font-size:8px;right:9px;top:9px}.battle-board{aspect-ratio:1.8}.turn-banner{font-size:8px}.battle-top{top:9px}.enemy-line{font-size:6px}.enemy-block{min-width:76px}.health-block{padding:5px}.health-block>span{font-size:6px}.health-track{margin-top:4px;height:3px}}
 @media(max-height:650px) and (min-width:801px){.topbar{height:60px}#battle-view{padding:10px 3vw}.battle-heading{margin-bottom:8px}.battle-board{max-height:calc(100dvh - 245px);min-height:200px}.battle-controls{padding:10px;margin-top:7px}.battle-bottom{padding:7px 0}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 @media(max-width:1000px) and (max-height:600px) and (orientation:landscape){.topbar{height:44px;min-height:44px;padding:3px 2vw;gap:12px;flex-wrap:nowrap}.brand>span{font-size:15px}.brand svg{width:25px}.brand small{display:none}.topbar nav{order:0;flex-basis:auto;height:100%;gap:14px}.nav-button{font-size:10px}.top-actions{gap:7px}.icon-button{width:27px;height:27px;font-size:16px}.credits{font-size:10px}#battle-view{height:calc(100dvh - 44px);padding:5px 2vw;display:grid;grid-template-columns:minmax(0,1fr) 230px;grid-template-rows:34px minmax(0,1fr) 32px;gap:5px 10px}.battle-heading{grid-column:1/-1;margin:0}.battle-heading h2{font-size:14px;margin:0}.battle-heading .eyebrow{font-size:7px}.battle-board{width:100%;height:100%;max-height:none;min-height:0;aspect-ratio:auto}.battle-controls{margin:0;padding:9px;display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:center}.movement-controls{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between}.control-label{margin:0;font-size:8px}.movement-controls>div{gap:5px}.move-button{width:42px;height:29px}.aim-control{min-width:0}.aim-control label{font-size:9px;margin-bottom:1px}.aim-control output{font-size:12px}.weapon-buttons{grid-column:1/-1;gap:4px}.weapon{width:0;flex:1;height:47px;padding:5px}.weapon span{font-size:9px}.fire-button{grid-column:1/-1;width:100%;min-width:0;height:45px}.fire-button span{font-size:17px}.fire-button small{font-size:8px}.battle-bottom{grid-column:1/-1;margin:0;padding:0;justify-content:flex-end;align-items:stretch}.battle-hint{display:none}.abilities{width:auto;gap:7px}.abilities button{padding:3px 12px;font-size:9px}.battle-top{top:10px;left:2%;right:2%}.health-block{width:27%;padding:5px 7px}.health-block>span{font-size:7px;letter-spacing:0}.health-block b{font-size:9px}.wind-label{padding:5px 8px;gap:5px}.wind-label span{font-size:7px}.wind-label b{font-size:10px}.enemy-block{min-width:85px}.enemy-line{font-size:7px;padding:2px 5px}.turn-banner{font-size:8px;padding:4px 8px;top:23%}.battle-corner{bottom:8px;left:10px;font-size:7px}.fuel-indicator{bottom:8px;right:10px}.fuel-indicator b{font-size:11px}.fuel-indicator small{font-size:7px}}
+/* Immersive phone battle: reserve screen space for the battlefield. */
+#view-toggle{display:none}
+@media(max-width:1000px){
+ body.in-battle{overflow:hidden;overscroll-behavior:none}
+ .in-battle .topbar{display:none}
+ .in-battle #battle-view{position:fixed;inset:0;max-width:none;margin:0;height:100dvh;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);display:grid;grid-template-columns:1fr;grid-template-rows:48px minmax(0,1fr) 162px 48px;gap:0;background:#08121b}
+ .in-battle .battle-heading{grid-column:1;margin:0;padding:4px 10px;min-width:0;background:#0b1722}
+ .in-battle .battle-heading h2{font-size:14px;margin:0}
+ .in-battle .battle-heading .eyebrow{display:none}
+ .in-battle .battle-actions{gap:6px}
+ .in-battle .battle-actions>span{display:none}
+ .in-battle #view-toggle{display:inline-flex}
+ .in-battle .battle-actions button{min-height:40px;padding:7px 10px;font-size:11px}
+ .in-battle .battle-board{width:100%;height:100%;min-height:0;max-height:none;aspect-ratio:auto;border:0;border-radius:0}
+ .in-battle .battle-controls{grid-column:1;margin:0;border-radius:0;padding:8px 10px;display:grid;grid-template-columns:92px minmax(0,1fr) 82px;grid-template-rows:44px 44px 48px;gap:5px 10px;align-content:center}
+ .in-battle .movement-controls{grid-column:1;grid-row:1/3;display:flex;flex-direction:column;justify-content:center;gap:5px}
+ .in-battle .control-label{margin:0;font-size:10px}
+ .in-battle .move-button{width:44px;height:48px;font-size:23px}
+ .in-battle .aim-control{grid-column:2;grid-row:1;min-width:0}
+ .in-battle .power-control{grid-row:2}
+ .in-battle .aim-control label{font-size:11px;margin:0}
+ .in-battle .aim-control output{font-size:14px}
+ .in-battle .aim-control input{height:28px;width:100%;margin:0;touch-action:none}
+ .in-battle .weapon-buttons{grid-column:1/3;grid-row:3;display:flex;gap:5px}
+ .in-battle .weapon{flex:1;width:auto;height:46px;padding:4px;font-size:11px}
+ .in-battle .weapon b{display:none}
+ .in-battle .weapon span{font-size:11px}
+ .in-battle .fire-button{grid-column:3;grid-row:1/4;width:100%;min-width:0;height:100%;touch-action:none}
+ .in-battle .fire-button span{font-size:24px}
+ .in-battle .fire-button small{font-size:9px}
+ .in-battle .battle-bottom{grid-column:1;margin:0;padding:3px 10px;display:flex;align-items:stretch;background:#111d28}
+ .in-battle .battle-hint{display:none}
+ .in-battle .abilities{width:100%;display:flex;gap:6px}
+ .in-battle .abilities button{flex:1;padding:5px;min-height:42px;font-size:11px}
+ .in-battle .battle-top{top:10px;left:10px;right:10px}
+ .in-battle .health-block{width:35%;padding:7px}
+ .in-battle .health-block>span{font-size:8px;letter-spacing:0}
+ .in-battle .health-block b{font-size:10px}
+ .in-battle .enemy-block{min-width:85px}
+ .in-battle .enemy-line{font-size:8px;padding:3px 5px}
+ .in-battle .wind-label{padding:5px;gap:4px}
+ .in-battle .wind-label span{display:none}
+ .in-battle .wind-label b{font-size:11px}
+ .in-battle .turn-banner{top:18%;font-size:10px;white-space:normal;width:max-content;padding:5px 9px}
+ .in-battle .battle-corner{bottom:10px;left:10px;font-size:8px;max-width:65%}
+ .in-battle .fuel-indicator{bottom:10px;right:10px}
+}
+@media(max-width:1000px) and (orientation:landscape){
+ .in-battle #battle-view{grid-template-columns:1fr;grid-template-rows:40px minmax(0,1fr) 90px;}
+ .in-battle .battle-heading{grid-row:1;padding:0 8px}
+ .in-battle .battle-heading h2{font-size:12px}
+ .in-battle .battle-actions button{min-height:34px}
+ .in-battle #view-toggle{display:none}
+ .in-battle .battle-board{grid-row:2;grid-column:1}
+ .in-battle .battle-controls{grid-row:3;grid-column:1;grid-template-columns:92px minmax(110px,1fr) minmax(180px,1fr) 88px;grid-template-rows:32px 38px;padding:5px 8px;gap:4px 10px;padding-right:calc(8px + env(safe-area-inset-right));}
+ .in-battle .movement-controls{grid-row:1/3;grid-column:1}
+ .in-battle .move-button{height:44px}
+ .in-battle .aim-control{grid-column:2;grid-row:1}
+ .in-battle .power-control{grid-row:2}
+ .in-battle .aim-control label{font-size:10px;line-height:12px}
+ .in-battle .aim-control input{height:21px}
+ .in-battle .weapon-buttons{grid-column:3;grid-row:1;gap:4px}
+ .in-battle .weapon{height:32px}
+ .in-battle .fire-button{grid-column:4;grid-row:1/3}
+ .in-battle .fire-button span{font-size:21px}
+ .in-battle .battle-bottom{grid-column:1;grid-row:3;position:absolute;bottom:13px;left:calc(120px + (100% - 506px)/2);right:calc(106px + env(safe-area-inset-right));height:34px;padding:0;pointer-events:none;background:none}
+ .in-battle .abilities{pointer-events:auto;gap:4px}
+ .in-battle .abilities button{min-height:34px;font-size:10px}
+}
+@media(max-width:1000px) and (orientation:landscape){.in-battle .battle-bottom{left:calc(50% + 7px)}}
