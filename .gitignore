@@ -10,3 +10,4 @@ fortress-backups/
 backup/*.tar.gz
 backup/*.tar.gz.sha256
 research/*.png
+*.blend1

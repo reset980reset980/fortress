@@ -6,10 +6,16 @@
   "scripts": {
     "start": "node tools/server.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node --check src/app.js && node --check src/battle.js && node --check src/audio.js && node --check src/vfx.js",
+    "check": "node --check src/app.js && node --check src/battle.js && node --check src/audio.js && node --check src/vfx.js && node --check src/environment.js",
     "test:legacy": "node research/legacy-regression.mjs",
     "verify:browser": "node tools/browser-verify.mjs",
     "verify:legacy": "node tools/legacy-browser-verify.mjs",
-    "verify:offline": "node tools/offline-verify.mjs"
+    "verify:offline": "node tools/offline-verify.mjs",
+    "verify:environment": "node tools/environment-verify.mjs",
+    "build:environment-engine": "esbuild tools/environment-vendor-entry.js --bundle --format=esm --minify --outfile=assets/vendor/environment-engine.js"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10",
+    "three": "0.180.0"
   }
 }

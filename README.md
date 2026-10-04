@@ -42,7 +42,7 @@ npm start
 
 ## 미니PC 적용
 
-연결된 미니PC 도구는 OpenDots 작업 공간(`/home/reset980/dot-work/opendots`)만 제공하며, Fortress의 서비스 경로나 백엔드에는 접근할 수 없습니다. 따라서 **운영 도메인 fortress.xsw.kr은 이 작업에서 변경하지 않았습니다.** 서버/DB 전체 백업도 이루어지지 않았습니다. 제공하는 백업은 공개 원본 웹 클라이언트와306개 에셋의 스냅샷입니다.
+2026-10-05 기존 `minipc` SSH 설정으로 실제 운영 서버 `ksd-webserver`에 접속해 최초 AFTERLIGHT 배포를 완료했습니다. Caddy는 웹 요청을3098번 서비스로, `/api/*`를3195번 API로 전달합니다. 정적 서비스 코드의 실제 공개 루트는 `/home/reset980/project/portress/.deploy`입니다. 백엔드 프로젝트 루트와 구분해야 합니다. 최초 배포 전 프로젝트/정적 파일/프록시 설정 백업은 `/home/reset980/backups/fortress-production-20261004T173832Z`이며, 정적 파일 실제 복원과 원본 비교를 통과했습니다. API/DB/프록시 및 실행 중인 백엔드를 유지했습니다.
 
 미니PC에서 운영 웹 루트 바깥의 별도 폴더에 이 저장소를 받은 뒤, 실제 서비스가 제공하는 **정적 웹 루트**를 지정해 실행합니다. 백엔드 프로젝트 루트 대신 공개 정적 파일만 제공하는 폴더를 지정하세요. 스크립트는 해당 루트를 먼저 tar.gz로 백업하고 체크섬과 복원 가능한 구성인지 검증한 뒤 정적 파일을 복사합니다. 마지막에 읽기 권한을 설정한 index.html을 원자적으로 교체합니다. 기존 API서버·DB·프록시설정은 건드리지 않습니다. Bash·GNU tar·기본 파일 도구·Python3가 필요합니다. 웹 루트 안의 심볼릭 링크나 특수 파일은 교체 전에 거부합니다.
 
@@ -77,3 +77,18 @@ node research/legacy-regression.mjs
 실제 Chromium에서 PC/390px세로 / 844px 가로 레이아웃, 이동/일시정지, 실제 승리/보상/다음 해금, 재접속 저장, 음소거 유지와 기존 2연발 / SS 제한을 확인했습니다. WebGL 스트레스·상한·소멸·복구 검사는 GPU 오류 0으로 통과했습니다. 시뮬레이션으로 9개 작전의 클리어 가능성을 확인했으나, 실제 미니PC / 휴대폰 성능 및 두 명의 원격 WebRTC 대전은 이 환경에서 측정하지 않았습니다.
 
 에셋 출처와 편집 가능한 음악 제작 소스는 ASSETS.md 및 tools/compose_music.py를 확인하세요.
+
+## Blender 전장 배경
+
+2026-10-05 해안/사막/설원 전장을 Blender 모델 기반의 실제3D 배경으로 다시 제작했습니다. 절벽, 항만 교량/크레인, 폐수로 아치, 설산, 중계기지/안테나가 원근 카메라, 그림자와 거리 안개를 사용합니다. 전차·탄도·지형 파괴는 기존2D 전투 좌표를 유지합니다. 낮은 품질에서는 그림자와 카메라 움직임을 줄이며 WebGL2가 없거나 손실되면 Blender 렌더 이미지로 전투가 계속됩니다. 모델과 텍스처는 오프라인 캐시에 포함됩니다.
+
+편집 원본은 `authoring/environments/*-v1.blend`입니다. 모든 텍스처가 원본/GLB에 포함되며, 제삼자 모델이나 유료 생성 서비스를 사용하지 않았습니다. 제작 재현:
+
+```bash
+blender --background --factory-startup --python tools/build-environments.py
+npm install
+npm run build:environment-engine
+npm run verify:environment
+```
+
+브라우저 검증은 `PLAYWRIGHT_MODULE`과 `CHROMIUM_PATH`가 지정된 환경에서 실행합니다. `BASE_URL`로 실제 운영 주소도 검증할 수 있습니다. 운영 프록시의 CSP를 유지하기 위해 내장 GLB 텍스처는 이미지 로더로 디코딩합니다. Three.js MIT 라이선스는 `assets/vendor/THREE-LICENSE.txt`에 포함했습니다. 844×390 가로 화면은 조작 패널을 전장 오른쪽에 배치해 전투/발사/능력 버튼이 한 화면에 들어옵니다. 실제 휴대폰 GPU와 두 명의 원격 WebRTC 대전은 별도 검증 항목입니다.

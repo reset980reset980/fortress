@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "checks": [
+    "Three Blender GLBs load with bounded geometry/draw calls",
+    "Camera parallax responds to real movement",
+    "Actual shots destroy the collision terrain while 3D backgrounds remain visible",
+    "Pause freezes both simulation and background",
+    "Leaving battles disposes the renderer",
+    "844x390 fits battle, firing controls and abilities without scrolling",
+    "Lost WebGL context uses the rendered Blender fallback",
+    "Without WebGL2 the Blender preview and real combat remain usable"
+  ],
+  "scenes": [
+    {
+      "ready": true,
+      "theme": "coast",
+      "frames": 9,
+      "triangles": 51144,
+      "drawCalls": 11,
+      "textures": 3,
+      "width": 1280,
+      "height": 711,
+      "error": null
+    },
+    {
+      "ready": true,
+      "theme": "desert",
+      "frames": 9,
+      "triangles": 52668,
+      "drawCalls": 9,
+      "textures": 3,
+      "width": 1280,
+      "height": 711,
+      "error": null
+    },
+    {
+      "ready": true,
+      "theme": "frost",
+      "frames": 9,
+      "triangles": 52152,
+      "drawCalls": 11,
+      "textures": 3,
+      "width": 1280,
+      "height": 711,
+      "error": null
+    }
+  ],
+  "errors": [],
+  "requestsFailed": [],
+  "landscape": {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "board": {
+      "x": 16.875,
+      "y": 88,
+      "right": 587.125,
+      "bottom": 348
+    },
+    "controls": {
+      "x": 597.125,
+      "y": 88,
+      "right": 827.125,
+      "bottom": 348
+    },
+    "abilities": {
+      "x": 564.03125,
+      "y": 353,
+      "right": 827.125,
+      "bottom": 385
+    },
+    "overflowX": false,
+    "overflowY": false
+  }
+}

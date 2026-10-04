@@ -2,10 +2,21 @@
   "passed": true,
   "checks": [
     "Campaign menu reloads offline",
-    "Battle source and generated art load offline",
+    "Blender GLB and textures render offline",
     "All12 audio buffers decode offline",
     "No browser exceptions"
   ],
   "errors": [],
-  "cachedResources": 25
+  "cachedResources": 33,
+  "environment": {
+    "ready": true,
+    "theme": "coast",
+    "frames": 3,
+    "triangles": 51144,
+    "drawCalls": 11,
+    "textures": 3,
+    "width": 781,
+    "height": 434,
+    "error": null
+  }
 }

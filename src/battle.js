@@ -168,6 +168,18 @@ export class Battle {
     this.tankAtlas = new Image();
     this.tankAtlas.src = '/assets/art/tanks.png';
     this.tankAtlas.onload = () => { if (!this.destroyed) this.draw(); };
+    this.environment = null;
+    this.environmentPreview = new Image();
+    this.environmentPreview.src = `/assets/environments/${this.mission.theme}-v1.png`;
+    // Headless simulation tests do not construct a GPU renderer. In browsers,
+    // keep the rendered Blender preview visible while the local GLB loads.
+    if (typeof document.createElement === 'function') {
+      import('./environment.js').then(({ BattlefieldEnvironment }) => {
+        if (this.destroyed) return;
+        const rect = this.canvas.getBoundingClientRect();
+        this.environment = new BattlefieldEnvironment(this.mission.theme, rect.width * Math.min(window.devicePixelRatio || 1, 1.5));
+      }).catch(() => { /* The Blender preview remains usable without WebGL2. */ });
+    }
     this._visibility = () => { if (document.hidden) this.setMove(0); this.lastTime = null; };
     document.addEventListener('visibilitychange', this._visibility);
     this.resize();
@@ -262,6 +274,7 @@ export class Battle {
     document.removeEventListener('visibilitychange', this._visibility);
     this.projectiles.length = 0;
     this.particles.length = 0;
+    this.environment?.destroy();
   }
 
   launch(actor, angle, power, weapon = 'shell') {
@@ -580,6 +593,14 @@ export class Battle {
   }
 
   drawBackground(ctx) {
+    if (this.environment) {
+      this.environment.setQuality(this.reducedMotion);
+      const rendered = this.environment.render(this.elapsed, this.player.x, this.reducedMotion);
+      if (rendered) { ctx.drawImage(rendered, 0, 0, WORLD_WIDTH, WORLD_HEIGHT); return; }
+    }
+    if (this.environmentPreview.complete && this.environmentPreview.naturalWidth > 0) {
+      ctx.drawImage(this.environmentPreview, 0, 0, WORLD_WIDTH, WORLD_HEIGHT); return;
+    }
     const p = this.palette;
     const sky = ctx.createLinearGradient(0, 0, 0, 650);
     sky.addColorStop(0, p.sky[0]); sky.addColorStop(0.52, p.sky[1]); sky.addColorStop(1, p.sky[2]);
@@ -670,6 +691,28 @@ export class Battle {
     ctx.beginPath(); ctx.moveTo(0, WORLD_HEIGHT);
     for (let x = 0; x <= WORLD_WIDTH; x += 2) ctx.lineTo(x, this.terrain[x]);
     ctx.lineTo(WORLD_WIDTH, WORLD_HEIGHT); ctx.closePath(); ctx.fillStyle = soil; ctx.fill();
+    // Lit upper shelf and eroded strata follow the live destructible contour.
+    ctx.save();
+    ctx.clip();
+    ctx.lineCap = 'round';
+    for (let band = 0; band < 8; band++) {
+      ctx.beginPath();
+      for (let x = 0; x <= WORLD_WIDTH; x += 8) {
+        const y = this.terrain[x] + 20 + band * 28 + Math.sin(x / 67 + band * 1.9) * 5;
+        if (!x) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = band % 2 ? '#08162140' : '#ded3b21c';
+      ctx.lineWidth = 3 + band % 3; ctx.stroke();
+    }
+    const shelf = ctx.createLinearGradient(0, 555, 0, 650);
+    shelf.addColorStop(0, this.palette.surface); shelf.addColorStop(1, this.palette.soil[0]);
+    ctx.beginPath();
+    for (let x = 0; x <= WORLD_WIDTH; x += 2) {
+      if (!x) ctx.moveTo(x, this.terrain[x]); else ctx.lineTo(x, this.terrain[x]);
+    }
+    for (let x = WORLD_WIDTH; x >= 0; x -= 2) ctx.lineTo(x, this.terrain[x] + 13 + Math.sin(x / 19) * 2);
+    ctx.closePath(); ctx.fillStyle = shelf; ctx.fill();
+    ctx.restore();
     ctx.beginPath();
     for (let x = 0; x <= WORLD_WIDTH; x += 2) { if (!x) ctx.moveTo(x, this.terrain[x]); else ctx.lineTo(x, this.terrain[x]); }
     ctx.lineWidth = this.mission.theme === 'frost' ? 5 : 3; ctx.strokeStyle = this.palette.surface; ctx.stroke();
@@ -677,10 +720,10 @@ export class Battle {
     ctx.beginPath(); ctx.moveTo(0, WORLD_HEIGHT);
     for (let x = 0; x <= WORLD_WIDTH; x += 4) ctx.lineTo(x, this.terrain[x] + 6);
     ctx.lineTo(WORLD_WIDTH, WORLD_HEIGHT); ctx.closePath(); ctx.clip();
-    ctx.globalAlpha = 0.055;
+    ctx.globalAlpha = this.environment?.ready ? 0.015 : 0.055;
     ctx.strokeStyle = '#b9d7d8'; ctx.lineWidth = 1;
     for (let y = 590; y < 800; y += 34) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WORLD_WIDTH, y + 12); ctx.stroke(); }
-    for (let x = 0; x < WORLD_WIDTH; x += 80) { ctx.beginPath(); ctx.moveTo(x, 555); ctx.lineTo(x, 800); ctx.stroke(); }
+    if (!this.environment?.ready) for (let x = 0; x < WORLD_WIDTH; x += 80) { ctx.beginPath(); ctx.moveTo(x, 555); ctx.lineTo(x, 800); ctx.stroke(); }
     ctx.restore();
     for (const rock of this.ornaments) {
       const y = this.groundAt(rock.x);
