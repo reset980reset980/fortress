@@ -12,23 +12,23 @@ try {
   await page.goto(process.env.BASE_URL || 'http://localhost:4173');
   await page.waitForFunction(() => navigator.serviceWorker.controller, {}, { timeout: 30000 });
   report.cachedResources = await page.evaluate(async () => {
-    const cache = await caches.open('fortress-afterlight-v8-duel-20261005'); return (await cache.keys()).length;
+    const cache = await caches.open('fortress-afterlight-v9-picker-20261005'); return (await cache.keys()).length;
   });
   assert.ok(report.cachedResources >= 45);
-  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v8-duel-20261005');const paths=(await c.keys()).map(r=>new URL(r.url).pathname);return ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03'].every(id=>['glb','png'].every(ext=>paths.includes('/assets/environments/'+id+'-v1.'+ext)));}),true);
+  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v9-picker-20261005');const paths=(await c.keys()).map(r=>new URL(r.url).pathname);return ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03'].every(id=>['glb','png'].every(ext=>paths.includes('/assets/environments/'+id+'-v1.'+ext)));}),true);
   report.checks.push('All nine mission maps and fallback images are cached');
   // An old tab can recreate its old cache after the new worker activates. Put
   // a stale executable response ahead of the current cache to exercise that
   // real upgrade race. Offline fetches must still use only the new version.
   await page.evaluate(async () => {
-    const paths = (await caches.keys()).filter(k => k.startsWith('fortress-afterlight-') && k !== 'fortress-afterlight-v8-duel-20261005');
+    const paths = (await caches.keys()).filter(k => k.startsWith('fortress-afterlight-') && k !== 'fortress-afterlight-v9-picker-20261005');
     await Promise.all(paths.map(k => caches.delete(k)));
-    const current = await caches.open('fortress-afterlight-v8-duel-20261005');
+    const current = await caches.open('fortress-afterlight-v9-picker-20261005');
     const entries = await Promise.all((await current.keys()).map(async request => [request, await current.match(request)]));
-    await caches.delete('fortress-afterlight-v8-duel-20261005');
+    await caches.delete('fortress-afterlight-v9-picker-20261005');
     const old = await caches.open('fortress-afterlight-v2-20261004');
     await old.put('/src/battle.js', new Response('throw new Error("Stale pre-3D cache was served");', { headers: { 'Content-Type': 'text/javascript' } }));
-    const replacement = await caches.open('fortress-afterlight-v8-duel-20261005');
+    const replacement = await caches.open('fortress-afterlight-v9-picker-20261005');
     await Promise.all(entries.map(([request, response]) => replacement.put(request, response)));
   });
   await context.setOffline(true); await page.reload();
