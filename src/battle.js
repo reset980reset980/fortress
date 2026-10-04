@@ -131,8 +131,8 @@ export class Battle {
     this.wind = Math.round((this.random() * 1.6 - 0.8) * (this.mission.wind || 15));
     this.fuelMax = Math.round(100 * this.tankType.mobility + (this.upgrades.fuel || 0) * 14);
     this.fuel = this.fuelMax;
-    this.ammo = { shell: Infinity, cluster: 3, arc: 2 };
-    this.abilities = { shield: 1, repair: 1, scan: 1 };
+    this.ammo = { shell: Infinity, cluster: 3 + (this.upgrades.ammo || 0), arc: 2 + (this.upgrades.ammo || 0) };
+    this.abilities = { shield: 1 + (this.upgrades.shield || 0), repair: 1 + Math.floor((this.upgrades.repair || 0) / 2), scan: 1 };
     this.scanning = false;
     this.movement = 0;
     this.paused = false;
@@ -232,7 +232,7 @@ export class Battle {
       this.onEvent('shield', { x: this.player.x, y: this.player.y, intensity: 0.5, color: '#75d7ff' });
       this.addLabel(this.player.x, this.player.y - 60, '방어막 가동', '#95e6ff');
     } else if (ability === 'repair') {
-      const restore = Math.min(this.maxHp - this.player.hp, Math.round(this.maxHp * 0.38));
+      const restore = Math.min(this.maxHp - this.player.hp, Math.round(this.maxHp * (0.38 + (this.upgrades.repair || 0) * .05)));
       this.player.hp += restore;
       this.status = `긴급 수리 · 체력 ${restore} 회복`;
       this.onEvent('repair', { x: this.player.x, y: this.player.y, intensity: 0.3, color: '#85e6b7' });

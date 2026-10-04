@@ -14,13 +14,13 @@ test('corrupt or incompatible saves are rejected without altering a fresh profil
   const a = createProfile(), b = createProfile();
   a.upgrades.hull = 3;
   a.missions[ids[0]] = 2;
-  assert.deepEqual(b, {version:2,credits:0,tank:'bastion',missions:{},upgrades:{hull:0,attack:0,fuel:0}});
+  assert.deepEqual(b, {version:2,credits:0,tank:'bastion',missions:{},upgrades:{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0}});
 });
 
 test('untrusted imported saves keep only game-owned tanks, upgrades and mission IDs', () => {
   const input = JSON.parse(`{"version":2,"credits":"348.9","tank":"<img src=x onerror=alert(1)>","upgrades":{"hull":99,"attack":-2,"fuel":"3.8","admin":100},"missions":{"${ids[0]}":12,"${ids[1]}":"2.9","${ids[2]}":-1,"unknown":3,"__proto__":{"polluted":true}},"debug":true}`);
   const p = sanitize(input);
-  assert.deepEqual(p, {version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},upgrades:{hull:5,attack:0,fuel:3}});
+  assert.deepEqual(p, {version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},upgrades:{hull:5,attack:0,fuel:3,ammo:0,repair:0,shield:0}});
   assert.equal({}.polluted,undefined);
   assert.equal(input.upgrades.hull,99,'Import sanitization does not mutate the source');
   assert.equal(sanitize({...createProfile(),tank:'arc'}).tank,'arc');
@@ -32,10 +32,10 @@ test('credits never import negative or non-finite values and upgrades remain 0 t
   for (const value of [-1,-999,NaN,Infinity,-Infinity,'NaN','Infinity',null,true,{},[100]]) {
     const p = sanitize({...createProfile(),credits:value,upgrades:{hull:value,attack:value,fuel:value}});
     assert.equal(p.credits,0,String(value));
-    assert.deepEqual(p.upgrades,{hull:0,attack:0,fuel:0});
+    assert.deepEqual(p.upgrades,{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0});
   }
-  assert.equal(sanitize({...createProfile(),credits:10000000}).credits,100000);
-  assert.deepEqual(sanitize({...createProfile(),upgrades:{hull:100,attack:5.9,fuel:'6'}}).upgrades,{hull:5,attack:5,fuel:5});
+  assert.equal(sanitize({...createProfile(),credits:10000000}).credits,10000000);
+  assert.deepEqual(sanitize({...createProfile(),upgrades:{hull:100,attack:5.9,fuel:'6'}}).upgrades,{hull:5,attack:5,fuel:5,ammo:0,repair:0,shield:0});
 });
 
 test('campaign unlocks in order and rejects indexes or forged gaps', () => {
@@ -60,22 +60,22 @@ test('mission loss does not grant credits, stars or progression', () => {
   assert.deepEqual(p,createProfile());
 });
 
-test('first completion pays once and replaying lower or equal stars never duplicates a reward', () => {
+test('first completion bonus pays once while each replay victory earns points', () => {
   const p = createProfile(), mission = MISSIONS[0];
   assert.equal(completeMission(p,mission,{won:true,stars:2}),mission.reward+70);
   const earned = p.credits;
-  for(const stars of [2,1,2,0]) assert.equal(completeMission(p,mission,{won:true,stars}),0);
-  assert.equal(p.credits,earned);
+  for(const stars of [2,1,2,0]) assert.equal(completeMission(p,mission,{won:true,stars}),81);
+  assert.equal(p.credits,earned+324);
   assert.equal(p.missions[mission.id],2);
 });
 
-test('improving a record pays only newly earned stars and caps records at three', () => {
+test('replay victories pay their base reward plus only newly earned stars', () => {
   const p = createProfile(), mission = MISSIONS[0];
   assert.equal(completeMission(p,mission,{won:true,stars:1}),mission.reward+35);
-  assert.equal(completeMission(p,mission,{won:true,stars:2}),35);
-  assert.equal(completeMission(p,mission,{won:true,stars:99}),35);
-  assert.equal(completeMission(p,mission,{won:true,stars:3}),0);
-  assert.equal(p.credits,mission.reward+105);
+  assert.equal(completeMission(p,mission,{won:true,stars:2}),116);
+  assert.equal(completeMission(p,mission,{won:true,stars:99}),116);
+  assert.equal(completeMission(p,mission,{won:true,stars:3}),81);
+  assert.equal(p.credits,mission.reward+105+243);
   assert.equal(p.missions[mission.id],3);
 });
 
@@ -115,3 +115,5 @@ test('blocked browser storage is a safe read/write failure', () => {
   try { assert.equal(safeRead('save'),null);assert.equal(safeWrite('save',createProfile()),false); }
   finally { if(descriptor)Object.defineProperty(globalThis,'localStorage',descriptor);else delete globalThis.localStorage; }
 });
+
+test('old saves gain item upgrade defaults and duel victories do not unlock campaign missions',()=>{const p=sanitize({version:2,credits:150,tank:'bastion',missions:{},upgrades:{hull:2,attack:1,fuel:0}});assert.equal(p.upgrades.ammo,0);assert.equal(p.upgrades.hull,2);const m={id:'duel-shore-01',mode:'duel',reward:150};assert.equal(completeMission(p,m,{won:true}),150);assert.equal(completeMission(p,m,{won:true}),150);assert.equal(completeMission(p,m,{won:false}),0);assert.deepEqual(p.missions,{});assert.equal(purchaseUpgrade(p,'ammo',UPGRADES.ammo),true);assert.equal(p.upgrades.ammo,1);assert.equal(sanitize(p).upgrades.ammo,1);});

@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "checks": [
+    "Two actual AI victories award 90 points each without unlocking campaign",
+    "Earned points purchase ammo upgrade; reload preserves it; next battle receives extra ammo"
+  ],
+  "errors": []
+}

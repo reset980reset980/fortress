@@ -26,7 +26,10 @@ export const MISSIONS = [
 ];
 
 export const UPGRADES = {
-  hull: { label: '강화 장갑', description: '단계마다 최대 체력 +25', max: 5, costs: [140, 210, 300, 410, 540] },
-  attack: { label: '포신 개량', description: '단계마다 모든 무기 피해 +8%', max: 5, costs: [160, 240, 340, 460, 600] },
-  fuel: { label: '동력 시스템', description: '단계마다 이동 연료 +14', max: 5, costs: [120, 190, 270, 370, 490] },
+  ammo: {label:'특수탄 보급',description:'단계마다 집속탄·플라즈마 탄약 각각 +1',max:5,costs:[120,200,300,420,560]},
+  repair: {label:'수리 키트 개량',description:'회복률 단계마다 +5%, 2·4단계에 사용 횟수 +1',max:5,costs:[130,210,310,430,570]},
+  shield: {label:'보호막 충전기',description:'단계마다 보호막 사용 횟수 +1',max:5,costs:[140,220,320,440,580]},
+  hull: { label: '강화 장갑', description:'단계마다 최대 체력 +25', description: '단계마다 최대 체력 +25', max: 5, costs: [140, 210, 300, 410, 540] },
+  attack: { label: '포신 개량', description:'단계마다 모든 무기 피해 +8%', description: '단계마다 모든 무기 피해 +8%', max: 5, costs: [160, 240, 340, 460, 600] },
+  fuel: { label: '동력 시스템', description:'단계마다 이동 연료 +14', description: '단계마다 이동 연료 +14', max: 5, costs: [120, 190, 270, 370, 490] },
 };

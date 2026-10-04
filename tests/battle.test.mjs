@@ -211,3 +211,5 @@ test('all nine campaign missions are solvable with affordable upgrade progressio
     battle.destroy();
   }
 });
+
+test('item upgrades add actual ammunition, shield charges and repair capacity',()=>{const {battle}=createBattle({upgrades:{ammo:2,shield:3,repair:4}});assert.equal(battle.ammo.cluster,5);assert.equal(battle.ammo.arc,4);assert.equal(battle.abilities.shield,4);assert.equal(battle.abilities.repair,3);battle.player.hp=10;const before=battle.player.hp;assert.equal(battle.useAbility('repair'),true);assert.equal(battle.player.hp-before,Math.round(battle.maxHp*.58));battle.destroy();});
