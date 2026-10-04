@@ -40,6 +40,7 @@ export class BattlefieldEnvironment {
     this.theme = THEMES[theme] ? theme : 'coast';
     this.ready = false; this.destroyed = false; this.contextLost = false; this.error = null; this.frameCount = 0;
     this.lastTime = -Infinity; this.lowQuality = false;
+    this.drawCosts = []; this.frameGaps = []; this.drawSamples = 0; this.fallbackReason = null;
     this.canvas = document.createElement('canvas');
     const context = this.canvas.getContext('webgl2', { antialias: true, alpha: false, preserveDrawingBuffer: true });
     if (!context) throw new Error('WebGL2 unavailable; use the Blender preview.');
@@ -86,6 +87,7 @@ export class BattlefieldEnvironment {
   }
 
   setQuality(low) {
+    if (this.destroyed) return;
     if (this.lowQuality === !!low) return;
     this.lowQuality = !!low; this.renderer.shadowMap.enabled = !low;
     this.renderer.shadowMap.needsUpdate = true;
@@ -93,6 +95,7 @@ export class BattlefieldEnvironment {
   }
 
   resize(width) {
+    if (this.destroyed) return;
     const size = Math.min(1280, Math.max(640, Math.round(width)));
     this.smallScreen = width < 1000;
     if (this.canvas.width === size) return;
@@ -112,6 +115,28 @@ export class BattlefieldEnvironment {
     return this.canvas;
   }
 
+  recordDrawCost(milliseconds) {
+    if (!this.ready || this.destroyed || ++this.drawSamples <= 2) return;
+    this.drawCosts.push(milliseconds);
+    if (this.drawCosts.length > 6) this.drawCosts.shift();
+    // Include the 3D-to-2D GPU readback, not just asynchronous GL submission.
+    // Sustained frames below ~12fps should not slow the ballistic simulation.
+    if (this.drawCosts.length === 6 && this.drawCosts.reduce((a, b) => a + b, 0) / 6 > 85) {
+      this.fallbackReason = 'slow-renderer'; this.destroy();
+    }
+  }
+
+  recordFrameGap(milliseconds) {
+    if (!this.ready || this.destroyed || milliseconds <= 0) return;
+    this.frameGaps.push(milliseconds);
+    if (this.frameGaps.length > 6) this.frameGaps.shift();
+    // Some drivers defer GPU/compositor work beyond the JS render call. A
+    // sustained median below 8fps also selects the inexpensive Blender render.
+    if (this.frameGaps.length === 6 && [...this.frameGaps].sort((a, b) => a - b)[3] > 125) {
+      this.fallbackReason = 'slow-renderer'; this.destroy();
+    }
+  }
+
   get stats() {
     const textures = new Set();
     this.model?.traverse(o => { for (const material of Array.isArray(o.material) ? o.material : o.material ? [o.material] : []) {
@@ -119,7 +144,7 @@ export class BattlefieldEnvironment {
     } });
     return { ready: this.ready, theme: this.theme, frames: this.frameCount,
       triangles: this.renderer.info.render.triangles, drawCalls: this.renderer.info.render.calls,
-      textures: textures.size, width: this.canvas.width, height: this.canvas.height, error: this.error };
+      textures: textures.size, width: this.canvas.width, height: this.canvas.height, fallbackReason: this.fallbackReason, error: this.error };
   }
 
   disposeModel(model) {
@@ -135,6 +160,7 @@ export class BattlefieldEnvironment {
   }
 
   destroy() {
+    if (this.destroyed) return;
     this.destroyed = true; this.ready = false;
     this.canvas.removeEventListener('webglcontextlost', this._lost);
     this.canvas.removeEventListener('webglcontextrestored', this._restored);

@@ -295,6 +295,7 @@ export class Battle {
 
   frame(time) {
     if (this.destroyed) return;
+    if (this.lastTime !== null && !this.paused && !document.hidden) this.environment?.recordFrameGap(time - this.lastTime);
     const dt = this.lastTime === null ? 0 : clamp((time - this.lastTime) / 1000, 0, 0.05);
     this.lastTime = time;
     if (!this.paused && !document.hidden) this.update(dt);
@@ -596,8 +597,12 @@ export class Battle {
   drawBackground(ctx) {
     if (this.environment) {
       this.environment.setQuality(this.reducedMotion);
+      const drawStarted = performance.now();
       const rendered = this.environment.render(this.elapsed, this.player.x, this.reducedMotion);
-      if (rendered) { ctx.drawImage(rendered, 0, 0, WORLD_WIDTH, WORLD_HEIGHT); return; }
+      if (rendered) {
+        ctx.drawImage(rendered, 0, 0, WORLD_WIDTH, WORLD_HEIGHT);
+        this.environment.recordDrawCost(performance.now() - drawStarted); return;
+      }
     }
     if (this.environmentPreview.complete && this.environmentPreview.naturalWidth > 0) {
       ctx.drawImage(this.environmentPreview, 0, 0, WORLD_WIDTH, WORLD_HEIGHT); return;

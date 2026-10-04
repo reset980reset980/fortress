@@ -74,6 +74,23 @@ try {
   await fallback.click('#fire-button'); await fallback.waitForFunction(() => FortressAfterlight.battle.craters.length > 0, {}, { timeout: 20000 });
   report.checks.push('Without WebGL2 the Blender preview and real combat remain usable');
   await fallbackContext.close();
+  const slowContext = await browser.newContext();
+  await slowContext.addInitScript(() => {
+    const original = CanvasRenderingContext2D.prototype.drawImage;
+    CanvasRenderingContext2D.prototype.drawImage = function(...args) {
+      if (args[0] === window.FortressAfterlight?.battle?.environment?.canvas) {
+        const until = performance.now() + 130; while (performance.now() < until) { /* Induce an expensive GPU readback. */ }
+      }
+      return original.apply(this, args);
+    };
+  });
+  const slow = await slowContext.newPage(); await slow.goto(base); await slow.click('#deploy-button');
+  await slow.waitForFunction(() => FortressAfterlight.battle.environment?.fallbackReason === 'slow-renderer', {}, { timeout: 20000 });
+  assert.equal(await slow.evaluate(() => FortressAfterlight.battle.environment.destroyed), true);
+  await slow.click('#fire-button'); await slow.waitForFunction(() => FortressAfterlight.battle.craters.length > 0, {}, { timeout: 20000 });
+  await slow.screenshot({ path: 'research/environment-slow-renderer.png' });
+  report.checks.push('Measured slow rendering releases WebGL resources and real combat continues with the Blender preview');
+  await slowContext.close();
   assert.deepEqual(report.errors, []); assert.deepEqual(report.requestsFailed, []); report.passed = true;
 } finally {
   await writeFile('research/environment-verification.json', JSON.stringify(report, null, 2));

@@ -8,18 +8,20 @@
     "Leaving battles disposes the renderer",
     "844x390 fits battle, firing controls and abilities without scrolling",
     "Lost WebGL context uses the rendered Blender fallback",
-    "Without WebGL2 the Blender preview and real combat remain usable"
+    "Without WebGL2 the Blender preview and real combat remain usable",
+    "Measured slow rendering releases WebGL resources and real combat continues with the Blender preview"
   ],
   "scenes": [
     {
       "ready": true,
       "theme": "coast",
-      "frames": 10,
+      "frames": 9,
       "triangles": 51144,
       "drawCalls": 11,
       "textures": 3,
       "width": 1280,
       "height": 711,
+      "fallbackReason": null,
       "error": null
     },
     {
@@ -31,6 +33,7 @@
       "textures": 3,
       "width": 1280,
       "height": 711,
+      "fallbackReason": null,
       "error": null
     },
     {
@@ -42,6 +45,7 @@
       "textures": 3,
       "width": 1280,
       "height": 711,
+      "fallbackReason": null,
       "error": null
     }
   ],

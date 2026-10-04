@@ -18,6 +18,7 @@
     "textures": 3,
     "width": 781,
     "height": 434,
+    "fallbackReason": null,
     "error": null
   }
 }
