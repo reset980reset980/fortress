@@ -170,14 +170,14 @@ export class Battle {
     this.tankAtlas.onload = () => { if (!this.destroyed) this.draw(); };
     this.environment = null;
     this.environmentPreview = new Image();
-    this.environmentPreview.src = `/assets/environments/${this.mission.theme}-v1.png`;
+    this.environmentPreview.src = `/assets/environments/${this.mission.map || this.mission.theme}-v1.png`;
     // Headless simulation tests do not construct a GPU renderer. In browsers,
     // keep the rendered Blender preview visible while the local GLB loads.
     if (typeof document.createElement === 'function') {
       import('./environment.js').then(({ BattlefieldEnvironment }) => {
         if (this.destroyed) return;
         const rect = this.canvas.getBoundingClientRect();
-        this.environment = new BattlefieldEnvironment(this.mission.theme, rect.width * Math.min(window.devicePixelRatio || 1, 1.5));
+        this.environment = new BattlefieldEnvironment(this.mission.theme, rect.width * Math.min(window.devicePixelRatio || 1, 1.5), this.mission.map);
       }).catch(() => { /* The Blender preview remains usable without WebGL2. */ });
     }
     this._visibility = () => { if (document.hidden) this.setMove(0); this.lastTime = null; };

@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "maps": [
+    {
+      "mission": "shore-01",
+      "expected": "coast",
+      "map": "coast",
+      "triangles": 51144,
+      "preview": "http://localhost:4173/assets/environments/coast-v1.png"
+    },
+    {
+      "mission": "shore-02",
+      "expected": "shore-02",
+      "map": "shore-02",
+      "triangles": 43784,
+      "preview": "http://localhost:4173/assets/environments/shore-02-v1.png"
+    },
+    {
+      "mission": "shore-03",
+      "expected": "shore-03",
+      "map": "shore-03",
+      "triangles": 48552,
+      "preview": "http://localhost:4173/assets/environments/shore-03-v1.png"
+    },
+    {
+      "mission": "dune-01",
+      "expected": "desert",
+      "map": "desert",
+      "triangles": 52668,
+      "preview": "http://localhost:4173/assets/environments/desert-v1.png"
+    },
+    {
+      "mission": "dune-02",
+      "expected": "dune-02",
+      "map": "dune-02",
+      "triangles": 41144,
+      "preview": "http://localhost:4173/assets/environments/dune-02-v1.png"
+    },
+    {
+      "mission": "dune-03",
+      "expected": "dune-03",
+      "map": "dune-03",
+      "triangles": 51312,
+      "preview": "http://localhost:4173/assets/environments/dune-03-v1.png"
+    },
+    {
+      "mission": "frost-01",
+      "expected": "frost",
+      "map": "frost",
+      "triangles": 52152,
+      "preview": "http://localhost:4173/assets/environments/frost-v1.png"
+    },
+    {
+      "mission": "frost-02",
+      "expected": "frost-02",
+      "map": "frost-02",
+      "triangles": 42308,
+      "preview": "http://localhost:4173/assets/environments/frost-02-v1.png"
+    },
+    {
+      "mission": "frost-03",
+      "expected": "frost-03",
+      "map": "frost-03",
+      "triangles": 50988,
+      "preview": "http://localhost:4173/assets/environments/frost-03-v1.png"
+    }
+  ],
+  "errors": []
+}

@@ -36,8 +36,9 @@ function makeSky(palette) {
  * 24 background frames/sec are rendered, independently of the ballistic loop.
  */
 export class BattlefieldEnvironment {
-  constructor(theme = 'coast', width = 960) {
+  constructor(theme = 'coast', width = 960, map = theme) {
     this.theme = THEMES[theme] ? theme : 'coast';
+    this.map = ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03'].includes(map) ? map : this.theme;
     this.ready = false; this.destroyed = false; this.contextLost = false; this.error = null; this.frameCount = 0;
     this.lastTime = -Infinity; this.lowQuality = false;
     this.drawCosts = []; this.frameGaps = []; this.drawSamples = 0; this.fallbackReason = null;
@@ -77,7 +78,7 @@ export class BattlefieldEnvironment {
         .setCrossOrigin(parser.options.crossOrigin).setRequestHeader(parser.options.requestHeader);
       return { name: 'FORTRESS_CSP_IMAGE_LOADER' };
     });
-    this.loading = loader.loadAsync(new URL(`../assets/environments/${this.theme}-${ENVIRONMENT_VERSION}.glb`, import.meta.url).href)
+    this.loading = loader.loadAsync(new URL(`../assets/environments/${this.map}-${ENVIRONMENT_VERSION}.glb`, import.meta.url).href)
       .then(gltf => {
         if (this.destroyed) { this.disposeModel(gltf.scene); return false; }
         this.model = gltf.scene;
@@ -142,7 +143,7 @@ export class BattlefieldEnvironment {
     this.model?.traverse(o => { for (const material of Array.isArray(o.material) ? o.material : o.material ? [o.material] : []) {
       for (const value of Object.values(material)) if (value?.isTexture) textures.add(value);
     } });
-    return { ready: this.ready, theme: this.theme, frames: this.frameCount,
+    return { ready: this.ready, theme: this.theme, map: this.map, frames: this.frameCount,
       triangles: this.renderer.info.render.triangles, drawCalls: this.renderer.info.render.calls,
       textures: textures.size, width: this.canvas.width, height: this.canvas.height, fallbackReason: this.fallbackReason, error: this.error };
   }
