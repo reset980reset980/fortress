@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "checkedWeapons": 36,
+  "onlineDelegationMethods": 11,
+  "checks": [
+    "36 local typed weapons",
+    "double trajectory rendering",
+    "SS ammo exhaustion",
+    "repair item",
+    "dual-shot item",
+    "unowned item rejection",
+    "camera restore generation race",
+    "camera shutdown timer cancellation",
+    "online transport byte preservation",
+    "root SW registration disabled"
+  ]
+}

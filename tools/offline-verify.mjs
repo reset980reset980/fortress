@@ -1,0 +1,7 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {loadPlaywright,findChromium} from './browser-runtime.mjs';
+const {chromium}=await loadPlaywright();
+const browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--enable-unsafe-swiftshader']});
+const context=await browser.newContext();const page=await context.newPage();let report={passed:false,checks:[],errors:[]};page.on('pageerror',e=>report.errors.push(e.message));
+try{await page.goto('http://localhost:4173');await page.waitForFunction(()=>navigator.serviceWorker.controller,{},{timeout:20000});const cached=await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v2-20261004');return(await c.keys()).length});assert.ok(cached>=25);await context.setOffline(true);await page.reload();await page.locator('#deploy-button').waitFor();await page.click('#deploy-button');await page.waitForFunction(()=>FortressAfterlight.battle&&FortressAfterlight.audio.buffers.size>=12,{},{timeout:15000});assert.equal(await page.evaluate(()=>FortressAfterlight.state.phase),'aim');assert.deepEqual(report.errors,[]);report={...report,passed:true,cachedResources:cached,checks:['Campaign menu reloads offline','Battle source and generated art load offline','All12 audio buffers decode offline','No browser exceptions']};}finally{await writeFile('research/offline-verification.json',JSON.stringify(report,null,2));await browser.close();console.log(JSON.stringify(report,null,2))}

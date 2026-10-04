@@ -1,0 +1,90 @@
+{
+  "passed": true,
+  "checks": [
+    "Original mode boots with all map, tank and effect textures",
+    "Actual local scene initializes class affinity and editable terrain",
+    "Cannonrider shot2 executes two real animated trajectories and settles",
+    "SS HUD decrements from 1 to 0, and selection/fire both reject a third use",
+    "No online API calls, browser exceptions or failed asset requests"
+  ],
+  "errors": [],
+  "errorStacks": [],
+  "failedRequests": [],
+  "apiRequests": [],
+  "fixtureResults": {
+    "boot": {
+      "canvasCount": 1,
+      "textureCount": 285,
+      "modeActive": true
+    },
+    "local": {
+      "tanks": [
+        "cannonrider",
+        "redfin"
+      ],
+      "classes": [
+        "classic",
+        "modern"
+      ],
+      "localPatchInstalled": true,
+      "suddenDeathEnabled": true,
+      "terrainChunks": 15
+    },
+    "double": {
+      "projectiles": [
+        {
+          "tankId": "cannonrider",
+          "slot": "shot2",
+          "points": 55,
+          "impact": {
+            "x": 1012,
+            "y": 568
+          },
+          "radius": 35
+        },
+        {
+          "tankId": "cannonrider",
+          "slot": "shot2",
+          "points": 61,
+          "impact": {
+            "x": 1099,
+            "y": 572
+          },
+          "radius": 35
+        }
+      ],
+      "hp": [
+        900,
+        900
+      ],
+      "phase": "aim",
+      "hud": "SHOT1 · 선봉 미사일   DMG 198   BLAST R40   DELAY +0"
+    },
+    "special": {
+      "firstSpecial": {
+        "before": 0,
+        "after": 1,
+        "phase": "flight",
+        "currentWeapon": "ss",
+        "hud": "SS · 대구경 파쇄탄   DMG 305   BLAST R70   DELAY +400   남은 특수탄 1"
+      },
+      "secondSpecial": {
+        "before": 1,
+        "after": 2,
+        "phase": "flight",
+        "currentWeapon": "ss",
+        "hud": "SS · 대구경 파쇄탄   DMG 305   BLAST R70   DELAY +400   남은 특수탄 0"
+      },
+      "limit": {
+        "selectionAfterExhaustedRequest": "shot1",
+        "turnBefore": 2,
+        "turnAfter": 2,
+        "projectilesBefore": 2,
+        "projectilesAfter": 2,
+        "remaining": 0,
+        "currentWeapon": "shot1",
+        "hud": "SHOT1 · 표준 포탄   DMG 202   BLAST R38   DELAY +0"
+      }
+    }
+  }
+}

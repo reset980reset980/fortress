@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "supported": true,
+  "shaderError": null,
+  "visiblePixels": 6484,
+  "glError": 0,
+  "peak": 456,
+  "stressGlError": 0,
+  "low": 148,
+  "lowGlError": 0,
+  "expired": 0,
+  "cleared": true,
+  "fallback": true,
+  "contextLost": true,
+  "restored": true,
+  "restoreGlError": 0,
+  "destroyed": true
+}

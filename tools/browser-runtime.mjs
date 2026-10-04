@@ -1,0 +1,4 @@
+import {access} from 'node:fs/promises';
+import {pathToFileURL} from 'node:url';
+export async function loadPlaywright(){for(const name of [process.env.PLAYWRIGHT_MODULE,'playwright-core','playwright','/workspace/browser-tools/node_modules/playwright-core/index.mjs','/opt/codex/cua_node/lib/node_modules/playwright-core/index.mjs'].filter(Boolean)){try{return await import(name.startsWith('/')?pathToFileURL(name).href:name)}catch{}}throw new Error('Install playwright-core locally or set PLAYWRIGHT_MODULE to its entry module.');}
+export async function findChromium(){for(const p of [process.env.CHROMIUM_PATH,'/usr/bin/chromium','/usr/bin/chromium-browser','/usr/bin/google-chrome'].filter(Boolean)){try{await access(p);return p}catch{}}throw new Error('Set CHROMIUM_PATH to a Chromium executable.');}

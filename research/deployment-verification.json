@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": [
+    "Existing static root backed up before replacing index",
+    "Source modules and assets copied with readable permissions",
+    "Unrelated backend configuration retained",
+    "Archive SHA256 verified",
+    "Restoring archive recovers original homepage"
+  ]
+}

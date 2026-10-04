@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "Fresh profile locks 8 missions",
+    "Tank selection saved",
+    "Selected tank and WebGL/audio run in browser",
+    "Keyboard movement consumes fuel",
+    "Pause freezes simulation",
+    "Portrait390px fits and resizes backing canvas",
+    "Actual battle victory awards credits and unlocks next mission",
+    "Progress survives reload",
+    "Mobile landscape844px fits",
+    "Mute setting applies and saves",
+    "Mute persists after reload"
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "requestsFailed": [],
+  "passed": true
+}

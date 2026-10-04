@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "Campaign menu reloads offline",
+    "Battle source and generated art load offline",
+    "All12 audio buffers decode offline",
+    "No browser exceptions"
+  ],
+  "errors": [],
+  "cachedResources": 25
+}

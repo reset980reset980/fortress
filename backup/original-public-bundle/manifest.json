@@ -1,0 +1,32 @@
+{
+  "name": "FORTRESS — Online Artillery",
+  "short_name": "FORTRESS",
+  "description": "한 발의 궤적, 한 번의 판정. 모바일 웹 아틸러리 대전.",
+  "lang": "ko-KR",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0d2228",
+  "theme_color": "#17282d",
+  "icons": [
+    {
+      "src": "/sprites/ui/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/sprites/ui/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/sprites/ui/pwa-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

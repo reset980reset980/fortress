@@ -1,0 +1,1844 @@
+{
+  "origin": "https://fortress.xsw.kr",
+  "assetCount": 306,
+  "totalBytes": 39743298,
+  "failures": [],
+  "results": [
+    {
+      "path": "/audio/ambient/rain.mp3",
+      "bytes": 289689,
+      "sha256": "dc178c147460cd090ee4f0586040cf4091fa9a726a7f38de945a2a4bdf3ed5fb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/ambient/wind.mp3",
+      "bytes": 289689,
+      "sha256": "aed9801f209a7d66183eb3731369949330e725a0305a16c6421ca963d4fcd9b2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/bgm/battle_grass.mp3",
+      "bytes": 1441376,
+      "sha256": "dd6f61bc68ec7686b50d0ad997e3173691f302135ad45c15495226a71e62b8ef",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/bgm/battle_tense.mp3",
+      "bytes": 887789,
+      "sha256": "d704d161c98a28a5b5993c4b2509494d4defdbf8e5ae48aa80d610b781de0f43",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/bgm/title.mp3",
+      "bytes": 1537297,
+      "sha256": "aa5a57cbc85b337242636c1ef4332565a8dc5718db4d5730ac08d09dda72d9db",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/aim_tick.mp3",
+      "bytes": 3280,
+      "sha256": "8c2511c43d1cd3a1dddaf22fe5f62d08f0eb667162517454be0641c391323c69",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/defeat.mp3",
+      "bytes": 47418,
+      "sha256": "08958979b2170efb9dc5e7feb90cffad9515131d3a6e120815a37e2dbbadfc15",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/explosion_large.mp3",
+      "bytes": 30863,
+      "sha256": "084030f5d463672491c2aa55861f6c9da4be3c6c0d5e46ab8ca552a0fe74b964",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/explosion_medium.mp3",
+      "bytes": 21476,
+      "sha256": "443ef04708f0bea0145435ffe59b2f0991ae95bf59b7a32dd55f45de0fa40134",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/explosion_small.mp3",
+      "bytes": 15798,
+      "sha256": "4c05ba5eeff34a3d7a9683d3dc89b88d31b0c32d3d1c49da8366a6b9c8aec968",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/fire_ballista.mp3",
+      "bytes": 17056,
+      "sha256": "54628491aedb234da9b25bfc1269250709272425d278eee8a8f29f5846796353",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/fire_cannon.mp3",
+      "bytes": 14390,
+      "sha256": "587ee6a21459ac24446bd586208c60587a622822bc28b74a864d289aeb8c9acc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/fire_missile.mp3",
+      "bytes": 17510,
+      "sha256": "bd27d1ee8806fdb65fe597092522e63efb1a06eaa7eff6c6004aa0a9a7b1784d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/power_charge.mp3",
+      "bytes": 24492,
+      "sha256": "77a234150b5b31408a8d24b2fe7d3eb13a1782071c30b25799ba6560cf25aca7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/splash_fall.mp3",
+      "bytes": 17097,
+      "sha256": "c9c92ec0aa6076f8081ed8bc3921c751298ac2fe9719a152190224b839a5dc72",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/tank_destroy.mp3",
+      "bytes": 26852,
+      "sha256": "baddd9ed8495f7d6f59c0293965b65d34b8f41e62241ac3d773dab615164bd8d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/tank_hit.mp3",
+      "bytes": 8909,
+      "sha256": "e9a704733d23cca0b4c6773b58ac27f69eb430c9a953df4a1be54df77bc277df",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/tank_move.mp3",
+      "bytes": 25509,
+      "sha256": "1a37cf71ae47661b267aafb4b10b5c652a6c0748d61e20824dc83e3a328bcd25",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/terrain_crumble.mp3",
+      "bytes": 14539,
+      "sha256": "bea4eadc3ff92d33f349e57329c8c4527067100de16f0f5d1d1441a3fc195b40",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/turn_start.mp3",
+      "bytes": 11734,
+      "sha256": "cd6673524326a38f4118109173daa2ed3525e18bcd7778f200a1bdcef93a4dc5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/ui_click.mp3",
+      "bytes": 2496,
+      "sha256": "d67cabd7c96e430be0ae2f02fa96b1752ae3be2bb55fa1864789ebc2dd51b048",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/ui_hover.mp3",
+      "bytes": 1921,
+      "sha256": "a4b9226c43877c970a044c6dc9827e2f605adfcac7e71913e6dae232309545d2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/audio/sfx/victory.mp3",
+      "bytes": 51179,
+      "sha256": "b0de6d80a9a6060401e21ce971b60890a6129e648f0fa4f5e3cf1019e1c41949",
+      "status": "downloaded"
+    },
+    {
+      "path": "/manifest.json",
+      "bytes": 784,
+      "sha256": "75bafd9ef939ba8e45ee511ac7df8c05aa929534bec4dbd6ee79ed292e2ffc7c",
+      "status": "existing"
+    },
+    {
+      "path": "/maps/cave/bg_0.png",
+      "bytes": 2545733,
+      "sha256": "aa8f55b6833a730b73f1cf4fe8ed7c6698fdbc59195d4f4f587623d12a2693b5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/cave/bg_1.png",
+      "bytes": 1781661,
+      "sha256": "6193aa2dc0415f742d8dc78a153839638a982e4e7fe654a148ce60a183f93bda",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/cave/surface.png",
+      "bytes": 2589,
+      "sha256": "ebfea8c0a9ed9c04978504ad10dbb04ec2cd9a68024bab33ea880b2f5cb3f325",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/cave/terrain.png",
+      "bytes": 655997,
+      "sha256": "923fe1775f32781ff535205009a1aceb26f045854cda840daee33b2e2a4cbe29",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/cave/thumbnail.png",
+      "bytes": 137297,
+      "sha256": "95c139bb818d89c8079c65eae35c8a8500077af1098c1edbcc531a56717bb74f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/desert/bg_0.png",
+      "bytes": 1838209,
+      "sha256": "698db3dfb0e8711d5db3815d08b50386b63ef1d7f4bc3934fa223bc5d631a300",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/desert/bg_1.png",
+      "bytes": 969722,
+      "sha256": "f27314cffc3d4c651d00fd15ae8f370805f1e699a5b7e34a6aa8de2bfbe3b6eb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/desert/surface.png",
+      "bytes": 3262,
+      "sha256": "df1982c1d5eedb9d509a804f7a840e2879316026a70f24839ca29c6505ff9f2d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/desert/terrain.png",
+      "bytes": 674949,
+      "sha256": "d14ef4b6969747ae7309f483942963b99aa9fd96c1f24dc8367e2cd4302f5ee7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/desert/thumbnail.png",
+      "bytes": 105963,
+      "sha256": "308a3b2de14080672fdb22bfc26ec0f93391fa0e6d382683a5c51033fd8981a9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/grassland/bg_0.png",
+      "bytes": 1592060,
+      "sha256": "8ddfe10d298c8955c84a68bed88891ef9197381ae532c99a32b6a475a289c2a2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/grassland/bg_1.png",
+      "bytes": 863546,
+      "sha256": "30dc757ca439b778a5265d345075c31331f09fa117912c78da15e88238f6ccd6",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/grassland/surface.png",
+      "bytes": 3107,
+      "sha256": "9db913ebd349a2bb7319606481a2918a78d2345c23933de68e788b90a0c41fe6",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/grassland/terrain.png",
+      "bytes": 610860,
+      "sha256": "9efdab1006fd202c48469a20f48dbea444273875f28d1006530412552004db2b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/grassland/thumbnail.png",
+      "bytes": 91488,
+      "sha256": "195828a56610f8fe5b061cde8e444bc9900898aa87f3cda0d2528fca986dc9b2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/islands/bg_0.png",
+      "bytes": 1875450,
+      "sha256": "6c7be6af68250547efefa71026da33c19beceb6304f1c2b678bfb00c82488eea",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/islands/bg_1.png",
+      "bytes": 663395,
+      "sha256": "18f51ebf2e14dbaf3631561d7f09c287c992e2e0a459e7cf6705a03229abf6b5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/islands/surface.png",
+      "bytes": 3202,
+      "sha256": "ff8be3f27d7a7e66614d4991e4991c3eb461be3f92b68d8109838c4273f10474",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/islands/terrain.png",
+      "bytes": 714522,
+      "sha256": "b430841ab236e703fd0cc1ce8b41f100a30c3106ba60e3f1c29d163ef8e8a3bc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/islands/thumbnail.png",
+      "bytes": 108456,
+      "sha256": "884e8e0e2be49b9d13278528821431c763a9ec2fcb0edc81f56e8bfd5ba11274",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/moon/bg_0.png",
+      "bytes": 2233968,
+      "sha256": "8dbadcb58738e4ae09b4dd550d4ac13b5edf273c6b7bdf5f253fb322ff7744dd",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/moon/bg_1.png",
+      "bytes": 1101056,
+      "sha256": "7528c128ec856be9bf03a6e62a8f2d3754a99d131c20d9eb6937e68db3f7f43d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/moon/surface.png",
+      "bytes": 3366,
+      "sha256": "2300c89d4ba70a1eee89bc8b1835eca4f927d511bffb68f07c77585250d93afb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/moon/terrain.png",
+      "bytes": 721677,
+      "sha256": "986ae9be19878d3f7ea0edc91c839b61beeabb0721f6ef0c4482c662f0f8697f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/moon/thumbnail.png",
+      "bytes": 121159,
+      "sha256": "749655d7fae517e5ff40c918570a4231795ae88884e48e11e430d64c4d2e29b0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/ruins/bg_0.png",
+      "bytes": 2386566,
+      "sha256": "42addea8d0d9a4ec823798e4668dc3dffab35a41c4dd2afac017371c1300d2c4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/ruins/bg_1.png",
+      "bytes": 1235614,
+      "sha256": "bc1426072fbfff601a1a8dac3c789858cbba433a3cd2db0b00871c68cf4340d2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/ruins/surface.png",
+      "bytes": 2663,
+      "sha256": "23e2bd2a65271699a1f167205751c9bd978e816b05426ff32b7477e9485d4850",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/ruins/terrain.png",
+      "bytes": 754596,
+      "sha256": "c4b6e0270e290ad1fc0edac97d57dd04edf3a1870dccb630b169bc55da48dea9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/ruins/thumbnail.png",
+      "bytes": 133886,
+      "sha256": "63e7487f3a9229be102e3fcc3b9e0135dd17d174d1f680200ba532ce506a543b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/snowfield/bg_0.png",
+      "bytes": 1899010,
+      "sha256": "04d23f7e1af0aee8422aa7fd26ef68a88af3bb8a8d532cd2a8deb6e41339b1af",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/snowfield/bg_1.png",
+      "bytes": 952829,
+      "sha256": "5338f11ddf918e875940c4a98d218d5e6e25e589a59abab9072c445d076341e5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/snowfield/surface.png",
+      "bytes": 3576,
+      "sha256": "104fef5e41e1bf966c07bcafba001a3a350cde8bc2bbe72986117a290827b8a6",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/snowfield/terrain.png",
+      "bytes": 694091,
+      "sha256": "fd3b4ead9a27873d2c794aca213ea3104c6dacc745841c4a5586cd87b7d26b43",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/snowfield/thumbnail.png",
+      "bytes": 108339,
+      "sha256": "e088f5a937a7795f11bba00c6662fd932f9f4564004073ee47a39783237dbd35",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/volcano/bg_0.png",
+      "bytes": 2375100,
+      "sha256": "cdcdd0ed5d6ae3fe324d31add26034bda284cb66e03ff943d040813f1c75f7f5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/volcano/bg_1.png",
+      "bytes": 1071361,
+      "sha256": "dbb0b7fb8d6862c9992d97d1c83a312d46c77d54303b8b18b01cffd11ba089e2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/volcano/surface.png",
+      "bytes": 2305,
+      "sha256": "edc645e41abe944530ec8eaeb1531276afe82085640f0ee076bd83dbe985c22f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/volcano/terrain.png",
+      "bytes": 683481,
+      "sha256": "1924256c7a26c67f6c39a0de03ae9cf89616b45357dcda4a02c2f515ed8a9f7a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/maps/volcano/thumbnail.png",
+      "bytes": 130789,
+      "sha256": "ed82339885eaca1f173989c2e155bac882441570eb5b6fda0ce8e0b7a3778d49",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_0.png",
+      "bytes": 1377,
+      "sha256": "d1a7469590c750a8ec7f5361efd607826fee5f49dec1181aa0fc05c4af98a971",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_1.png",
+      "bytes": 5259,
+      "sha256": "6445bc1242f2be13e63098ead931dcc1d23b49966c7d96f094720b00232f0c87",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_2.png",
+      "bytes": 9395,
+      "sha256": "9f5bba1c29b04be68b5a47f4ad8d2d68a7c5829857db351b51eea6246bc9bd94",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_3.png",
+      "bytes": 15017,
+      "sha256": "13a25fbf3118c7c314fafa805a14518c7a8aaa538ab027f7bacb9b5b17344f4f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_4.png",
+      "bytes": 14110,
+      "sha256": "b8dc9ceff467503dafce5f712416b1afa0deab859ac55998259b994731d14e54",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_l_5.png",
+      "bytes": 9531,
+      "sha256": "f4dc98d74c02391ec5a788c418fe880eeff225f678fff56cf2792f2d7f984da2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_0.png",
+      "bytes": 968,
+      "sha256": "2075fbf410f1c351b79a1f6555e27c63b912d8657147710d9fc136e6dbfd50a9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_1.png",
+      "bytes": 3720,
+      "sha256": "468eb304eef9ddce75563cda30e34d37424758e535b0dc2128ea112e86f50f2e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_2.png",
+      "bytes": 6690,
+      "sha256": "bd8591ca541fe28a5982d3216832a723a678ec9bd707836c1884a07e427ebea2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_3.png",
+      "bytes": 10592,
+      "sha256": "36c3492e7156c6fad7248726769903d4ca9f0edd9e0efdbe7e8172e184b7150e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_4.png",
+      "bytes": 9311,
+      "sha256": "238c8fcb00b4d74107d5a11f071b989e405c60dbb845e702b25af644d4369454",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_m_5.png",
+      "bytes": 6127,
+      "sha256": "9b0da9b67530296650ff4c07d1445017ecc1a86f6760ec95d1f6b4f4628419d0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_0.png",
+      "bytes": 583,
+      "sha256": "3d175fa6361579d6c9a2254d21cd6a60487ab76815bdc73113ededc27321f678",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_1.png",
+      "bytes": 2102,
+      "sha256": "2628857f1697c36e7dc99706934e12867e3652f45dd9a8a75dc6c1fae02a7412",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_2.png",
+      "bytes": 4045,
+      "sha256": "ce7aca3d33df149acd8b7a69f46dbe9fdd518597f6f6fd88f6ce96f7ed971744",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_3.png",
+      "bytes": 6264,
+      "sha256": "f77f93467080ae87a7bce5aaecd194731029207ac204a00d804205516b2a075c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_4.png",
+      "bytes": 5169,
+      "sha256": "28fb782f578f741aa90ddfe2d0368e98d831247259265a16bc75b9bd945c5a2b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/explosion_s_5.png",
+      "bytes": 3338,
+      "sha256": "916edb0eafe80d2dd805cd9736ffc296c559c983235dbad2cca97c465efe819d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/weather-rain.png",
+      "bytes": 617,
+      "sha256": "9fac60e9b12b4261742fce0471e053ee112f7c6229199bc2289e27a2a3464eb1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/fx/weather-snow.png",
+      "bytes": 500,
+      "sha256": "875f8b0ad10bb10a3ddbeeae42ae0af314aad2811b023e5e5648b11d15f00919",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/aegis.png",
+      "bytes": 1380,
+      "sha256": "e36f1f44ec56a0caa0fb047445ec60f7ec48e1159fff6c786ab91c538b1d6e32",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/ballista.png",
+      "bytes": 827,
+      "sha256": "72c92d238e62f4255e082802262da21c2f9f8dc66eac487fe4bd41a7962172cc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/cannonrider.png",
+      "bytes": 1265,
+      "sha256": "dc8cbae4c511cce5edfbb38b3b8b53dac01a3524f895e8c3150bbd08b5f5b729",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/goliath.png",
+      "bytes": 1720,
+      "sha256": "3a65e95a01dd0a251193af568346312efed4cbd20a7877108bc54af51e1de75b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/hornetdrone.png",
+      "bytes": 2032,
+      "sha256": "baf5f09551764096d95eff2281c8b34e729b5f88ed06a9e6214fab11016b89f2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/ironduke.png",
+      "bytes": 768,
+      "sha256": "ad9f960693d4a3e85416ac292d0bb3abcab06349db42e95c009f3830abbb7b80",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/mineporter.png",
+      "bytes": 1649,
+      "sha256": "ef51d75b27ceb1c60b5ea1db27a31b0d5800d20d8ff7272f68dde223c51fc4d5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/prism.png",
+      "bytes": 1813,
+      "sha256": "d87d55284c27314fddfc0215f6957ac34342218814627acabdc6c26751a4468d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/rabbitdasher.png",
+      "bytes": 1080,
+      "sha256": "af4b795cefab1d9bd3cf51529c0108a24620c5b8d345cb06220452e899ea441d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/redfin.png",
+      "bytes": 937,
+      "sha256": "fdcaa5700d36c6ab8958f7d47578659312ad654b0c24d4341177fafe84edb69f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/swarmlauncher.png",
+      "bytes": 1373,
+      "sha256": "131cd14fa687f2c77b304049f2561708d156cb9f4e31464ddd5aadd93ea7cb75",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/projectiles/trebuchet.png",
+      "bytes": 1718,
+      "sha256": "1ea1d1f9373257d650d3837bff6d89ccb85e6cf97221747ca94aac62937e5ae1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/barrel.png",
+      "bytes": 3886,
+      "sha256": "09de7687b96e9bc4b2ec0070b3a159b77e22cbe99124ee74df4af219b6c82a50",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/body.png",
+      "bytes": 14305,
+      "sha256": "f35b85fd85fb61d36a02e6d837c1526b1c385448f91b00301fe88328b9a34594",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/destroy_0.png",
+      "bytes": 15773,
+      "sha256": "d154751460276063b2bd0cb226931a2fb22ca19396909faa43ac520946f02568",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/destroy_1.png",
+      "bytes": 17190,
+      "sha256": "b9a2b01060074cf542d055098fda10f7cb199bfea2c2aee1cc08827648fe8c14",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/destroy_2.png",
+      "bytes": 16196,
+      "sha256": "6d23fbf7c53893a62ae748f75a20b71f16254f9832e0a6f6a956dd02a16be084",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/destroy_3.png",
+      "bytes": 13035,
+      "sha256": "4cd0921e67b31cfb27f3956c7fb56a831f4b2b5985ad69ca12d8b29f24891e35",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/fire_0.png",
+      "bytes": 14928,
+      "sha256": "93342f36b78b041f74a59354f8b06dfe8e0462f20b1b99df2e826ec0c9c0ccf9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/fire_1.png",
+      "bytes": 15589,
+      "sha256": "3f917e6b6293564dba0e4ea85fcf72523a0a8a2f2893638861739fe17b4ba946",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/fire_2.png",
+      "bytes": 15164,
+      "sha256": "e394202cb5414f9daabbe7304ffdd99d98d2e6653d42435f989fa6ccdb25c6d8",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/hit_0.png",
+      "bytes": 14597,
+      "sha256": "e36a62d688f4f9f7f1cc50290b7cba668bd2bf38e21333691e27fc22444656e1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/hit_1.png",
+      "bytes": 14804,
+      "sha256": "f1a08e51b386ed7ac4ba0b35cd04cf6fe2f0761c5e6bee8897f912dfd2ee50f4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/move_0.png",
+      "bytes": 17985,
+      "sha256": "8355bc924961bb38b7a5fb76b8a706b87314f0628c52eb53d87a4740fe845802",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/move_1.png",
+      "bytes": 18069,
+      "sha256": "26f4a3795f4a5a43a22b8418532fdfd713a06984cedf12b5d71fdf6a1e0fe2fc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/move_2.png",
+      "bytes": 18406,
+      "sha256": "442ef5510259b07659bece76bd75d241b740e6acced51d2946f724c55ee497d4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/move_3.png",
+      "bytes": 18122,
+      "sha256": "5f0d60b32a1c94345030d21d4eeea89cc09b382f5848b2b474611b63d56587ec",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/aegis/portrait.png",
+      "bytes": 54230,
+      "sha256": "19a6ab8b90e8ace2b516f3d5258e3649749430af32c37be56ef7e480af7b4048",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/barrel.png",
+      "bytes": 1430,
+      "sha256": "38f13d78354b746c76a879344824d8f2f7698b5bc7381fe5ea1111986c86432c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/body.png",
+      "bytes": 5769,
+      "sha256": "d020ba5559e9e3f4567a6c49805f9f12d28763a196c84038b1db6567277299bf",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/destroy_0.png",
+      "bytes": 6833,
+      "sha256": "4fe45ba2e77fa755df280aa3c6d4948a46ec518fe8ad99c6e40ed1dfcb4e57c5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/destroy_1.png",
+      "bytes": 10367,
+      "sha256": "92466d758a15e5647a28f1cdc64db665977fa2f057d0b8f45b9147b5bd032c6b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/destroy_2.png",
+      "bytes": 12271,
+      "sha256": "c73fb6c9720356713a15224c05cf19edf7560df48988ae8c45e8171ab5067f0c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/destroy_3.png",
+      "bytes": 12729,
+      "sha256": "08261720b754561acda5c55ae7f1686b66f79e54f998686bcfd40cbe8198232a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/fire_0.png",
+      "bytes": 5769,
+      "sha256": "d020ba5559e9e3f4567a6c49805f9f12d28763a196c84038b1db6567277299bf",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/fire_1.png",
+      "bytes": 5778,
+      "sha256": "08bb04527055b98e5cdae355e30f6cf30a20a3ee8383a67dfffffe2cf184390a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/fire_2.png",
+      "bytes": 5777,
+      "sha256": "80d51e87edd2f635c8f7c505b85086e602c4d9adf0d3a11d353d6d4e45260a45",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/hit_0.png",
+      "bytes": 7399,
+      "sha256": "897fdde77c14e3bd13d45ccd28c02fbc12b357df24ec8d81d0dfe354df721c06",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/hit_1.png",
+      "bytes": 7490,
+      "sha256": "6b09af66e49217e7b6b64495fb43f3cc36c0574bc26df80017fdeb55c42b5eb9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/move_0.png",
+      "bytes": 5769,
+      "sha256": "d020ba5559e9e3f4567a6c49805f9f12d28763a196c84038b1db6567277299bf",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/move_1.png",
+      "bytes": 5744,
+      "sha256": "fb6d2fc066c70bb5692f08d09a1717076012e331df072dbb58b6519f8349ef58",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/move_2.png",
+      "bytes": 5736,
+      "sha256": "bfa7a5672bff9f429243f88f4964e83bf059b5bb34f9ddebf5583e893f2e77a8",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/move_3.png",
+      "bytes": 5769,
+      "sha256": "e3110eec53a08773f1538db6dfc799ee6a5f61670170d924709fec43e39be39b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ballista/portrait.png",
+      "bytes": 23602,
+      "sha256": "97a829327543ac51440e2092aa47cfd9caa61e70e3b6b90d08669fec74d5c3ac",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/barrel.png",
+      "bytes": 3760,
+      "sha256": "707460c19f7a96fc647c3bd5d3209288a612554a37211a098cb027a4bed547f0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/body.png",
+      "bytes": 12605,
+      "sha256": "a3ec884dd7b13ef5ac4f947d95ffad5f21c670c8dad7444d938f0a622740b0e0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/destroy_0.png",
+      "bytes": 13058,
+      "sha256": "3dc62e1757f8067e462d7938a8cc59f614566c9a460208d7b9a676396898bd7f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/destroy_1.png",
+      "bytes": 13858,
+      "sha256": "8571d65edfaf3f44f9f667b46849e29542047488a4dcc717b26965040799410a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/destroy_2.png",
+      "bytes": 13137,
+      "sha256": "ab59c442729fae453e6f4b3f040fc97c73b4fd30ba915df3beca4c69ce7bf939",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/destroy_3.png",
+      "bytes": 10442,
+      "sha256": "53539222caaa3165723017d3958c3c8cdc0e0a0cf9a6e07e40610322a1aaae8c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/fire_0.png",
+      "bytes": 12616,
+      "sha256": "b19e884d826e5e85ec825df2ed0a6c7387b7b2046ae9419b4401a6e157a9ee13",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/fire_1.png",
+      "bytes": 13221,
+      "sha256": "546d4e6945f5af5b4b20ef017c636552761ff819d9e5917ea76421c6f73d81ac",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/fire_2.png",
+      "bytes": 12803,
+      "sha256": "f01f63e193ce1412068e06867185b6b37293c32b26cff4dd1d47ab8e5c9010d7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/hit_0.png",
+      "bytes": 12790,
+      "sha256": "7f85d8b4907b07cca77f84242e9ab8bda5d3a5546e3ecc66031024338e8ee98a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/hit_1.png",
+      "bytes": 13348,
+      "sha256": "fd2e445b0d3e61ad1ad20bcc4fda599c3fde7ca0943b80bea1fcf020926a6b97",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/move_0.png",
+      "bytes": 13657,
+      "sha256": "511f37a3ca6b91bc1ee1b7bdbb04cf56b901c5f10b38d9ba6551c65624f7f085",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/move_1.png",
+      "bytes": 14450,
+      "sha256": "e17991d79fc255f6345d50e192d1d5adae46975d8a6eef48486ef5e9de904a31",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/move_2.png",
+      "bytes": 14042,
+      "sha256": "44930ff83cefb9ee504660c6f5537aca1cb15854d9f76dabad4fc1d6d5d2ce41",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/move_3.png",
+      "bytes": 12988,
+      "sha256": "7f4a9c9472a983d7983d08c2abce220160f06dc157288490d40f38840887f2c5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/cannonrider/portrait.png",
+      "bytes": 46382,
+      "sha256": "09cdb7b964d52bd2d875753af0fd3ebec622e69387e76ff0377e0d209ea33245",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/barrel.png",
+      "bytes": 3464,
+      "sha256": "4831472370067bb2837c9478feb54e7d0d4711499e28d3a6f270eabad7bb4b8f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/body.png",
+      "bytes": 12372,
+      "sha256": "6b4406c2bc8652c0219ace20913031179cea0c65338444b348f2bd9856e044e7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/destroy_0.png",
+      "bytes": 12777,
+      "sha256": "2cd5ba20a302cb338b42347385b5af639d9e310b94ffa1c654045d9d4cb7f39d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/destroy_1.png",
+      "bytes": 12756,
+      "sha256": "c572a8ed6e795c051ea3cbe4a083e797d0eb44e8cc2e9ce90b46308245076774",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/destroy_2.png",
+      "bytes": 10142,
+      "sha256": "a3fe281557a4ba6331b956be188f50cec439054a19a06932711d3656d4ce9894",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/destroy_3.png",
+      "bytes": 7130,
+      "sha256": "3262059cd7f309e8622d6fc340cf01f1ad26f23746e2f00eb948244e2b88bebc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/fire_0.png",
+      "bytes": 12623,
+      "sha256": "6eaae4e8919b5c76ea13d70ec33949b18d16e380b0e1d47f2f80a0312aa18cb5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/fire_1.png",
+      "bytes": 12089,
+      "sha256": "8387642c90b026a066f3daadb8c7ce5e5e5cfdbc7992579d37d014cd0addd488",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/fire_2.png",
+      "bytes": 12520,
+      "sha256": "a95d6edc6082a1f46d9f1ded627a684404772b58609dc99d90c445ea812ba855",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/hit_0.png",
+      "bytes": 12200,
+      "sha256": "2eb6d0dc980aafe711407717f3c7696942eb608bbae602823e36cfe66c161560",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/hit_1.png",
+      "bytes": 11118,
+      "sha256": "37b6b2765216bac167dd7e5630c966dfd5d8424a8e2a228978c65b3d19125697",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/move_0.png",
+      "bytes": 12721,
+      "sha256": "f8df140ac8bea730faf57a3fb9b1bd16bbbaf9c0a152df27d20adc94719c3c35",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/move_1.png",
+      "bytes": 12412,
+      "sha256": "5c1f49c5b5df488860f15a42ca57c0e11c282c22c1790b08bfe4ac508c3458ef",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/move_2.png",
+      "bytes": 12360,
+      "sha256": "82c43a77a309b04f1318fe5cdc164cd7100d7e5f4ae8319cd499d9bc3e8e7785",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/move_3.png",
+      "bytes": 12479,
+      "sha256": "c950fd89b94de89f482cda243ca7a4015b207daf12f14ab22d307a7554f6828b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/goliath/portrait.png",
+      "bytes": 44691,
+      "sha256": "f519db233d99ad7d01ea5dd03891af05db7b4ba4b5fd95e5e92cf7437dbdbd5e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/barrel.png",
+      "bytes": 3347,
+      "sha256": "6487d3a763874f8cebeeb4c58e594e29e4ad09bb1cc4026c7a95f09405f420d4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/body.png",
+      "bytes": 12295,
+      "sha256": "f4cb455d9da8bfb12015d6cd8fc05c217a4d2400080dddef9d0f00c5822db643",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/destroy_0.png",
+      "bytes": 13317,
+      "sha256": "9dfefd522886e7815854d5bcba3c8f2145b2206870ebff3d3666b4cd0a0bc3c1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/destroy_1.png",
+      "bytes": 14216,
+      "sha256": "49b59374693370dab075f9abed32e7ac34c53527115456084a4cbd409db7c4aa",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/destroy_2.png",
+      "bytes": 13564,
+      "sha256": "5157755ae7c2e0be25e4868b9a048ba785ab45cd4f27bdd42f40a475f2416605",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/destroy_3.png",
+      "bytes": 12403,
+      "sha256": "50e1a47b30a8e2dfb344e8cc5b290d0758e9d43f26d07a28d70237955b84e9e7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/fire_0.png",
+      "bytes": 11980,
+      "sha256": "71aa369c61096f6bd6e19ada5b7524a411996546a1c7b7cb868cfb88f7d70c74",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/fire_1.png",
+      "bytes": 11982,
+      "sha256": "cd44c31259fd8fa44591cf990bcac15f23da8a866a76ced4d5f9abdb6be902aa",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/fire_2.png",
+      "bytes": 12111,
+      "sha256": "d5633294f9af05aea996dacfb5e3d801e8dc4349dbd1575ae961ae6250b0e852",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/hit_0.png",
+      "bytes": 12138,
+      "sha256": "74bdd07c005a6afd727411f3ecaf589860e3f09f3b428582a9ba21bc28a21168",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/hit_1.png",
+      "bytes": 11689,
+      "sha256": "b3136deed514c34686c83be8929b45c04b5440028f6397e745f2ccf75ea1dab3",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/move_0.png",
+      "bytes": 11854,
+      "sha256": "94acb767b5291ce75caccda3c5e050d7d6b4f4929259226b4f2d747851ced8b1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/move_1.png",
+      "bytes": 12317,
+      "sha256": "55079816a0038bfdbdadd2f154b60d7613e406f0c2c03ddadccccb513c3ae9e9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/move_2.png",
+      "bytes": 12593,
+      "sha256": "dc47165d945ed2f7ec0be74007640a349600cd91f27d4ca5d89d61944209ac82",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/move_3.png",
+      "bytes": 13367,
+      "sha256": "845a43dca2dde59985059ce62e7ba3b252b412d129b3786dfa853efe94701593",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/hornetdrone/portrait.png",
+      "bytes": 45493,
+      "sha256": "59d34a70eb628630809fd6c1bdd0fdac82cbc72c702118dde013c019677277aa",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/barrel.png",
+      "bytes": 1120,
+      "sha256": "390f6a21b8ed52966ecc632dbf79f7870e44b9691ae2eb8fa7e8353bf33407b5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/body.png",
+      "bytes": 5515,
+      "sha256": "f8b3b81d2d194f40e5fdfc20adf9cecbfb41dd1919ea2357cee039da8ca0f9a0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/destroy_0.png",
+      "bytes": 6366,
+      "sha256": "12f3ad7db622d531ae8b04de4e46f23ea26f4bcd58e7dea0add966bed284969f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/destroy_1.png",
+      "bytes": 9841,
+      "sha256": "7a95928a3873c87dc04f82f76ec800db27b9d2bbae517f7ed3bb1273d1bf24e7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/destroy_2.png",
+      "bytes": 11586,
+      "sha256": "34e9fd197812fb37f504b3abe8aeb89186ffc4eb63d9c8c04a20b870a297ad01",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/destroy_3.png",
+      "bytes": 12132,
+      "sha256": "f8c2e51b2187e223c156b7a1223d88affdcddb014606e2c979b23f27a1b1e7eb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/fire_0.png",
+      "bytes": 5515,
+      "sha256": "f8b3b81d2d194f40e5fdfc20adf9cecbfb41dd1919ea2357cee039da8ca0f9a0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/fire_1.png",
+      "bytes": 5532,
+      "sha256": "02d3671a44c5d61621aa8b57b76e5cb167ddbc4b6f7cfebd376d6b1984270de3",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/fire_2.png",
+      "bytes": 5522,
+      "sha256": "dacc0acf3cf451bacb3125ce4f337b6646491bc22768ba6eb8ab79a495e3b485",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/hit_0.png",
+      "bytes": 7095,
+      "sha256": "74fe44da32c975ecc941504aa15e1e1a2e2a986e68a2b7c83f87dd15adf35105",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/hit_1.png",
+      "bytes": 7064,
+      "sha256": "0be41ff4eef53c42b54aa1ce78b3ea20b93a6b05b318faebac54e0bf84792e02",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/move_0.png",
+      "bytes": 5515,
+      "sha256": "f8b3b81d2d194f40e5fdfc20adf9cecbfb41dd1919ea2357cee039da8ca0f9a0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/move_1.png",
+      "bytes": 5515,
+      "sha256": "0b4e553bc79e90b5b00c6a01ac8a5da8d5713c3ce16e8524caeaac2ad476832f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/move_2.png",
+      "bytes": 5515,
+      "sha256": "f8b3b81d2d194f40e5fdfc20adf9cecbfb41dd1919ea2357cee039da8ca0f9a0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/move_3.png",
+      "bytes": 5516,
+      "sha256": "7e92903a5204ecaadc41657b8a3a4cc1869adc19bd1845db6225b1622f8bb9e8",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/ironduke/portrait.png",
+      "bytes": 24554,
+      "sha256": "765d0b3e4f04d9562bdd89572d813b82ef8df7ab8e661a5f5470914a56bb2cf2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/barrel.png",
+      "bytes": 3468,
+      "sha256": "dc46f907ce514566337f67974a3cff476b35ca6050c23ea451f007df20bdef28",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/body.png",
+      "bytes": 13013,
+      "sha256": "2e46608e80ddb264460c5b26cd4703ed5434c5faf71c316ea34125ae0cf35dd1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/destroy_0.png",
+      "bytes": 14846,
+      "sha256": "a2dff25c6f0f12009cbfcffcc9306b7acfde3885d8e6f366afa2e0ceec8e786c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/destroy_1.png",
+      "bytes": 16288,
+      "sha256": "6a0ad3eb42df1570a80ee3e8c69850d1ccb3ae8f8af490cf37880c6006d7764d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/destroy_2.png",
+      "bytes": 16487,
+      "sha256": "a677d58f1b72805b3fd2fa55842e11d0223e4d196064b3cf58955bb92c26b842",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/destroy_3.png",
+      "bytes": 15555,
+      "sha256": "7544f9c6d0c1134349324db7d772c39d1652fbfda5e172d4d6718fbc848b4406",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/fire_0.png",
+      "bytes": 12933,
+      "sha256": "445783a2a27e371c30ab368a4505f2743773888b939a9b5bbb57909e63a8965f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/fire_1.png",
+      "bytes": 14040,
+      "sha256": "31bef1e56d4b6c15bb2f987edfcd1c5ef05f99e994eb0d63a638fa8938d47c9a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/fire_2.png",
+      "bytes": 13546,
+      "sha256": "1eb5a4ccbf1f2acee9bb6b71cdc62390a41d78fc7100876e7f8a9510e99b1450",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/hit_0.png",
+      "bytes": 13028,
+      "sha256": "826dfd58efd753aa01a34b1ecc73e06805de2eaeaceee9369f92ffe80074bf5a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/hit_1.png",
+      "bytes": 13498,
+      "sha256": "40650c5e3341421d378ec2d2c3d1e8439a2ba3ea42315a4e2daeffeb80099c77",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/move_0.png",
+      "bytes": 14984,
+      "sha256": "5cb97f706488cc05a65e2dc6161836ded7d81688e0c059c76bfbfd03584b74e0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/move_1.png",
+      "bytes": 15295,
+      "sha256": "47865d9a3fe52142d65199f1bf0963b5d5b97c93bda732a31ad71963f24f8be0",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/move_2.png",
+      "bytes": 15872,
+      "sha256": "11ea96d55ce9852055ab3431b5f4f8ca3bcc90601c42cfb0f7113ab204f306cc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/move_3.png",
+      "bytes": 15160,
+      "sha256": "de0b57fc49c5eb00d851c674d490ff2ab3e1564bc69dee424ef6a7496c003d3e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/mineporter/portrait.png",
+      "bytes": 45182,
+      "sha256": "c837de32306d79eb4b697088ec8d94e38a59c8b405b944bb1375aac9967ade45",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/barrel.png",
+      "bytes": 3271,
+      "sha256": "7476d3069557e2ecb2e8bbdd8fcf3dc7a05e110b2dfe5b658178ff8dbc8ec416",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/body.png",
+      "bytes": 13142,
+      "sha256": "89a3d0452d884c8862ea61ba9939271ea4bd95d88d655466274162ec5a37d619",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/destroy_0.png",
+      "bytes": 14307,
+      "sha256": "a5bb8494f96bcfaacdfa3144c76028524d39884c4c094ffb6954b330597d2c79",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/destroy_1.png",
+      "bytes": 16864,
+      "sha256": "54bdeb4a634fa5239194bea90ae1fea7454688ab17576e71757f1e6cfecb2377",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/destroy_2.png",
+      "bytes": 16595,
+      "sha256": "ab6fb9e1ec069f567d47041c2c4941a7d55cf576835fd22dbafbf31f6ef06a9e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/destroy_3.png",
+      "bytes": 13769,
+      "sha256": "0506707cda218da9da2e985d0bc5b851992687928040be19f8017e4079347af4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/fire_0.png",
+      "bytes": 14270,
+      "sha256": "c4546cf1d5c76ed3e3b3b2caf25bc14b31b57b2687322cd80714dd5317ce3d1a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/fire_1.png",
+      "bytes": 16917,
+      "sha256": "3ea609a343a8f0311f848d0dedb1a420b0de12e0f1d1d0f5251c802f29de5071",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/fire_2.png",
+      "bytes": 15863,
+      "sha256": "318ac7fb3dd5fa2d7f3f20926bd3ad65f0d989d53386000d3b9958a64200cbf9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/hit_0.png",
+      "bytes": 13390,
+      "sha256": "c5db877fd30b3ce3049460b60916c11fadd8c426895eb72e1a9a9a269b985c02",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/hit_1.png",
+      "bytes": 13498,
+      "sha256": "ca04f5a167826a8cbcbe99b795120181e7e6df0f057134b38f5b9ee3f40eecef",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/move_0.png",
+      "bytes": 15783,
+      "sha256": "666e5509f9e071be38870852d168f4fdd4c4c57100def1972b02e7eb928109e5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/move_1.png",
+      "bytes": 16251,
+      "sha256": "51088b7c902f89bf4897cedf494dd7d6f3c8b716048dd457fb07c8700926b602",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/move_2.png",
+      "bytes": 15665,
+      "sha256": "1f0814c6bfcd0f3911c616b17bd18220970040d30820e2d8c0db0f7400473997",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/move_3.png",
+      "bytes": 14252,
+      "sha256": "3dc455e801fbd8f82e877107f36f7797bec112531c1911b649170dd48c6eda46",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/prism/portrait.png",
+      "bytes": 47829,
+      "sha256": "9cad735b0520777923e1e57e9b68081bb8bc671b08dcda5be0eea3930aea63e9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/barrel.png",
+      "bytes": 1925,
+      "sha256": "eb73ea3646a97cd650d1cb8c1e26d612ab808cf98f869511cca5a28ddcf70e58",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/body.png",
+      "bytes": 15756,
+      "sha256": "7d188dfdde9466c5a821058f2b90b143952182aad7792ef36209c7d41bba222d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/destroy_0.png",
+      "bytes": 15924,
+      "sha256": "994dcf94e625ac3e321083e3cb9abfef87b0fc2f9219bc117fb3879a44356327",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/destroy_1.png",
+      "bytes": 17978,
+      "sha256": "a8d0cfb00f2470dcb85ca388d24108e85d24536cf6cbf6cdc3e282b89021405a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/destroy_2.png",
+      "bytes": 15769,
+      "sha256": "32be5de9a0415a2059ed001bccbd01a2fb3032e1da495d589a4674a43a112bce",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/destroy_3.png",
+      "bytes": 13344,
+      "sha256": "3d6bad8d4d790826846fe250d941678fbc7fb7c37ade948a464cc3e8ea81bb1d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/fire_0.png",
+      "bytes": 16159,
+      "sha256": "d008d73ef26c7be042c6306e7e4ad6c6c9562f6db335500b020434e57e784e30",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/fire_1.png",
+      "bytes": 16587,
+      "sha256": "a1c27cd153bd910ad6ad63673ac1c550902b68125d15ffca34208d9e67855b48",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/fire_2.png",
+      "bytes": 16149,
+      "sha256": "4dcf481539b56e30f551d1e72aa8e964165c6e0ee2ed2ee61c007a96f5c45a78",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/hit_0.png",
+      "bytes": 16659,
+      "sha256": "008fc4071233d33759447b4a3495cb175a0ceb81e88ebb0b6ace3739e118fe0f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/hit_1.png",
+      "bytes": 13447,
+      "sha256": "d82f4e88e9c8e32a4eba00e39742ab30e0042762d923e1a9ac5b91bf4c631ade",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/move_0.png",
+      "bytes": 16332,
+      "sha256": "168d2e77660f443a701180203b6d96af185c5ca52ac5c0eccacedde2d259017f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/move_1.png",
+      "bytes": 15677,
+      "sha256": "76446a8bc0e9081c574f33a89dbf966c5085d8032037afc467766e30b70cd1fd",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/move_2.png",
+      "bytes": 15028,
+      "sha256": "6d85d0e4448a896cce60749cc1e1dc2a37eb3bc66a69a96935ae6254975812fb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/move_3.png",
+      "bytes": 16544,
+      "sha256": "b34af4cd034ed1986874ec68180c8dc709a3886c33fd8c6e000c5082acdbab74",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/rabbitdasher/portrait.png",
+      "bytes": 55896,
+      "sha256": "c0241491b71946ce4470919f3c649cef9eeae7a350d44eaab5a03f0339766f0f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/barrel.png",
+      "bytes": 1335,
+      "sha256": "7fc672fe0f573a3125dbb464d21db2e9523d73ffe529744b098028b11f17dced",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/body.png",
+      "bytes": 6830,
+      "sha256": "87450c3de8fc1f4e767a301a781d14dc95b078d4728f38d38b5d854b9fa316a2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/destroy_0.png",
+      "bytes": 7720,
+      "sha256": "32b9bc3770f90752c830a85b9ff9f98aafba0217b0b1f15d9653600e40f220a5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/destroy_1.png",
+      "bytes": 10808,
+      "sha256": "637ed4dc8b21a841b63175a67731dcf8fcf0fe290ab898dd18e37760e9eaa39a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/destroy_2.png",
+      "bytes": 12328,
+      "sha256": "6e6f3c660501a3b9683cac495f80a7541dfd95841779e7dbbf86fa96d5591ced",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/destroy_3.png",
+      "bytes": 12709,
+      "sha256": "e812b51540dda5f2b0713bbd28e54877f99900f2e6fbf96eba158747e3512334",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/fire_0.png",
+      "bytes": 6830,
+      "sha256": "87450c3de8fc1f4e767a301a781d14dc95b078d4728f38d38b5d854b9fa316a2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/fire_1.png",
+      "bytes": 6833,
+      "sha256": "461bd4cf6f85a9586fc2d6f24a87a93fc5d53f166ae30dab9f6ce99e293fc09f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/fire_2.png",
+      "bytes": 6830,
+      "sha256": "74d71e7b114f5793732343b4f0b82d4d68f726efcb8a31105416127137eeacbc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/hit_0.png",
+      "bytes": 8714,
+      "sha256": "4e459bc9746ff9176da5f290feafad26b347649e53fe9f6da56bb2dd7bde8a81",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/hit_1.png",
+      "bytes": 8662,
+      "sha256": "255bf4cd0e94def34efbe572844a694b212b051503b5a9eea404a7cef2f7ad32",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/move_0.png",
+      "bytes": 6830,
+      "sha256": "87450c3de8fc1f4e767a301a781d14dc95b078d4728f38d38b5d854b9fa316a2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/move_1.png",
+      "bytes": 6830,
+      "sha256": "263f00cd3ef8168258e690c7f97457c614ea2788790b67d6dc37eaed7b81d886",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/move_2.png",
+      "bytes": 6830,
+      "sha256": "87450c3de8fc1f4e767a301a781d14dc95b078d4728f38d38b5d854b9fa316a2",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/move_3.png",
+      "bytes": 6831,
+      "sha256": "8a3701d20e83099b951664df1848c64f2a5553778ba396dad0b907685b3a117c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/redfin/portrait.png",
+      "bytes": 26490,
+      "sha256": "24b5de88b0b242384fb24147c905dbecd9d0851545890ce123553b72471cd77c",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/barrel.png",
+      "bytes": 2948,
+      "sha256": "bbe4b72fb1a696c99d6024540c833f1c28f8eb80a86348200e98824c1f1504b9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/body.png",
+      "bytes": 17592,
+      "sha256": "299c9e4d17ced5f00d73face2540427860e5362de1c1fb7d89786fea60ffb5a1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/destroy_0.png",
+      "bytes": 18380,
+      "sha256": "e0de1b27df32defdd069dc1cf127760c76a762e3a30852d45ebba7c48ce60c9e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/destroy_1.png",
+      "bytes": 20518,
+      "sha256": "f0d5b8fc9089a170935ac0a55c003cc01bd25e0f3e009e44613cf80b5b41faf9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/destroy_2.png",
+      "bytes": 18516,
+      "sha256": "5819ec9a804e0e373913dc3e923f2b767f80805721d120cac9349ffccc91f943",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/destroy_3.png",
+      "bytes": 16395,
+      "sha256": "444098d1ae8694c5522b1845ffffa8638bd722ac29383da6361e304bd5ae34ea",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/fire_0.png",
+      "bytes": 17906,
+      "sha256": "a5ae22ac7d15069d6ab5d7ae51435c09416672b88a24acd2c6c52b26cd659360",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/fire_1.png",
+      "bytes": 18478,
+      "sha256": "67a5e29e0871ea35dddfeb8446491cfb8c6f996004bf8554807bbefd070fb748",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/fire_2.png",
+      "bytes": 17785,
+      "sha256": "e9b86d5f56bbcdbc2393d4584c3bea6b2c44186c40b91653e23a6a9aab6b781b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/hit_0.png",
+      "bytes": 18089,
+      "sha256": "2df0e9203e775648ce1b76ec55da259aaea3683f23963704b58d52deb4a1ed3f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/hit_1.png",
+      "bytes": 17987,
+      "sha256": "ee33b2a4275976cc4784a6acf6be77e42ee11b9c2fc8fc375547a693c68f3386",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/move_0.png",
+      "bytes": 17675,
+      "sha256": "ea36658162fd91a26a13f6ff1a21d5f075b1402bde6d7bd923331446fcf9a5a9",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/move_1.png",
+      "bytes": 16828,
+      "sha256": "573376a73c3a2d8ba2d937b7e4502f56819cbff3963e0c53435a792c0929166b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/move_2.png",
+      "bytes": 18306,
+      "sha256": "b27e8f895798dd4585b76765e6ddb6eec6c7ac19d0ee01d979149c9fc9e62165",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/move_3.png",
+      "bytes": 18160,
+      "sha256": "6060a6a95eff60bd6dd3f75d239055477b9c5b033d64b192132ba07d7fc81885",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/swarmlauncher/portrait.png",
+      "bytes": 64330,
+      "sha256": "c037b2d7538264c73df8d4b96052cb8fe361aa902b9f2d0f995345c5eff61212",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/barrel.png",
+      "bytes": 1996,
+      "sha256": "64bbe9501c0ca2e5298d053fb4c8a6c4b5d9ba059bbe54e6d623ef1e7fcabefb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/body.png",
+      "bytes": 13906,
+      "sha256": "ec3ad5727b0c542632f9a618ba66fa9f7069c064367a20d1b071009f5c6a64b4",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/destroy_0.png",
+      "bytes": 15520,
+      "sha256": "6612bd3ce2ffa0c59429c10e74bba94d7f1dc2fc46a48935d3368c1de0143301",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/destroy_1.png",
+      "bytes": 16829,
+      "sha256": "43b5bcae9fdf64ba8fb2cc0b4982a611a6324b41bd8056eb909fce2ea2bf24c6",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/destroy_2.png",
+      "bytes": 14393,
+      "sha256": "283b57f9816386872d04c70d4dd5e149441fc4f0a569ceb666e9319e1649da39",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/destroy_3.png",
+      "bytes": 7500,
+      "sha256": "7c27120302d2fa3ebe880622e88fc7f5607dc60d67d0959703245b5f3cdf01bc",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/fire_0.png",
+      "bytes": 17200,
+      "sha256": "bceb23f17f13ff6252282c2658ad7db37dfb001091b1d1b072e63d9f80188716",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/fire_1.png",
+      "bytes": 8329,
+      "sha256": "a15fb03fe1bb42e6e45721d7ac7338ada18b7eed486a9880ca463ec18c61a783",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/fire_2.png",
+      "bytes": 11255,
+      "sha256": "ffea2c1b7005cdfc85d19e5ed445f9f22a7476119ad5e4442693ee7bfc837b58",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/hit_0.png",
+      "bytes": 14383,
+      "sha256": "db77178f2e0fd630985f7534a66743e30ff8de75b5ed8d7e93b2b67229cc9260",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/hit_1.png",
+      "bytes": 14492,
+      "sha256": "7a8b9c895d2825699d8b9400432f67b4fc9e951e94199f98f8b439cc66ecd55e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/move_0.png",
+      "bytes": 14825,
+      "sha256": "b1367a0059aea230ddbaed084d6911bd8b29553360964b83891a9b70e202dfc7",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/move_1.png",
+      "bytes": 16623,
+      "sha256": "3d952b8c878e9ae83424cc17bb30c7b30d2c5b5995998aca8c2745aadd764e02",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/move_2.png",
+      "bytes": 16419,
+      "sha256": "0b7f423316e631370e40c05cdd562a1fbb548607245537cee28e336460f9ab29",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/move_3.png",
+      "bytes": 15910,
+      "sha256": "d77240413ccd4a9927337dde3f2b8ce368a4171cd2248edae7a8861d1ae4602f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/tanks/trebuchet/portrait.png",
+      "bytes": 54584,
+      "sha256": "f62b5b41d8364b1e7b0bbcb706c41a4c17e4205a6e0fb6ca5be082f78e83fe09",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/button-fire.png",
+      "bytes": 14845,
+      "sha256": "dd25c16315f1a612580883292c1ae948d320c85a159174f95fa922ced752f577",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/facing-left.png",
+      "bytes": 9361,
+      "sha256": "0b7ede68b9753c643a4f7939ad83a3689a9b08c4ce19137b851bfe3e9365965b",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/facing-right.png",
+      "bytes": 9312,
+      "sha256": "06b516678ad264abc549489beb2bdbe11e344f5b86988ac67105b1563111443e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/item.png",
+      "bytes": 8541,
+      "sha256": "2809c3cd43e2d0a0f0e812f838f7d12a28f49b28e10d07a58b991b4a4b34a395",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/joystick-base.png",
+      "bytes": 30804,
+      "sha256": "e57f86c24c46c8fc557bfa2f13e7f21897c616a83c94b017314299c7314b62f5",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/joystick-knob.png",
+      "bytes": 8326,
+      "sha256": "718f309c10e2a63fcc5e038e9eff57b42b5ff97b6eaaf3ad1b69da23ea6cdc95",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/pwa-icon-192.png",
+      "bytes": 20128,
+      "sha256": "b025d63f04a914a9a19fa988d7e6c290127593c980319a5c61e1bf6087092f23",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/pwa-icon-512.png",
+      "bytes": 61213,
+      "sha256": "a7f513c9f029555e660487579a9b10cd4981fd55bec15c9b6651289c579ffb4a",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weapon-shot1.png",
+      "bytes": 9904,
+      "sha256": "79e088909576d4670c9c0ae5c63ce691c14194f26ac421a59bb55a061a5a2e5d",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weapon-shot2.png",
+      "bytes": 10176,
+      "sha256": "9a7462e658cd613939d9e26da0667972fc40935ec1b3855efaa157f1931c0301",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weapon-ss.png",
+      "bytes": 10314,
+      "sha256": "ca22d2482966cfe935ff4da9963be3137806966237ccc0a4031b2e0fb8d5e89e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-affinity.png",
+      "bytes": 3766,
+      "sha256": "61761c6c37fe5b2a73a0321219f7c39dcb0ccc3057126fe3ac20356a99ad05ab",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-clear.png",
+      "bytes": 8272,
+      "sha256": "a4043a71e4ea89ab238cd3f24b2b9445ec1c7486b430168d5657e21435aa19f1",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-fog.png",
+      "bytes": 7092,
+      "sha256": "06557d715cfdbefb67e7c3a8d772a08db13b1205fa358b54c2563272d0c65e90",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-gale.png",
+      "bytes": 8467,
+      "sha256": "83cd6f38f02a5fad43daaa5e19ecb9fe5b45b70585e7de15274a48289bcc3f4e",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-rain.png",
+      "bytes": 7778,
+      "sha256": "f6522e2df62e9afba4dd5f093cbf845044a8a53a6814d955834582fc49e386bb",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sprites/ui/weather-snow.png",
+      "bytes": 8215,
+      "sha256": "9fbcbebf46793e70ef66bf289c0fdab50d61b9c5dcfb4caeceb20520d3967a8f",
+      "status": "downloaded"
+    },
+    {
+      "path": "/sw.js",
+      "bytes": 1871,
+      "sha256": "e68b87e6031011ce9406a4b6e4e9e851cb07ba96967161dcc640b5a7abab5dec",
+      "status": "downloaded"
+    }
+  ]
+}

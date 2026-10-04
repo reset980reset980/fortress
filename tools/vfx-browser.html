@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>FORTRESS WebGL verification</title>
+<body style="margin:0;background:#152536;color:#d9e6ee;font:14px monospace">
+<canvas id="canvas"></canvas><pre id="result">Running real WebGL checks…</pre>
+<script type="module">
+import { EffectDirector } from '../src/vfx.js';
+const canvas = document.querySelector('#canvas');
+const fx = new EffectDirector(canvas);
+fx.resize(720, 450, 1);
+const checks = { supported: fx.supported, shaderError: fx.error || null };
+try {
+  for (const [type,x,y,color] of [['explosion',180,300,'#ffb348'],['plasma',380,260,'#3ddcff'],['shield',540,250,'#78c8ff'],['heal',600,350,'#50ffb0'],['muzzle',100,160,'#ffe992']]) {
+    fx.emit(type,x,y,{color,intensity:1.4,angle:-0.3});
+  }
+  fx.update(.05); fx.update(.05); fx.render();
+  const pixels = new Uint8Array(720*450*4);
+  fx.gl.readPixels(0,0,720,450,fx.gl.RGBA,fx.gl.UNSIGNED_BYTE,pixels);
+  let alphaPixels=0;
+  for(let i=3;i<pixels.length;i+=4) if(pixels[i]) alphaPixels++;
+  checks.visiblePixels=alphaPixels;
+  checks.glError=fx.gl.getError();
+  const preview=document.createElement('img'); preview.src=canvas.toDataURL(); document.body.append(preview);
+  for(let i=0;i<200;i++) fx.emit('explosion',Math.random()*720,Math.random()*450,{intensity:2.5});
+  fx.render(); checks.peak=fx.activeCount; checks.stressGlError=fx.gl.getError();
+  fx.setQuality('low'); checks.low=fx.activeCount; fx.render(); checks.lowGlError=fx.gl.getError();
+  for(let i=0;i<60;i++) fx.update(.05);
+  fx.render(); checks.expired=fx.activeCount;
+  const empty=new Uint8Array(720*450*4);
+  fx.gl.readPixels(0,0,720,450,fx.gl.RGBA,fx.gl.UNSIGNED_BYTE,empty);
+  checks.cleared=empty.every(value=>value===0);
+  const fallback=new EffectDirector({getContext(){return null;}});
+  fallback.resize(100,100,1); fallback.emit('explosion',30,30); fallback.update(.05); fallback.render(); fallback.clear(); fallback.destroy();
+  checks.fallback=!fallback.supported;
+  const lose=fx.gl.getExtension('WEBGL_lose_context');
+  if(lose){
+    lose.loseContext(); await new Promise(resolve=>setTimeout(resolve,80)); checks.contextLost=!fx.supported;
+    lose.restoreContext(); await new Promise(resolve=>setTimeout(resolve,300)); checks.restored=fx.supported;
+    fx.emit('explosion',360,220); fx.update(.05); fx.render(); checks.restoreGlError=fx.gl.getError();
+  }
+  fx.destroy(); checks.destroyed=!fx.supported;
+} catch(error){ checks.error=error.stack; }
+const passed=checks.supported && checks.visiblePixels>100 && checks.glError===0 && checks.stressGlError===0
+  && checks.lowGlError===0 && checks.peak<=456 && checks.low<=148 && checks.expired===0
+  && checks.cleared && checks.fallback && checks.destroyed && !checks.error
+  && (!('restored' in checks) || checks.contextLost && checks.restored && checks.restoreGlError===0);
+document.querySelector('#result').textContent=JSON.stringify({passed,...checks},null,2);
+document.documentElement.dataset.test=passed?'pass':'fail';
+window.vfxTestResult={passed,...checks};
+</script></body></html>

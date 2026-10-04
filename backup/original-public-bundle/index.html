@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content" />
+    <meta name="theme-color" content="#17282d" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/sprites/ui/pwa-icon-192.png" />
+    <title>FORTRESS — Online Artillery</title>
+    <script type="module" crossorigin src="/assets/index-Dvs0axOV.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Bgt7x0wV.css">
+  </head>
+  <body>
+    <main class="shell" aria-label="FORTRESS 아틸러리 대전">
+      <header class="brand-strip">
+        <span class="brand-mark">F</span>
+        <div><strong>FORTRESS</strong><small>M1 · SERVER AUTHORITY UPLINK</small></div>
+        <span class="status-light">SIM LINKED</span>
+      </header>
+      <nav class="system-tools" aria-label="시스템 도구">
+        <button
+          id="system-settings-toggle"
+          class="system-tool"
+          type="button"
+          aria-label="오디오 설정 열기"
+          aria-controls="system-settings-dialog"
+          aria-expanded="false"
+        >
+          <svg class="system-tool__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M4 7h10M18 7h2M4 17h2M10 17h10M8 13V3M16 21V11" />
+            <circle cx="8" cy="7" r="2" />
+            <circle cx="16" cy="17" r="2" />
+          </svg>
+          <span>설정</span>
+        </button>
+        <button
+          id="system-fullscreen-toggle"
+          class="system-tool"
+          type="button"
+          aria-label="전체화면으로 전환"
+          aria-pressed="false"
+        >
+          <svg class="system-tool__icon" data-fullscreen-icon="expand" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M9 4H4v5M15 4h5v5M20 15v5h-5M4 15v5h5" />
+          </svg>
+          <svg class="system-tool__icon" data-fullscreen-icon="collapse" viewBox="0 0 24 24" aria-hidden="true" focusable="false" hidden>
+            <path d="M9 4v5H4M15 4v5h5M20 15h-5v5M4 15h5v5" />
+          </svg>
+          <span data-fullscreen-label>전체화면</span>
+        </button>
+      </nav>
+      <p id="system-feedback" class="system-feedback" role="status" aria-live="polite"></p>
+      <div id="game" role="application" aria-label="FORTRESS 게임 화면"></div>
+      <footer>
+        <span><kbd>←</kbd><kbd>→</kbd> 이동</span>
+        <span><kbd>↑</kbd><kbd>↓</kbd> 각도</span>
+          <span><kbd>SPACE</kbd> 누르고 떼어 발사</span>
+          <span><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> 무기 선택</span>
+          <span><kbd>Q</kbd> 날씨 아이템</span>
+        <span><kbd>M</kbd> 미니맵</span>
+      </footer>
+      <dialog id="system-settings-dialog" class="system-dialog" aria-labelledby="system-settings-title">
+        <header class="system-dialog__header">
+          <div>
+            <small>AUDIO CONTROL / M1</small>
+            <h2 id="system-settings-title">사운드 설정</h2>
+          </div>
+          <button id="system-settings-close" class="system-dialog__close" type="button" aria-label="사운드 설정 닫기">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" /></svg>
+          </button>
+        </header>
+        <p class="system-dialog__hint">전장의 음량을 채널별로 조절합니다. 변경 내용은 이 기기에 자동 저장됩니다.</p>
+        <section class="audio-panel" aria-label="오디오 음량 설정">
+          <label for="volume-master">
+            <strong>MASTER</strong>
+            <input id="volume-master" type="range" min="0" max="1" step="0.01" aria-label="마스터 볼륨" />
+            <output id="volume-master-value" for="volume-master">85%</output>
+          </label>
+          <label for="volume-bgm">
+            <strong>BGM</strong>
+            <input id="volume-bgm" type="range" min="0" max="1" step="0.01" aria-label="BGM 볼륨" />
+            <output id="volume-bgm-value" for="volume-bgm">52%</output>
+          </label>
+          <label for="volume-sfx">
+            <strong>SFX</strong>
+            <input id="volume-sfx" type="range" min="0" max="1" step="0.01" aria-label="효과음 볼륨" />
+            <output id="volume-sfx-value" for="volume-sfx">82%</output>
+          </label>
+          <button id="audio-mute" type="button" aria-label="전체 사운드 음소거" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M4 10v4h4l5 4V6L8 10H4ZM17 9c1.3 1.7 1.3 4.3 0 6M19.5 6.5c3 3 3 8 0 11" />
+            </svg>
+            <span>전체 사운드</span>
+            <em data-audio-mute-state>켜짐</em>
+          </button>
+        </section>
+      </dialog>
+    </main>
+    <aside class="orientation-lock" role="status" aria-label="화면 방향 안내">
+      <span class="orientation-lock__phone" aria-hidden="true">↻</span>
+      <strong>가로로 돌려주세요</strong>
+      <p>FORTRESS는 두 엄지로 조작하는 가로 화면에 최적화되어 있습니다.</p>
+    </aside>
+  </body>
+</html>

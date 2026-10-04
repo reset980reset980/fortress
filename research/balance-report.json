@@ -1,0 +1,20 @@
+{
+  "method": "Deterministic headless simulation with a smart player targeting the lowest-HP enemy, grid-search ballistic aim, plasma when target HP >90, shield on round 2, repair below 70% HP. No movement or cluster used. Each mission starts with one charge of each ability and normal ammo.",
+  "tank": "bastion",
+  "upgradeProgression": { "hullAndAttackLevels": [0, 0, 1, 1, 2, 2, 3, 3, 4], "fuel": 0 },
+  "budgetCheck": "Combined hull/attack costs through level 4 are 2260 CR; missions 1-8 award 2640 CR before final mission. Earlier tested level steps also fit cumulative first-clear rewards.",
+  "results": [
+    { "mission": 1, "upgradeLevel": 0, "won": true, "hpRemaining": 240, "rounds": 1 },
+    { "mission": 2, "upgradeLevel": 0, "won": true, "hpRemaining": 189, "rounds": 3 },
+    { "mission": 3, "upgradeLevel": 1, "won": true, "hpRemaining": 135, "rounds": 4 },
+    { "mission": 4, "upgradeLevel": 1, "won": true, "hpRemaining": 265, "rounds": 2 },
+    { "mission": 5, "upgradeLevel": 2, "won": true, "hpRemaining": 240, "rounds": 4 },
+    { "mission": 6, "upgradeLevel": 2, "won": true, "hpRemaining": 203, "rounds": 3 },
+    { "mission": 7, "upgradeLevel": 3, "won": true, "hpRemaining": 181, "rounds": 4 },
+    { "mission": 8, "upgradeLevel": 3, "won": true, "hpRemaining": 5, "rounds": 6 },
+    { "mission": 9, "upgradeLevel": 4, "won": true, "hpRemaining": 271, "rounds": 4 }
+  ],
+  "interpretation": "All missions are possible with earned upgrades. Mission 8 has the largest attrition pressure; movement, cluster attacks against adjacent enemies, a defensive tank, or higher hull level provide alternatives. These results establish feasibility for accurate play; they do not represent a human playtest or average success rate.",
+  "physicsChecks": ["identical seeded terrain", "left/right ballistic symmetry", "positive wind increases range", "lower power shortens range", "analytic gravity integration", "three distinct cluster landings"],
+  "lifecycleChecks": ["finite turn fuel", "ability charges", "repair cannot consume at full HP", "actual shield damage reduction", "controls disabled during projectile and after finish", "pause and hidden-tab simulation freeze", "visibility listener cleanup", "player-AI-player turn resolution", "destructible craters", "round 16 storm escalation"]
+}

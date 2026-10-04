@@ -1,0 +1,98 @@
+{
+  "title": "Fortress: Nova \u2014 The Meridian Score",
+  "composer": "Original procedural composition for this project",
+  "provenance": "All notes, synthesis, drums and effects authored in compose_music.py. No third-party samples.",
+  "seed": 20471004,
+  "music": {
+    "menu": {
+      "file": "menu_ambient.ogg",
+      "duration": 24.0,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.52,
+      "bpm": 80
+    },
+    "battle_base": {
+      "file": "battle_base.ogg",
+      "duration": 17.45454,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.52,
+      "bpm": 110
+    },
+    "battle_pulse": {
+      "file": "battle_pulse.ogg",
+      "duration": 17.45454,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.52,
+      "bpm": 110
+    },
+    "battle_danger": {
+      "file": "battle_danger.ogg",
+      "duration": 17.45454,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.52,
+      "bpm": 110
+    }
+  },
+  "effects": {
+    "victory": {
+      "file": "victory.ogg",
+      "duration": 3.7,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.7
+    },
+    "defeat": {
+      "file": "defeat.ogg",
+      "duration": 3.5,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.7
+    },
+    "fire": {
+      "file": "fire.ogg",
+      "duration": 0.55,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    },
+    "impact": {
+      "file": "impact.ogg",
+      "duration": 1.05,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    },
+    "shield": {
+      "file": "shield.ogg",
+      "duration": 0.65,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    },
+    "repair": {
+      "file": "repair.ogg",
+      "duration": 0.85,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    },
+    "ui": {
+      "file": "ui.ogg",
+      "duration": 0.14,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    },
+    "charge": {
+      "file": "charge.ogg",
+      "duration": 0.9,
+      "channels": 2,
+      "sampleRate": 24000,
+      "peak": 0.78
+    }
+  }
+}
