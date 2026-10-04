@@ -8,14 +8,7 @@ archive=$(realpath -- "$1")
 webroot=$(realpath -- "$2")
 if [[ "$webroot" == / ]]; then exit 2; fi
 if [[ -f "$archive.sha256" ]]; then (cd -- "$(dirname -- "$archive")" && sha256sum -c "$(basename -- "$archive.sha256")"); fi
-# This accepts only relative members without traversal and no symlink/hardlink entries.
-python3 - "$archive" <<'PY'
-import sys,tarfile
-from pathlib import PurePosixPath
-with tarfile.open(sys.argv[1]) as t:
- for m in t.getmembers():
-  if m.name.startswith('/') or '..' in PurePosixPath(m.name).parts or m.issym() or m.islnk():
-   raise SystemExit('Unsafe backup member: '+m.name)
-PY
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+python3 "$script_dir/validate_backup.py" "$archive"
 tar -xzf "$archive" -C "$webroot"
 echo 'Previous static build restored. Extra new assets are harmless and were retained.'

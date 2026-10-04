@@ -1,10 +1,14 @@
 {
   "passed": true,
   "checks": [
-    "Existing static root backed up before replacing index",
-    "Source modules and assets copied with readable permissions",
-    "Unrelated backend configuration retained",
-    "Archive SHA256 verified",
-    "Restoring archive recovers original homepage"
+    "Static backup verified before asset replacement",
+    "Hardlinked public files backed up as restorable regular files",
+    "Portable checksum allows restoring a relocated backup",
+    "Restoration recovers original homepage",
+    "Copied assets and atomic homepage have readable permissions",
+    "Unrelated file contents and permissions preserved",
+    "Symlink backup rejected before modifying deployed files",
+    "Directory without an existing homepage rejected",
+    "Source checkout rejected as deployment target"
   ]
 }
