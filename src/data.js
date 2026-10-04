@@ -33,3 +33,10 @@ export const UPGRADES = {
   attack: { label: '포신 개량', description:'단계마다 모든 무기 피해 +8%', description: '단계마다 모든 무기 피해 +8%', max: 5, costs: [160, 240, 340, 460, 600] },
   fuel: { label: '동력 시스템', description:'단계마다 이동 연료 +14', description: '단계마다 이동 연료 +14', max: 5, costs: [120, 190, 270, 370, 490] },
 };
+
+export const ARENAS=[
+{id:'sky-islands',index:9,name:'구름 위 부유섬',region:'공중 전선',map:'sky-islands',theme:'coast',seed:11001,wind:15,platforms:true},
+{id:'iron-foundry',index:10,name:'철골 공중 공장',region:'산업 전선',map:'iron-foundry',theme:'frost',seed:12001,wind:18,platforms:true},
+{id:'lava-steps',index:11,name:'용암 계단',region:'화산 전선',map:'lava-steps',theme:'desert',seed:13001,wind:20,platforms:true}
+];
+export const BATTLE_MAPS=[...MISSIONS,...ARENAS];

@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "maps": [
+    {
+      "map": "sky-islands",
+      "left": 220,
+      "right": 220,
+      "x": 205,
+      "enemyX": 1235,
+      "platforms": 7
+    },
+    {
+      "map": "iron-foundry",
+      "left": 210,
+      "right": 210,
+      "x": 205,
+      "enemyX": 1235,
+      "platforms": 7
+    },
+    {
+      "map": "lava-steps",
+      "left": 240,
+      "right": 240,
+      "x": 205,
+      "enemyX": 1235,
+      "platforms": 7
+    }
+  ],
+  "checks": [
+    "Pause freezes an actual falling tank",
+    "Two real UI-fired shots break supporting layers; animated falls land and turns continue",
+    "Real armor purchase changes hangar pixels and remains after reload"
+  ],
+  "errors": []
+}

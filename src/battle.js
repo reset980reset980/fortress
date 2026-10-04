@@ -1,3 +1,5 @@
+import {makePlatforms,surfaceAt,solidAt,breakPlatforms,drawPlatforms} from './platforms.js';
+import {drawModifications} from './appearance.js';
 import { MISSIONS, TANKS, WEAPONS } from './data.js';
 
 export const WORLD_WIDTH = 1440;
@@ -45,7 +47,7 @@ export function stepBallistic(projectile, dt, wind) {
   return projectile;
 }
 
-export function simulateShot({ x, y, angle, power, wind = 0, terrain, step = 1 / 60 }) {
+export function simulateShot({ x, y, angle, power, wind = 0, terrain, platforms = [], step = 1 / 60 }) {
   const velocity = launchVelocity(angle, power);
   const p = { x: x + Math.cos(angle * DEG) * 35, y: y - Math.sin(angle * DEG) * 35, ...velocity, age: 0 };
   const points = [{ x: p.x, y: p.y }];
@@ -54,7 +56,7 @@ export function simulateShot({ x, y, angle, power, wind = 0, terrain, step = 1 /
     if (i % 3 === 0) points.push({ x: p.x, y: p.y });
     if (p.x < -90 || p.x > WORLD_WIDTH + 90 || p.y > WORLD_HEIGHT + 100) break;
     const ground = terrain[clamp(Math.round(p.x), 0, WORLD_WIDTH)];
-    if (p.y >= ground && p.age > 0.055) break;
+    if (solidAt(p.x,p.y,terrain,platforms) && p.age > 0.055) break;
   }
   return { x: p.x, y: p.y, time: p.age, points };
 }
@@ -64,7 +66,7 @@ export function simulateWeaponShot(options) {
     const shot = simulateShot(options);
     return { ...shot, branches: [], impacts: [{ x: shot.x, y: shot.y }] };
   }
-  const { x, y, angle, power, terrain, wind = 0 } = options;
+  const { x, y, angle, power, terrain, platforms = [], wind = 0 } = options;
   const step = options.step || 1 / 60;
   const p = { x: x + Math.cos(angle * DEG) * 36, y: y - Math.sin(angle * DEG) * 36, ...launchVelocity(angle, power), age: 0 };
   const points = [{ x: p.x, y: p.y }];
@@ -73,7 +75,7 @@ export function simulateWeaponShot(options) {
     stepBallistic(p, step, wind);
     if (i % 3 === 0) points.push({ x: p.x, y: p.y });
     if (p.vy >= -18 && p.age > 0.38) { didSplit = true; break; }
-    if (p.x < -90 || p.x > WORLD_WIDTH + 90 || (p.y >= terrain[clamp(Math.round(p.x), 0, WORLD_WIDTH)] && p.age > 0.055)) break;
+    if (p.x < -90 || p.x > WORLD_WIDTH + 90 || (solidAt(p.x,p.y,terrain,platforms) && p.age > 0.055)) break;
   }
   const branches = [], impacts = [];
   if (didSplit) {
@@ -83,7 +85,7 @@ export function simulateWeaponShot(options) {
       for (let i = 0; i < Math.ceil(8 / step); i++) {
         stepBallistic(bomblet, step, wind);
         if (i % 3 === 0) branch.push({ x: bomblet.x, y: bomblet.y });
-        if (bomblet.x < -90 || bomblet.x > WORLD_WIDTH + 90 || bomblet.y >= terrain[clamp(Math.round(bomblet.x), 0, WORLD_WIDTH)] || bomblet.age > 9) break;
+        if (bomblet.x < -90 || bomblet.x > WORLD_WIDTH + 90 || solidAt(bomblet.x,bomblet.y,terrain,platforms) || bomblet.age > 9) break;
       }
       branches.push(branch);
       impacts.push({ x: bomblet.x, y: bomblet.y });
@@ -122,6 +124,9 @@ export class Battle {
     this.onFinish = options.onFinish || (() => {});
     this.random = seededRandom(this.mission.seed);
     this.terrain = createTerrain(this.mission.seed, this.mission.theme);
+    this.platforms = this.mission.platforms ? makePlatforms(this.mission.map) : [];
+    if(this.platforms.length)this.terrain.fill(730);
+    if(this.mission.mode==='duel'){for(let x=0;x<=WORLD_WIDTH/2;x++)this.terrain[WORLD_WIDTH-x]=this.terrain[x];}
     this.palette = THEMES[this.mission.theme] || THEMES.coast;
     this.phase = 'aim';
     this.round = 1;
@@ -159,7 +164,7 @@ export class Battle {
     this.attack = this.tankType.attack * (1 + (this.upgrades.attack || 0) * 0.08);
     this.player = { id: 'player', x: 205, hp: this.maxHp, maxHp: this.maxHp, type: this.tankType.id, color: this.tankType.color, angle: this.angle, shield: 0, facing: 1, recoil: 0, name: this.tankType.name, attack: this.attack };
     const specs = this.mission.enemies || [{ hp: 130, tank: 'striker', color: '#f49387', attack: 0.65 }];
-    this.enemies = specs.map((spec, index) => ({ id: `enemy-${index}`, x: specs.length === 1 ? 1065 : 850 + index * (430 / Math.max(specs.length - 1, 1)), hp: spec.hp, maxHp: spec.hp, type: spec.tank || 'bastion', color: spec.color || '#ff998c', angle: 135, shield: 0, facing: -1, recoil: 0, attack: spec.attack || 1, name: this.mission.index === 8 && index === 0 ? '오블리비언' : `${(TANKS.find(t => t.id === spec.tank) || TANKS[0]).name} ${index + 1}` }));
+    this.enemies = specs.map((spec, index) => ({ id: `enemy-${index}`, x: specs.length === 1 ? (this.mission.mode==='duel'?1235:1065) : 850 + index * (430 / Math.max(specs.length - 1, 1)), hp: spec.hp, maxHp: spec.hp, type: spec.tank || 'bastion', color: spec.color || '#ff998c', angle: 135, shield: 0, facing: -1, recoil: 0, attack: spec.attack || 1, name: this.mission.index === 8 && index === 0 ? '오블리비언' : `${(TANKS.find(t => t.id === spec.tank) || TANKS[0]).name} ${index + 1}` }));
     for (const actor of this.actors()) actor.y = this.groundAt(actor.x) - 20;
     this.ornaments = Array.from({ length: 65 }, () => ({ x: this.random() * WORLD_WIDTH, size: 2 + this.random() * 6, alpha: 0.2 + this.random() * 0.35 }));
     this.stars = Array.from({ length: 75 }, () => ({ x: this.random() * WORLD_WIDTH, y: this.random() * 340, size: this.random() * 1.7 + 0.4, alpha: this.random() * 0.4 + 0.15 }));
@@ -189,8 +194,8 @@ export class Battle {
   }
 
   actors() { return [this.player, ...this.enemies]; }
-  groundAt(x) { return this.terrain[clamp(Math.round(x), 0, WORLD_WIDTH)]; }
-  canControl() { return !this.destroyed && !this.paused && this.phase === 'aim' && this.player.hp > 0; }
+  groundAt(x,below=-Infinity) { return surfaceAt(x,this.terrain,this.platforms,below); }
+  canControl() { return !this.destroyed && !this.paused && this.phase === 'aim' && !this.player.falling && this.player.hp > 0; }
   setAngle(angle) {
     if (!this.canControl() || !Number.isFinite(Number(angle))) return;
     this.angle = clamp(Math.round(Number(angle)), 18, 162);
@@ -271,7 +276,7 @@ export class Battle {
     this.draw();
   }
   getSnapshot() {
-    return { phase: this.phase, playerHp: Math.round(this.player.hp), playerMaxHp: this.maxHp, enemies: this.enemies.map(e => ({ id: e.id, hp: Math.round(e.hp), maxHp: e.maxHp, name: e.name })), angle: this.angle, power: this.power, wind: this.wind, round: this.round, fuel: Math.round(this.fuel), fuelMax: this.fuelMax, weapon: this.weapon, ammo: { ...this.ammo }, abilities: { ...this.abilities }, status: this.status, text: this.status, intensity: this.intensity, paused: this.paused, scanning: this.scanning, activeId: this.shotBy?.id || (this.phase === 'aim' ? 'player' : null), storm: this.round >= 16, damageDealt: Math.round(this.damageDealt) };
+    return { phase: this.phase, falling:!!this.player.falling, playerHp: Math.round(this.player.hp), playerMaxHp: this.maxHp, enemies: this.enemies.map(e => ({ id: e.id, hp: Math.round(e.hp), maxHp: e.maxHp, name: e.name })), angle: this.angle, power: this.power, wind: this.wind, round: this.round, fuel: Math.round(this.fuel), fuelMax: this.fuelMax, weapon: this.weapon, ammo: { ...this.ammo }, abilities: { ...this.abilities }, status: this.status, text: this.status, intensity: this.intensity, paused: this.paused, scanning: this.scanning, activeId: this.shotBy?.id || (this.phase === 'aim' ? 'player' : null), storm: this.round >= 16, damageDealt: Math.round(this.damageDealt) };
   }
   emitState() { if (!this.destroyed) this.onState(this.getSnapshot()); }
   destroy() {
@@ -310,6 +315,7 @@ export class Battle {
 
   update(dt) {
     this.elapsed += dt;
+    if(this.platforms.length)this.updateFalling(dt);
     this.shake *= Math.exp(-dt * 12);
     this.flash *= Math.exp(-dt * 9);
     for (const actor of this.actors()) actor.recoil = Math.max(0, actor.recoil - dt * 5);
@@ -332,7 +338,7 @@ export class Battle {
       flake.y = (flake.y + flake.velocity * dt) % WORLD_HEIGHT;
     }
     if (this.phase === 'ended') return;
-    if (this.phase === 'aim' && this.movement && this.fuel > 0) {
+    if (this.phase === 'aim' && !this.player.falling && this.movement && this.fuel > 0) {
       const distance = Math.min(dt * (82 * this.tankType.mobility), this.fuel / 0.75) * this.movement;
       if (this.moveActor(this.player, distance)) {
         this.fuel = Math.max(0, this.fuel - Math.abs(distance) * 0.75);
@@ -347,16 +353,16 @@ export class Battle {
     } else if (this.phase === 'projectile') {
       if (this.impactTimer < 0) this.impactTimer = 0.6;
       this.impactTimer -= dt;
-      if (this.impactTimer <= 0) this.endShot();
+      if (this.impactTimer <= 0 && !this.actors().some(a=>a.hp>0&&a.falling)) this.endShot();
     }
     if (this.phase === 'enemy' && this.pendingAction) {
       this.actionTimer -= dt;
-      if (this.actionTimer <= 0) {
+      if (this.actionTimer <= 0 && !this.actors().some(a=>a.hp>0&&a.falling)) {
         const action = this.pendingAction;
         this.pendingAction = null;
         if (action.actor.hp > 0) {
           this.shotBy = action.actor;
-          this.launch(action.actor, action.angle, action.power, action.weapon);
+          const shot=this.platforms.length?this.findEnemyShot(action.actor):action;this.launch(action.actor, shot.angle, shot.power, shot.weapon);
         } else this.nextEnemy();
       }
     }
@@ -365,13 +371,31 @@ export class Battle {
     if (this.stateTimer <= 0) { this.stateTimer = 0.1; this.emitState(); }
   }
 
+  updateFalling(dt) {
+    for (const actor of this.actors()) {
+      if (actor.hp <= 0) continue;
+      const floor = this.groundAt(actor.x, actor.y + 18) - 20;
+      if (floor > actor.y + .01) {
+        if (!actor.falling) actor.fallStart = actor.y;
+        actor.falling = true; actor.vy = (actor.vy || 0) + 350 * dt;
+        actor.y = Math.min(floor, actor.y + actor.vy * dt);
+      }
+      if (actor.y >= floor - .01) {
+        const drop = actor.falling ? floor - actor.fallStart : 0;
+        actor.y = floor; actor.falling = false; actor.vy = 0;
+        if (drop > 27) this.hurt(actor, Math.round(Math.min(30, (drop - 20) * .15)), false, '낙하');
+      }
+    }
+  }
+
   moveActor(actor, distance) {
     const next = clamp(actor.x + distance, 65, WORLD_WIDTH - 65);
     if (Math.abs(next - actor.x) < 0.1) return false;
     if (this.actors().some(a => a !== actor && a.hp > 0 && Math.abs(a.x - next) < 65)) return false;
-    if (Math.abs(this.groundAt(next) - this.groundAt(actor.x)) > 14) return false;
+    const floor=this.groundAt(next,actor.y+12);
+    if (!this.platforms.length && Math.abs(floor - this.groundAt(actor.x)) > 14) return false;
     actor.x = next;
-    actor.y = this.groundAt(next) - 20;
+    if(!this.platforms.length)actor.y = this.groundAt(next) - 20;
     if (actor.id !== 'player') actor.facing = -1;
     return true;
   }
@@ -398,13 +422,13 @@ export class Battle {
         continue;
       }
       const hitTank = this.actors().find(actor => actor.hp > 0 && (actor !== p.source || p.age > 0.25) && Math.hypot(p.x - actor.x, p.y - (actor.y - 4)) < 24);
-      if (hitTank || (p.x >= 0 && p.x <= WORLD_WIDTH && p.y >= this.groundAt(p.x) && p.age > 0.04)) {
+      if (hitTank || (p.x >= 0 && p.x <= WORLD_WIDTH && solidAt(p.x,p.y,this.terrain,this.platforms) && p.age > 0.04)) {
         let impactX = p.x, impactY = p.y;
         if (!hitTank) {
           for (let n = 0; n < 5; n++) {
             const t = n / 4;
             const tx = lerp(prevX, p.x, t), ty = lerp(prevY, p.y, t);
-            if (tx >= 0 && tx <= WORLD_WIDTH && ty >= this.groundAt(tx)) { impactX = tx; impactY = this.groundAt(tx); break; }
+            if (tx >= 0 && tx <= WORLD_WIDTH && solidAt(tx,ty,this.terrain,this.platforms)) { impactX = tx; impactY = this.platforms.length?ty:this.groundAt(tx); break; }
           }
         }
         this.projectiles.splice(index, 1);
@@ -435,9 +459,11 @@ export class Battle {
       const crater = y + Math.sqrt(Math.max(0, 1 - norm * norm)) * depth;
       this.terrain[px] = Math.max(this.terrain[px], Math.min(735, crater));
     }
+    if(this.platforms.length)breakPlatforms(this.platforms,x,y,craterRadius);
     this.craters.push({ x, y, radius: craterRadius });
     if (this.craters.length > 42) this.craters.shift();
     this.actors().forEach((actor, index) => {
+      if (this.platforms.length) return;
       actor.y = this.groundAt(actor.x) - 20;
       const drop = actor.y - oldY[index];
       if (actor.hp > 0 && drop > 27) this.hurt(actor, Math.round(Math.min(30, (drop - 20) * 0.7)), projectile.source.id === 'player', '낙하');
@@ -493,13 +519,13 @@ export class Battle {
   findEnemyShot(actor) {
     const skill = clamp(this.mission.difficulty || 0, 0, 1);
     const aimX = clamp(this.player.x + (this.random() - 0.5) * (170 - skill * 145), 60, WORLD_WIDTH - 60);
-    const aimY = this.groundAt(aimX) - 20;
+    const aimY = this.platforms.length?this.player.y:this.groundAt(aimX) - 20;
     let weapon = 'shell';
     if (this.mission.index >= 3 && this.round % 4 === 0) weapon = 'arc';
     if (this.mission.index >= 5 && this.round % 5 === 0) weapon = 'cluster';
     let best = { distance: Infinity, angle: 135, power: 70 };
     const evaluate = (angle, power) => {
-      const shot = simulateWeaponShot({ x: actor.x, y: actor.y - 13, angle, power, wind: this.wind, terrain: this.terrain, weapon, step: 1 / 45 });
+      const shot = simulateWeaponShot({ x: actor.x, y: actor.y - 13, angle, power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon, step: 1 / 45 });
       const distance = Math.min(...shot.impacts.map(impact => Math.hypot(impact.x - aimX, impact.y - aimY) + (impact.x < 0 || impact.x > WORLD_WIDTH ? 90 : 0))) + shot.time * 4;
       if (distance < best.distance) best = { distance, angle, power };
     };
@@ -586,6 +612,7 @@ export class Battle {
     if (this.shake > 0.1 && !this.paused && !this.reducedMotion) ctx.translate(Math.sin(this.elapsed * 71) * this.shake, Math.cos(this.elapsed * 53) * this.shake * 0.6);
     this.drawBackground(ctx);
     this.drawTerrain(ctx);
+    drawPlatforms(ctx,this.platforms,this.palette);
     if (this.phase === 'aim') this.drawTrajectory(ctx);
     for (const actor of this.actors()) this.drawTank(ctx, actor);
     for (const p of this.projectiles) this.drawProjectile(ctx, p);
@@ -764,7 +791,7 @@ export class Battle {
   }
 
   drawTrajectory(ctx) {
-    const trajectory = simulateWeaponShot({ x: this.player.x, y: this.player.y - 13, angle: this.angle, power: this.power, wind: this.wind, terrain: this.terrain, weapon: this.weapon, step: 1 / 60 });
+    const trajectory = simulateWeaponShot({ x: this.player.x, y: this.player.y - 13, angle: this.angle, power: this.power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon: this.weapon, step: 1 / 60 });
     const points = trajectory.points;
     const count = this.scanning ? points.length : Math.min(15, Math.max(5, Math.floor(points.length * 0.42)));
     for (let i = 1; i < count; i++) {
@@ -783,7 +810,7 @@ export class Battle {
       }
       ctx.globalAlpha = 1;
       for (const impact of trajectory.impacts) if (impact.x >= 0 && impact.x <= WORLD_WIDTH) {
-        const y = this.groundAt(impact.x);
+        const y = this.platforms.length?impact.y:this.groundAt(impact.x);
         ctx.strokeStyle = '#9fe7ff8c'; ctx.lineWidth = 1.5;
         ctx.beginPath(); ctx.ellipse(impact.x, y, WEAPONS[this.weapon].radius * 0.55, 9, 0, 0, Math.PI * 2); ctx.stroke();
         ctx.beginPath(); ctx.moveTo(impact.x - 8, y); ctx.lineTo(impact.x + 8, y); ctx.moveTo(impact.x, y - 8); ctx.lineTo(impact.x, y + 8); ctx.stroke();
@@ -794,7 +821,7 @@ export class Battle {
   }
 
   drawTank(ctx, actor) {
-    const slope = Math.atan2(this.groundAt(actor.x + 26) - this.groundAt(actor.x - 26), 52);
+    const slope = Math.atan2(this.groundAt(actor.x + 26,actor.y+12) - this.groundAt(actor.x - 26,actor.y+12), 52);
     const alive = actor.hp > 0;
     const heavy = actor.type === 'warden';
     const fast = actor.type === 'striker';
@@ -853,12 +880,20 @@ export class Battle {
       ctx.fillStyle = '#d8c8ff'; ctx.shadowColor = '#b79dff'; ctx.shadowBlur = 7; ctx.fillRect(-16, -23, 4, 10); ctx.fillRect(12, -23, 4, 10); ctx.shadowBlur = 0;
     }
     ctx.restore();
+    ctx.save(); ctx.translate(actor.x, actor.y);
+    ctx.rotate(slope);
+    if (actor.id === 'player') drawModifications(ctx, this.upgrades, 90, actor.facing);
+    ctx.restore();
     ctx.save(); ctx.translate(actor.x, actor.y - 13); ctx.rotate(-actor.angle * DEG);
     const barrel = ctx.createLinearGradient(0, -6, 0, 6); barrel.addColorStop(0, '#b8cad2'); barrel.addColorStop(0.5, '#547586'); barrel.addColorStop(1, '#1f3443');
     ctx.fillStyle = barrel; ctx.strokeStyle = '#95aab5'; ctx.lineWidth = 1;
     ctx.beginPath(); roundedRect(ctx, 4 - actor.recoil * 7, -4.5, heavy ? 42 : 37, 9, 2); ctx.fill(); ctx.stroke();
     ctx.fillStyle = '#1c2e3e'; ctx.fillRect(heavy ? 37 - actor.recoil * 7 : 32 - actor.recoil * 7, -6, 7, 12);
     ctx.fillStyle = actor.color; ctx.fillRect(14, -4, 3, 8);
+    if (actor.id === 'player' && this.upgrades.attack) {
+      ctx.fillStyle = '#e5c078';
+      for (let i = 0; i < this.upgrades.attack; i++) ctx.fillRect(19 + i * 3, -5.5, 2, 11);
+    }
     ctx.restore();
     ctx.save(); ctx.translate(actor.x, actor.y);
     const hpRatio = actor.hp / actor.maxHp;

@@ -1,7 +1,7 @@
 {
   "passed": true,
   "checks": [
-    "All nine mission maps and fallback images are cached",
+    "All twelve battle maps and fallback images are cached",
     "Campaign menu reloads offline",
     "Blender GLB and textures render offline",
     "Old pre-3D cache cannot override the current offline build",
@@ -9,7 +9,7 @@
     "No browser exceptions"
   ],
   "errors": [],
-  "cachedResources": 45,
+  "cachedResources": 53,
   "environment": {
     "ready": true,
     "theme": "coast",

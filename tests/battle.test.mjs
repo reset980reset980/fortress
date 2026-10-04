@@ -1,3 +1,5 @@
+import {ARENAS} from '../src/data.js';
+import {solidAt,surfaceAt,makePlatforms} from '../src/platforms.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Battle, createTerrain, launchVelocity, stepBallistic, simulateShot, simulateWeaponShot } from '../src/battle.js';
@@ -213,3 +215,7 @@ test('all nine campaign missions are solvable with affordable upgrade progressio
 });
 
 test('item upgrades add actual ammunition, shield charges and repair capacity',()=>{const {battle}=createBattle({upgrades:{ammo:2,shield:3,repair:4}});assert.equal(battle.ammo.cluster,5);assert.equal(battle.ammo.arc,4);assert.equal(battle.abilities.shield,4);assert.equal(battle.abilities.repair,3);battle.player.hp=10;const before=battle.player.hp;assert.equal(battle.useAbility('repair'),true);assert.equal(battle.player.hp-before,Math.round(battle.maxHp*.58));battle.destroy();});
+
+test('all layered arenas have mirrored starting surfaces and real empty space below slabs',()=>{for(const m of ARENAS){const {battle:b}=createBattle({mission:{...m,mode:'duel',enemies:[{hp:240,tank:'bastion'}]}});assert.equal(b.player.x,1440-b.enemies[0].x);assert.equal(b.player.y,b.enemies[0].y);for(let x=0;x<=1440;x+=5)assert.equal(surfaceAt(x,b.terrain,b.platforms),surfaceAt(1440-x,b.terrain,b.platforms));assert.equal(solidAt(205,b.platforms[0].top+10,b.terrain,b.platforms),true);assert.equal(solidAt(205,b.platforms[0].top+80,b.terrain,b.platforms),false);b.destroy();}});
+test('real explosions break top and middle platforms, tanks fall twice and combat continues',()=>{const {battle:b}=createBattle({mission:{...ARENAS[0],mode:'duel',enemies:[{hp:240,tank:'bastion'}]}});const source=b.enemies[0];for(const floor of [240,430]){const before=b.player.y;b.impact({weapon:'cluster',source},b.player.x,floor,null);assert.equal(b.player.y,before,'No instant teleport');b.update(1/60);assert.equal(b.player.falling,true);advanceUntil(b,()=>!b.player.falling&&b.player.y>before+100);assert.equal(b.player.y,(floor===240?430:620)-20);assert.ok(b.player.hp>0);assert.equal(b.phase,'aim');assert.equal(b.canControl(),true);}assert.equal(b.fire(),true);assert.equal(b.phase,'projectile');b.destroy();});
+test('shots launched below an upper platform travel through the gap instead of hitting a heightfield wall',()=>{const terrain=new Float32Array(1441).fill(730),platforms=makePlatforms();const hit=simulateShot({x:205,y:400,angle:18,power:25,terrain,platforms,wind:0});assert.ok(hit.time>.2);assert.ok(hit.x>260);});

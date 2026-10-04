@@ -38,7 +38,7 @@ function makeSky(palette) {
 export class BattlefieldEnvironment {
   constructor(theme = 'coast', width = 960, map = theme) {
     this.theme = THEMES[theme] ? theme : 'coast';
-    this.map = ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03'].includes(map) ? map : this.theme;
+    this.map = ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03','sky-islands','iron-foundry','lava-steps'].includes(map) ? map : this.theme;
     this.ready = false; this.destroyed = false; this.contextLost = false; this.error = null; this.frameCount = 0;
     this.lastTime = -Infinity; this.lowQuality = false;
     this.drawCosts = []; this.frameGaps = []; this.drawSamples = 0; this.fallbackReason = null;
