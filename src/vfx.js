@@ -416,13 +416,15 @@ export class EffectDirector {
     const dirX = Math.cos(angle), dirY = Math.sin(angle);
     const power = Math.sqrt(intensity);
     if (type === 'trail') {
-      this._point(x, y, Number(options.z) || 0, -dirX * 18, -dirY * 18, 0, 0.12 + Math.random() * 0.1,
-        (cool ? 22 : 13) * power, r, g, b, 0.48, cool ? 3 : 0, 0, 5);
+      this._point(x, y, Number(options.z) || 0, -dirX * 18, -dirY * 18, 0, 0.20 + Math.random() * 0.1,
+        (cool ? 32 : 20) * power, r, g, b, 0.72, cool ? 3 : 0, 0, 5);
       return true;
     }
     if (type === 'muzzle' || type === 'fire') {
-      this._point(x, y, 0, dirX * 22, dirY * 22, -8, 0.12, 52 * power, r, g, b, 0.9, 0, 0, 1);
-      for (let i = 0, n = Math.max(3, Math.round(13 * scale * power)); i < n; i++) {
+      this._wave(x,y,36*power,.22,r,g,b,.5);
+      if(!reduced)this._point(x,y,10,-dirX*25,-dirY*25,0,.55,42,r*.35,g*.35,b*.35,.28,2,-12,1);
+      this._point(x, y, 0, dirX * 22, dirY * 22, -8, 0.16, 78 * power, r, g, b, 0.9, 0, 0, 1);
+      for (let i = 0, n = Math.max(3, Math.round(22 * scale * power)); i < n; i++) {
         const a = angle + (Math.random() - 0.5) * 0.75;
         const speed = (95 + Math.random() * 130) * power;
         this._point(x, y, 0, Math.cos(a) * speed, Math.sin(a) * speed, (Math.random() - 0.5) * 65,
@@ -465,9 +467,10 @@ export class EffectDirector {
     }
     if (type !== 'explosion' && type !== 'impact' && type !== 'plasma') return false;
     const radius = (Number(options.radius) || 65) * power;
-    this._wave(x, y, radius * 1.4, reduced ? 0.2 : 0.46, r, g, b);
+    this._wave(x, y, radius * 1.65, reduced ? 0.2 : 0.46, r, g, b);
+    if(!reduced){this._wave(x,y,radius*.85,.65,1,.86,.55,.8);this._point(x,y,-10,0,0,0,.11,radius*.9,1,.94,.78,.8,0,0,0);}
     this._point(x, y, -6, 0, -8, 0, 0.2, radius * 1.15, r, g, b, 0.78, cool ? 3 : 0, 0, 0);
-    for (let i = 0, n = Math.max(5, Math.round((cool ? 38 : 50) * scale * power)); i < n; i++) {
+    for (let i = 0, n = Math.max(5, Math.round((cool ? 52 : 66) * scale * power)); i < n; i++) {
       const a = Math.random() * TAU;
       const speed = (60 + Math.random() * 220) * power * (reduced ? 0.5 : 1);
       this._point(x, y, 0, Math.cos(a) * speed, Math.sin(a) * speed - 38,

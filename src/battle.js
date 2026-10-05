@@ -149,6 +149,7 @@ export class Battle {
     this.intensity = 0.2;
     this.damageDealt = 0;
     this.projectiles = [];
+    this.combatBursts=[];
     this.particles = [];
     this.labels = [];
     this.craters = [];
@@ -285,6 +286,7 @@ export class Battle {
     cancelAnimationFrame(this.raf);
     document.removeEventListener('visibilitychange', this._visibility);
     this.projectiles.length = 0;
+    this.combatBursts.length = 0;
     this.particles.length = 0;
     this.environment?.destroy();
   }
@@ -295,11 +297,12 @@ export class Battle {
     actor.recoil = 1;
     const velocity = launchVelocity(angle, power);
     this.projectiles.push({ x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, ...velocity, age: 0, weapon, source: actor, trail: [], split: weapon !== 'cluster', damageScale: 1 });
+    this.addCombatBurst(actor.x+Math.cos(angle*DEG)*36,actor.y-13-Math.sin(angle*DEG)*36,weapon,'fire');
     this.phase = 'projectile';
     this.status = actor.id === 'player' ? '포탄 비행 중' : `${actor.name}의 반격`;
     this.intensity = 0.7;
     this.impactTimer = -1;
-    this.onEvent('fire', { x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, intensity: weapon === 'arc' ? 0.9 : 0.55, color: WEAPONS[weapon].color, weapon, enemy: actor.id !== 'player' });
+    this.onEvent('fire', { x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, intensity: weapon === 'arc' ? 0.9 : 0.55, angle:-angle*DEG,color: WEAPONS[weapon].color, weapon, enemy: actor.id !== 'player' });
     this.burst(actor.x + Math.cos(angle * DEG) * 36, actor.y - 13 - Math.sin(angle * DEG) * 36, WEAPONS[weapon].color, 10, 95);
     this.emitState();
   }
@@ -316,6 +319,7 @@ export class Battle {
 
   update(dt) {
     this.elapsed += dt;
+    for(let i=this.combatBursts.length-1;i>=0;i--){this.combatBursts[i].age+=dt;if(this.combatBursts[i].age>=this.combatBursts[i].life)this.combatBursts.splice(i,1);}
     if(this.platforms.length)this.updateFalling(dt);
     this.shake *= Math.exp(-dt * 12);
     this.flash *= Math.exp(-dt * 9);
@@ -338,15 +342,19 @@ export class Battle {
       flake.x = (flake.x + (this.wind * 0.6 + 9) * dt + WORLD_WIDTH) % WORLD_WIDTH;
       flake.y = (flake.y + flake.velocity * dt) % WORLD_HEIGHT;
     }
-    if (this.phase === 'ended') return;
+    if (this.phase === 'ended') {this.onEvent('movement',{active:false});return;}
+    let moved=false;
     if (this.phase === 'aim' && !this.player.falling && this.movement && this.fuel > 0) {
       const distance = Math.min(dt * (82 * this.tankType.mobility), this.fuel / 0.75) * this.movement;
       if (this.moveActor(this.player, distance)) {
+        moved=Math.abs(distance)>0;
         this.fuel = Math.max(0, this.fuel - Math.abs(distance) * 0.75);
         if (this.random() < 0.5) this.burst(this.player.x - this.movement * 26, this.player.y + 16, this.palette.surface, 1, 18);
       }
       if (this.fuel <= 0) { this.movement = 0; this.status = '이동 연료 소진 · 다음 턴에 보충됩니다'; }
     }
+    this.onEvent('movement',{active:moved,tank:this.player.type,x:this.player.x,y:this.player.y+20});
+    if(moved&&(this.elapsed-(this._dustTime||0)>.10)){this._dustTime=this.elapsed;this.onEvent('dust',{x:this.player.x-this.movement*30,y:this.player.y+22,color:this.palette.surface,intensity:.45});}
     if (this.projectiles.length) {
       const steps = Math.max(1, Math.ceil(dt / (1 / 120)));
       const subdt = dt / steps;
@@ -407,6 +415,7 @@ export class Battle {
       const p = this.projectiles[index];
       const prevX = p.x, prevY = p.y;
       stepBallistic(p, dt, this.wind);
+      if(p.age-(p.fxAge||0)>.035){p.fxAge=p.age;this.onEvent('trail',{x:p.x,y:p.y,angle:Math.atan2(p.vy,p.vx),color:WEAPONS[p.weapon].color,weapon:p.weapon,intensity:p.weapon==='arc'?1.2:.8});}
       p.trail.push({ x: p.x, y: p.y });
       if (p.trail.length > 25) p.trail.shift();
       if (!p.split && p.vy >= -18 && p.age > 0.38) {
@@ -473,6 +482,7 @@ export class Battle {
     this.flash = Math.max(this.flash, 0.16);
     this.burst(x, y, weapon.color, projectile.weapon === 'arc' ? 46 : 34, 210);
     this.burst(x, y + 5, this.palette.surface, 20, 145, 600);
+    this.addCombatBurst(x,y,projectile.weapon,'impact');
     this.onEvent('impact', { x, y, intensity: projectile.weapon === 'arc' ? 1 : projectile.weapon === 'cluster' ? 0.5 : 0.7, radius, color: weapon.color, weapon: projectile.weapon, direct: !!directTarget });
   }
 
@@ -617,6 +627,7 @@ export class Battle {
     if (this.phase === 'aim') this.drawTrajectory(ctx);
     for (const actor of this.actors()) this.drawTank(ctx, actor);
     for (const p of this.projectiles) this.drawProjectile(ctx, p);
+    this.drawCombatBursts(ctx);
     for (const p of this.particles) {
       ctx.globalAlpha = Math.min(1, p.life / p.maxLife * 1.4);
       ctx.fillStyle = p.color;
@@ -919,6 +930,12 @@ export class Battle {
     ctx.restore();
   }
 
+  addCombatBurst(x,y,weapon,type){this.combatBursts.push({x,y,weapon,type,age:0,life:type==='fire'?.28:.75});if(this.combatBursts.length>20)this.combatBursts.shift();}
+
+  drawCombatBursts(ctx){
+    for(const f of this.combatBursts){const t=f.age/f.life,impact=f.type==='impact',color=WEAPONS[f.weapon].color,r=(impact?90:38)*(this.reducedMotion?.7:1)*(impact?.35+t:1-t*.4);ctx.save();ctx.globalCompositeOperation='screen';ctx.globalAlpha=(1-t)*(impact?.8:.95);const glow=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,r);glow.addColorStop(0,'#fff5df');glow.addColorStop(.15,color);glow.addColorStop(.5,color+'88');glow.addColorStop(1,color+'00');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(f.x,f.y,r,0,Math.PI*2);ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=impact?3:2;ctx.globalAlpha=(1-t)*.9;ctx.beginPath();ctx.ellipse(f.x,f.y,r*(.5+t),r*(impact?.45:.8),0,0,Math.PI*2);ctx.stroke();if(!this.reducedMotion){ctx.lineWidth=2;for(let i=0;i<(impact?12:6);i++){const a=i*Math.PI*2/(impact?12:6)+f.age*1.3;ctx.beginPath();ctx.moveTo(f.x+Math.cos(a)*r*.45,f.y+Math.sin(a)*r*.45);ctx.lineTo(f.x+Math.cos(a)*r*(1+t),f.y+Math.sin(a)*r*(1+t));ctx.stroke();}}ctx.restore();}
+  }
+
   drawProjectile(ctx, projectile) {
     const color = WEAPONS[projectile.weapon].color;
     if (projectile.y < 0 && projectile.x > 20 && projectile.x < WORLD_WIDTH - 20) {
@@ -929,7 +946,7 @@ export class Battle {
       ctx.restore();
     }
     if (projectile.trail.length > 1) {
-      ctx.lineWidth = projectile.weapon === 'arc' ? 4 : 2;
+      ctx.lineWidth = projectile.weapon === 'arc' ? 6 : 3;ctx.shadowBlur=this.reducedMotion?0:12;ctx.shadowColor=color;
       for (let i = 1; i < projectile.trail.length; i++) {
         const a = projectile.trail[i - 1], b = projectile.trail[i];
         ctx.globalAlpha = i / projectile.trail.length * 0.55; ctx.strokeStyle = color;
@@ -937,6 +954,7 @@ export class Battle {
       }
       ctx.globalAlpha = 1;
     }
+    ctx.shadowBlur=0;
     ctx.save(); ctx.translate(projectile.x, projectile.y); ctx.rotate(Math.atan2(projectile.vy, projectile.vx));
     ctx.shadowBlur = projectile.weapon === 'arc' ? 23 : 10; ctx.shadowColor = color;
     ctx.fillStyle = color;

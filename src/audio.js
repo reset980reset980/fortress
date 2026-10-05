@@ -156,6 +156,7 @@ export class AudioDirector {
 
   setMuted(muted = true) {
     this.muted = Boolean(muted);
+    if(this.muted)this.stopMovement();
     this._ramp(this.masterGain?.gain, this.muted ? 0 : this.volumes.master, .06);
   }
 
@@ -221,6 +222,18 @@ export class AudioDirector {
     return true;
   }
 
+  setMovement(active, type='bastion', pan=0) {
+    const ctx=this.context;
+    if(!active||!ctx||ctx.state!=='running'||this.paused||this.muted||this._disposed){this.stopMovement();return false;}
+    if(this.movementVoice?.type===type)return true;
+    this.stopMovement();
+    const buffer=ctx.createBuffer(1,48000,24000),data=buffer.getChannelData(0);let seed=721,low=0;
+    for(let n=0;n<data.length;n++){const t=n/24000;seed=(seed*16807)%2147483647;const noise=seed/1073741823.5-1;low+=.08*(noise-low);const tread=Math.pow(Math.max(0,Math.sin(t*Math.PI*2*18)),10);data[n]=type==='arc'?Math.sin(t*Math.PI*2*96)*.2+Math.sin(t*Math.PI*2*192)*.09+low*.08:Math.sin(t*Math.PI*2*(type==='striker'?72:48))*.22+low*.35+noise*tread*.18;}
+    const source=ctx.createBufferSource(),gain=ctx.createGain(),panner=ctx.createStereoPanner?.();source.buffer=buffer;source.loop=true;source.connect(gain);if(panner){gain.connect(panner);panner.pan.value=clamp(pan,-1,1);panner.connect(this.sfxGain);}else gain.connect(this.sfxGain);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(type==='arc'?.20:.30,ctx.currentTime+.08);source.onended=()=>{source.disconnect();gain.disconnect();panner?.disconnect();};source.start();this.movementVoice={source,gain,panner,type};return true;
+  }
+
+  stopMovement(){const voice=this.movementVoice;if(!voice)return;this.movementVoice=null;const now=this.context.currentTime;voice.gain.gain.cancelScheduledValues(now);voice.gain.gain.setValueAtTime(voice.gain.gain.value,now);voice.gain.gain.linearRampToValueAtTime(0,now+.08);try{voice.source.stop(now+.09);}catch{} }
+
   _stopVoice(voice) {
     if (!voice) return;
     voice.ended = true;
@@ -229,6 +242,7 @@ export class AudioDirector {
   }
 
   pause() {
+    this.stopMovement();
     this.paused = true;
     if (this.context?.state === 'running') this.context.suspend().catch(() => {});
   }
@@ -239,6 +253,7 @@ export class AudioDirector {
   }
 
   dispose() {
+    this.stopMovement();
     this._disposed = true;
     this._resumeId++;
     clearTimeout(this._duckTimer);
