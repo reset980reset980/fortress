@@ -2,7 +2,7 @@ import {ARENAS} from '../src/data.js';
 import {solidAt,surfaceAt,makePlatforms} from '../src/platforms.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Battle, createTerrain, launchVelocity, stepBallistic, simulateShot, simulateWeaponShot } from '../src/battle.js';
+import { Battle, createTerrain, launchVelocity, stepBallistic, simulateShot, simulateWeaponShot,tankSlope } from '../src/battle.js';
 import { MISSIONS, TANKS } from '../src/data.js';
 import {NEW_MAPS} from '../src/expansion.js';
 
@@ -16,6 +16,7 @@ const ctx = new Proxy({}, {
   set(target, key, value) { target[key] = value; return true; },
 });
 const listeners = new Map();
+test('broken platform edges and falling tanks keep a bounded visible body tilt',()=>{const terrain=new Float32Array(1441).fill(730),platforms=makePlatforms('iron-foundry'),actor={x:205,y:210,falling:false};assert.equal(tankSlope(actor,terrain,platforms),0);platforms[0].solid.fill(0,0,130);assert.equal(tankSlope(actor,terrain,platforms),0);actor.falling=true;actor.y=350;assert.equal(tankSlope(actor,terrain,platforms),0);terrain[231]=700;terrain[179]=500;actor.falling=false;assert.ok(Math.abs(tankSlope(actor,terrain,[]))<=.32);});
 globalThis.window = { devicePixelRatio: 1, matchMedia: () => ({ matches: false }) };
 globalThis.document = {
   hidden: false,

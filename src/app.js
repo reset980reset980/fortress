@@ -66,7 +66,7 @@ $('#save-export').onclick=()=>{const blob=new Blob([JSON.stringify(profile,null,
 applySettings();renderCampaign();if(damagedSave)toast('진행 기록을 읽지 못했습니다. 원래 기록은 보존하고 새 세션을 시작합니다.');
 window.FortressAfterlight={get state(){return state?JSON.parse(JSON.stringify(state)):null},get profile(){return JSON.parse(JSON.stringify(profile))},get audio(){return audio},get battle(){return battle},get effects(){return vfx},version:'2.0.0'};
 
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(()=>{}));}
+if('serviceWorker' in navigator){let controller=navigator.serviceWorker.controller;window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).catch(()=>{}));navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!controller){controller=navigator.serviceWorker.controller;return;}if(battle){toast('새 버전이 준비되었습니다. 전투를 마친 뒤 새로고침하면 적용됩니다.');return;}location.reload();});}
 
 $('#view-toggle').onclick=()=>{if(!battle)return;battle.overview=!battle.overview;battle.resize();resizeVfx();$('#view-toggle').textContent=battle.overview?'전차 확대':'전체 전장';$('#view-toggle').setAttribute('aria-pressed',String(battle.overview));};
 

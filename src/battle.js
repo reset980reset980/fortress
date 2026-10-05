@@ -4,6 +4,14 @@ import {makePlatforms,surfaceAt,solidAt,breakPlatforms,drawPlatforms} from './pl
 import {drawModifications} from './appearance.js';
 import { MISSIONS, TANKS, WEAPONS } from './data.js';
 import {weaponFor,SIGNATURES} from './expansion.js';
+// Cosmetic tilt must not sample the floor stories below a broken tread.
+export function tankSlope(actor,terrain,platforms=[]){
+  if(actor.falling)return 0;
+  const left=surfaceAt(actor.x-26,terrain,platforms,actor.y+12),right=surfaceAt(actor.x+26,terrain,platforms,actor.y+12);
+  if(!Number.isFinite(left)||!Number.isFinite(right))return 0;
+  if(platforms.length&&(Math.abs(left-(actor.y+20))>14||Math.abs(right-(actor.y+20))>14))return 0;
+  return Math.max(-.32,Math.min(.32,Math.atan2(right-left,52)));
+}
 
 export const WORLD_WIDTH = 1440;
 export const WORLD_HEIGHT = 800;
@@ -891,7 +899,7 @@ export class Battle {
     const motion=tankFeedback(actor,this.reducedMotion);
     ctx.save();ctx.translate(motion.x,motion.y);ctx.translate(actor.x,actor.y);ctx.rotate(motion.roll);ctx.translate(-actor.x,-actor.y);
 
-    const slope = Math.atan2(this.groundAt(actor.x + 26,actor.y+12) - this.groundAt(actor.x - 26,actor.y+12), 52);
+    const slope = tankSlope(actor,this.terrain,this.platforms);
     const alive = actor.hp > 0;
     const heavy = actor.type === 'warden';
     const fast = actor.type === 'striker';
