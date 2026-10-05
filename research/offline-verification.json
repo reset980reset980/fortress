@@ -9,12 +9,12 @@
     "No browser exceptions"
   ],
   "errors": [],
-  "cachedResources": 53,
+  "cachedResources": 78,
   "environment": {
     "ready": true,
     "theme": "coast",
     "map": "coast",
-    "frames": 2,
+    "frames": 3,
     "triangles": 51144,
     "drawCalls": 11,
     "textures": 3,

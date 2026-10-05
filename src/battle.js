@@ -1,3 +1,4 @@
+import {evolutionImage,evolutionStage} from './evolution.js';
 import {makePlatforms,surfaceAt,solidAt,breakPlatforms,drawPlatforms} from './platforms.js';
 import {drawModifications} from './appearance.js';
 import { MISSIONS, TANKS, WEAPONS } from './data.js';
@@ -848,6 +849,11 @@ export class Battle {
       }
       return;
     }
+    const stage=actor.id==='player'?evolutionStage(this.upgrades):0;
+    const evolved=evolutionImage(actor.type,stage);
+    if(evolved.complete&&evolved.naturalWidth){
+      const spriteWidth=88+stage*7,spriteHeight=evolved.naturalHeight/evolved.naturalWidth*spriteWidth;ctx.save();if(actor.facing<0)ctx.scale(-1,1);ctx.drawImage(evolved,-spriteWidth/2,24-spriteHeight,spriteWidth,spriteHeight);ctx.restore();
+    }else{
     const track = ctx.createLinearGradient(0, 6, 0, 24); track.addColorStop(0, '#45525f'); track.addColorStop(1, '#0d1721');
     ctx.fillStyle = track; ctx.strokeStyle = '#788893'; ctx.lineWidth = 1.4;
     ctx.beginPath(); roundedRect(ctx, -width / 2, 5, width, 21, 10); ctx.fill(); ctx.stroke();
@@ -879,10 +885,11 @@ export class Battle {
     if (actor.type === 'arc') {
       ctx.fillStyle = '#d8c8ff'; ctx.shadowColor = '#b79dff'; ctx.shadowBlur = 7; ctx.fillRect(-16, -23, 4, 10); ctx.fillRect(12, -23, 4, 10); ctx.shadowBlur = 0;
     }
+    }
     ctx.restore();
     ctx.save(); ctx.translate(actor.x, actor.y);
     ctx.rotate(slope);
-    if (actor.id === 'player') drawModifications(ctx, this.upgrades, 90, actor.facing);
+    if (!evolved.naturalWidth && actor.id === 'player') drawModifications(ctx, this.upgrades, 90, actor.facing);
     ctx.restore();
     ctx.save(); ctx.translate(actor.x, actor.y - 13); ctx.rotate(-actor.angle * DEG);
     const barrel = ctx.createLinearGradient(0, -6, 0, 6); barrel.addColorStop(0, '#b8cad2'); barrel.addColorStop(0.5, '#547586'); barrel.addColorStop(1, '#1f3443');
