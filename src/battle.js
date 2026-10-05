@@ -1,3 +1,4 @@
+export function tankFeedback(actor,reduced=false){if(reduced)return{x:0,y:0,roll:0};const recoil=(actor.recoil||0)*(actor.recoilPower||1),age=actor.hitAge??1,hit=(actor.hitPower||0)*Math.exp(-age*8),wave=Math.cos(age*48);return{x:-(actor.facing||1)*recoil*7+(actor.hitDirection||1)*hit*wave*6,y:recoil*1.5-Math.abs(hit*wave)*2,roll:-(actor.facing||1)*recoil*.025+hit*Math.sin(age*42)*.055};}
 import {evolutionImage,evolutionStage} from './evolution.js';
 import {makePlatforms,surfaceAt,solidAt,breakPlatforms,drawPlatforms} from './platforms.js';
 import {drawModifications} from './appearance.js';
@@ -295,6 +296,7 @@ export class Battle {
     actor.angle = angle;
     actor.facing = Math.cos(angle * DEG) < 0 ? -1 : 1;
     actor.recoil = 1;
+    actor.recoilPower=weapon==='arc'?1:.75;
     const velocity = launchVelocity(angle, power);
     this.projectiles.push({ x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, ...velocity, age: 0, weapon, source: actor, trail: [], split: weapon !== 'cluster', damageScale: 1 });
     this.addCombatBurst(actor.x+Math.cos(angle*DEG)*36,actor.y-13-Math.sin(angle*DEG)*36,weapon,'fire');
@@ -323,7 +325,7 @@ export class Battle {
     if(this.platforms.length)this.updateFalling(dt);
     this.shake *= Math.exp(-dt * 12);
     this.flash *= Math.exp(-dt * 9);
-    for (const actor of this.actors()) actor.recoil = Math.max(0, actor.recoil - dt * 5);
+    for (const actor of this.actors()){actor.recoil=Math.max(0,actor.recoil-dt*4.5);actor.hitAge=(actor.hitAge??1)+dt;if(actor.hitAge>.65)actor.hitPower=0;}
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i];
       p.life -= dt;
@@ -459,7 +461,7 @@ export class Battle {
       if (distance < radius + 20 || actor === directTarget) {
         let amount = Math.round(damage * (actor === directTarget ? 1.16 : clamp(1 - distance / (radius + 24), 0.16, 1)));
         if (actor.shield) amount = Math.round(amount * (projectile.weapon === 'arc' ? 0.65 : 0.45));
-        this.hurt(actor, amount, projectile.source.id === 'player', actor === directTarget ? '직격' : '');
+        this.hurt(actor, amount, projectile.source.id === 'player', actor === directTarget ? '직격' : '',Math.sign(actor.x-projectile.source.x)||1);
       }
     }
     const craterRadius = projectile.weapon === 'cluster' ? 38 : projectile.weapon === 'arc' ? 52 : 55;
@@ -486,7 +488,8 @@ export class Battle {
     this.onEvent('impact', { x, y, intensity: projectile.weapon === 'arc' ? 1 : projectile.weapon === 'cluster' ? 0.5 : 0.7, radius, color: weapon.color, weapon: projectile.weapon, direct: !!directTarget });
   }
 
-  hurt(actor, amount, credit = false, tag = '') {
+  hurt(actor, amount, credit = false, tag = '',direction=1) {
+    actor.hitAge=0;actor.hitPower=clamp(amount/70,.35,1.3);actor.hitDirection=direction;
     const actual = Math.min(actor.hp, Math.max(1, amount));
     actor.hp = Math.max(0, actor.hp - actual);
     if (credit && actor.id !== 'player') this.damageDealt += actual;
@@ -620,7 +623,7 @@ export class Battle {
     ctx.setTransform(sx, 0, 0, sx, this.offsetX * this.pixelRatio, this.offsetY * this.pixelRatio);
     ctx.save();
     ctx.beginPath(); ctx.rect(0, 0, WORLD_WIDTH, WORLD_HEIGHT); ctx.clip();
-    if (this.shake > 0.1 && !this.paused && !this.reducedMotion) ctx.translate(Math.sin(this.elapsed * 71) * this.shake, Math.cos(this.elapsed * 53) * this.shake * 0.6);
+    if(this.shake>.1&&!this.paused&&!this.reducedMotion){const amplitude=Math.min(this.shake,(this.lightEffects?2:5)/this.scale);ctx.translate(Math.sin(this.elapsed*71)*amplitude,Math.cos(this.elapsed*53)*amplitude*.7);}
     this.drawBackground(ctx);
     this.drawTerrain(ctx);
     drawPlatforms(ctx,this.platforms,this.palette);
@@ -833,6 +836,9 @@ export class Battle {
   }
 
   drawTank(ctx, actor) {
+    const motion=tankFeedback(actor,this.reducedMotion);
+    ctx.save();ctx.translate(motion.x,motion.y);ctx.translate(actor.x,actor.y);ctx.rotate(motion.roll);ctx.translate(-actor.x,-actor.y);
+
     const slope = Math.atan2(this.groundAt(actor.x + 26,actor.y+12) - this.groundAt(actor.x - 26,actor.y+12), 52);
     const alive = actor.hp > 0;
     const heavy = actor.type === 'warden';
@@ -858,12 +864,12 @@ export class Battle {
         ctx.globalAlpha = 0.2; ctx.fillStyle = '#b9ccd1';
         ctx.beginPath(); ctx.arc(actor.x + Math.sin(this.elapsed + actor.x) * 9, actor.y - 30 - (this.elapsed * 12 + actor.x) % 55, 10, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
       }
-      return;
+      ctx.restore();return;
     }
     const stage=actor.id==='player'?evolutionStage(this.upgrades):0;
     const evolved=evolutionImage(actor.type,stage);
     if(evolved.complete&&evolved.naturalWidth){
-      const spriteWidth=88+stage*7,spriteHeight=evolved.naturalHeight/evolved.naturalWidth*spriteWidth;ctx.save();if(actor.facing<0)ctx.scale(-1,1);ctx.drawImage(evolved,-spriteWidth/2,24-spriteHeight,spriteWidth,spriteHeight);ctx.restore();
+      const spriteWidth=104,spriteHeight=evolved.naturalHeight/evolved.naturalWidth*spriteWidth;ctx.save();if(actor.facing<0)ctx.scale(-1,1);ctx.drawImage(evolved,-spriteWidth/2,24-spriteHeight,spriteWidth,spriteHeight);ctx.restore();
     }else{
     const track = ctx.createLinearGradient(0, 6, 0, 24); track.addColorStop(0, '#45525f'); track.addColorStop(1, '#0d1721');
     ctx.fillStyle = track; ctx.strokeStyle = '#788893'; ctx.lineWidth = 1.4;
@@ -927,6 +933,7 @@ export class Battle {
       const pulse = Math.sin(this.elapsed * 3 + actor.x) * 0.5 + 0.5;
       ctx.globalAlpha = 0.25; ctx.fillStyle = '#ffc07d'; ctx.beginPath(); ctx.arc(-8, -21, 5 + pulse * 2, 0, Math.PI * 2); ctx.fill();
     }
+    ctx.restore();
     ctx.restore();
   }
 

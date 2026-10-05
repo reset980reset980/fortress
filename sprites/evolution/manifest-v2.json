@@ -1,0 +1,106 @@
+{
+  "bastion": [
+    {
+      "width": 348,
+      "height": 218
+    },
+    {
+      "width": 348,
+      "height": 219
+    },
+    {
+      "width": 350,
+      "height": 218
+    },
+    {
+      "width": 349,
+      "height": 218
+    },
+    {
+      "width": 349,
+      "height": 218
+    },
+    {
+      "width": 348,
+      "height": 219
+    }
+  ],
+  "striker": [
+    {
+      "width": 328,
+      "height": 229
+    },
+    {
+      "width": 339,
+      "height": 214
+    },
+    {
+      "width": 341,
+      "height": 230
+    },
+    {
+      "width": 342,
+      "height": 237
+    },
+    {
+      "width": 342,
+      "height": 230
+    },
+    {
+      "width": 337,
+      "height": 236
+    }
+  ],
+  "arc": [
+    {
+      "width": 321,
+      "height": 173
+    },
+    {
+      "width": 335,
+      "height": 212
+    },
+    {
+      "width": 338,
+      "height": 208
+    },
+    {
+      "width": 343,
+      "height": 226
+    },
+    {
+      "width": 339,
+      "height": 223
+    },
+    {
+      "width": 348,
+      "height": 241
+    }
+  ],
+  "warden": [
+    {
+      "width": 355,
+      "height": 196
+    },
+    {
+      "width": 355,
+      "height": 227
+    },
+    {
+      "width": 354,
+      "height": 222
+    },
+    {
+      "width": 354,
+      "height": 245
+    },
+    {
+      "width": 354,
+      "height": 223
+    },
+    {
+      "width": 353,
+      "height": 255
+    }
+  ]
+}
