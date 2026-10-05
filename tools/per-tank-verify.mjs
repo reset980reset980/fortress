@@ -1,0 +1,31 @@
+import {loadPlaywright,findChromium} from './browser-runtime.mjs';
+import assert from 'node:assert/strict';
+const {chromium}=await loadPlaywright();
+const browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:process.env.PRODUCTION_LAN?['--host-resolver-rules=MAP fortress.xsw.kr 192.168.68.106']:[]});
+try{
+ const page=await browser.newPage({viewport:{width:1343,height:1000}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.addInitScript(()=>{if(!localStorage.getItem('fortress-afterlight-v2'))localStorage.setItem('fortress-afterlight-v2',JSON.stringify({version:2,tank:'warden',credits:410890,missions:{'shore-01':2,'shore-02':2},upgrades:{hull:5,attack:5,fuel:5,ammo:5,repair:5,shield:5}}));});
+ await page.goto(process.env.BASE_URL||'http://localhost:4173');
+ await page.click('[data-page=hangar]');
+ await page.waitForFunction(()=>document.querySelector('canvas[data-tank="warden"]').dataset.evolution==='5');
+ assert.equal(await page.locator('canvas[data-tank="bastion"]').getAttribute('data-evolution'),'0');
+ await page.click('[data-select-tank=bastion]');
+ assert.equal(await page.evaluate(()=>FortressAfterlight.profile.upgrades.hull),0);
+ await page.click('[data-upgrade=hull]');
+ const after=await page.evaluate(()=>FortressAfterlight.profile);
+ assert.equal(after.upgrades.hull,1);assert.equal(after.tankProgress.warden.upgrades.hull,5);
+ assert.equal(after.tankProgress.arc.upgrades.hull,0);assert.equal(after.tankProgress.striker.upgrades.hull,0);
+ await page.reload();await page.click('[data-page=hangar]');
+ assert.deepEqual(await page.evaluate(()=>FortressAfterlight.profile),after);
+ await page.click('[data-select-tank=arc]');
+ await page.click('[data-page=training]');await page.click('#training-start');
+ assert.equal(await page.evaluate(()=>FortressAfterlight.battle.upgrades.hull),0);
+ await page.click('#pause-button');await page.click('#exit-button');await page.click('[data-page=hangar]');
+ await page.click('[data-select-tank=warden]');
+ assert.equal(await page.evaluate(()=>FortressAfterlight.profile.upgrades.hull),5);
+ await page.screenshot({path:'research/per-tank-upgrades.png',fullPage:true});
+ assert.ok(await page.evaluate(()=>localStorage.getItem('fortress-afterlight-v2-before-per-tank')));
+ assert.deepEqual(errors,[]);
+ console.log(JSON.stringify({passed:true,checks:['legacy Warden MK.5 retained; other tanks MK.0','Bastion purchase affects only Bastion','reload retains separate growth and shared points','Arc battle receives zero upgrades','original legacy save backup retained'],errors}));
+}finally{await browser.close();}

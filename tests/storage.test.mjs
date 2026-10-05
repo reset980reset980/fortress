@@ -14,13 +14,13 @@ test('corrupt or incompatible saves are rejected without altering a fresh profil
   const a = createProfile(), b = createProfile();
   a.upgrades.hull = 3;
   a.missions[ids[0]] = 2;
-  assert.deepEqual(b, {version:2,credits:0,tank:'bastion',missions:{},visualFloor:0,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0}});
+  assert.deepEqual({...b,tankProgress:undefined}, {tankProgress:undefined,version:2,credits:0,tank:'bastion',missions:{},visualFloor:0,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0}});
 });
 
 test('untrusted imported saves keep only game-owned tanks, upgrades and mission IDs', () => {
   const input = JSON.parse(`{"version":2,"credits":"348.9","tank":"<img src=x onerror=alert(1)>","upgrades":{"hull":99,"attack":-2,"fuel":"3.8","admin":100},"missions":{"${ids[0]}":12,"${ids[1]}":"2.9","${ids[2]}":-1,"unknown":3,"__proto__":{"polluted":true}},"debug":true}`);
   const p = sanitize(input);
-  assert.deepEqual(p, {version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},visualFloor:5,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:5,attack:0,fuel:3,ammo:0,repair:0,shield:0}});
+  assert.deepEqual({...p,tankProgress:undefined}, {tankProgress:undefined,version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},visualFloor:5,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:5,attack:0,fuel:3,ammo:0,repair:0,shield:0}});
   assert.equal({}.polluted,undefined);
   assert.equal(input.upgrades.hull,99,'Import sanitization does not mutate the source');
   assert.equal(sanitize({...createProfile(),tank:'arc'}).tank,'arc');
@@ -30,12 +30,12 @@ test('untrusted imported saves keep only game-owned tanks, upgrades and mission 
 
 test('credits never import negative or non-finite values and upgrades remain 0 through 5', () => {
   for (const value of [-1,-999,NaN,Infinity,-Infinity,'NaN','Infinity',null,true,{},[100]]) {
-    const p = sanitize({...createProfile(),credits:value,upgrades:{hull:value,attack:value,fuel:value}});
+    const p = sanitize({...createProfile(),tankProgress:undefined,credits:value,upgrades:{hull:value,attack:value,fuel:value}});
     assert.equal(p.credits,0,String(value));
     assert.deepEqual(p.upgrades,{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0});
   }
   assert.equal(sanitize({...createProfile(),credits:10000000}).credits,10000000);
-  assert.deepEqual(sanitize({...createProfile(),upgrades:{hull:100,attack:5.9,fuel:'6'}}).upgrades,{hull:5,attack:5,fuel:5,ammo:0,repair:0,shield:0});
+  assert.deepEqual(sanitize({...createProfile(),tankProgress:undefined,upgrades:{hull:100,attack:5.9,fuel:'6'}}).upgrades,{hull:5,attack:5,fuel:5,ammo:0,repair:0,shield:0});
 });
 
 test('campaign unlocks in order and rejects indexes or forged gaps', () => {
