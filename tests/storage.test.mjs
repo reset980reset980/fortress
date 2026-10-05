@@ -14,13 +14,13 @@ test('corrupt or incompatible saves are rejected without altering a fresh profil
   const a = createProfile(), b = createProfile();
   a.upgrades.hull = 3;
   a.missions[ids[0]] = 2;
-  assert.deepEqual(b, {version:2,credits:0,tank:'bastion',missions:{},upgrades:{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0}});
+  assert.deepEqual(b, {version:2,credits:0,tank:'bastion',missions:{},visualFloor:0,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:0,attack:0,fuel:0,ammo:0,repair:0,shield:0}});
 });
 
 test('untrusted imported saves keep only game-owned tanks, upgrades and mission IDs', () => {
   const input = JSON.parse(`{"version":2,"credits":"348.9","tank":"<img src=x onerror=alert(1)>","upgrades":{"hull":99,"attack":-2,"fuel":"3.8","admin":100},"missions":{"${ids[0]}":12,"${ids[1]}":"2.9","${ids[2]}":-1,"unknown":3,"__proto__":{"polluted":true}},"debug":true}`);
   const p = sanitize(input);
-  assert.deepEqual(p, {version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},upgrades:{hull:5,attack:0,fuel:3,ammo:0,repair:0,shield:0}});
+  assert.deepEqual(p, {version:2,credits:348,tank:'bastion',missions:{[ids[0]]:3,[ids[1]]:2},visualFloor:5,collection:['bastion','striker','arc','warden'],mastery:{},upgrades:{hull:5,attack:0,fuel:3,ammo:0,repair:0,shield:0}});
   assert.equal({}.polluted,undefined);
   assert.equal(input.upgrades.hull,99,'Import sanitization does not mutate the source');
   assert.equal(sanitize({...createProfile(),tank:'arc'}).tank,'arc');
@@ -40,14 +40,14 @@ test('credits never import negative or non-finite values and upgrades remain 0 t
 
 test('campaign unlocks in order and rejects indexes or forged gaps', () => {
   const p = createProfile();
-  assert.deepEqual(MISSIONS.map((_,i)=>isUnlocked(p,MISSIONS,i)),[true,false,false,false,false,false,false,false,false]);
+  assert.deepEqual(MISSIONS.map((_,i)=>isUnlocked(p,MISSIONS,i)),MISSIONS.map((_,i)=>i===0));
   for (let i=0;i<MISSIONS.length;i++) {
     assert.equal(isUnlocked(p,MISSIONS,i),true);
     completeMission(p,MISSIONS[i],{won:true,stars:1});
     if(i+1<MISSIONS.length) assert.equal(isUnlocked(p,MISSIONS,i+1),true);
     if(i+2<MISSIONS.length) assert.equal(isUnlocked(p,MISSIONS,i+2),false);
   }
-  for(const index of [-1,9,Infinity,NaN,.5,'0']) assert.equal(isUnlocked(p,MISSIONS,index),false);
+  for(const index of [-1,MISSIONS.length,Infinity,NaN,.5,'0']) assert.equal(isUnlocked(p,MISSIONS,index),false);
   assert.equal(isUnlocked(p,[],0),false);
   const forged = createProfile();
   forged.missions[ids[5]]=3;

@@ -2,11 +2,20 @@ import { WebGLRenderer, Scene, PerspectiveCamera, Color, Fog, HemisphereLight,
   DirectionalLight, CanvasTexture, SRGBColorSpace, ACESFilmicToneMapping,
   PCFSoftShadowMap, Vector3, TextureLoader, GLTFLoader } from '../assets/vendor/environment-engine.js';
 
+import {NEW_MAPS} from './expansion.js';
 export const ENVIRONMENT_VERSION = 'v1';
 const THEMES = {
   coast: { sky: ['#376986', '#89b7c6', '#d4ded3'], fog: '#a8c7cb', sun: '#ffe2ae', ambient: '#b2daee', exposure: 1.15 },
   desert: { sky: ['#645c78', '#c59a89', '#f0ceb0'], fog: '#d3ad91', sun: '#ffd295', ambient: '#d6c3dc', exposure: 1.22 },
   frost: { sky: ['#385979', '#8ab1cf', '#d7e8eb'], fog: '#b5d3e0', sun: '#e9f6ff', ambient: '#c8e7ff', exposure: 1.18 },
+};
+const MAP_SKIES={
+ 'orbital-station':{sky:['#020515','#0c1735','#243658'],fog:'#16213c',sun:'#829dc2',ambient:'#98b7df',exposure:1.1,stars:true},
+ 'abyss-base':{sky:['#031821','#123f50','#285766'],fog:'#143e4c',sun:'#5eafbb',ambient:'#8bc8d6',exposure:1.12,underwater:true},
+ 'crystal-cavern':{sky:['#161025','#382944','#564561'],fog:'#3f344e',sun:'#b9a2d5',ambient:'#c7a9e7',exposure:1.05,cave:true},
+ 'neon-docks':{sky:['#0b102b','#26304e','#5b5978'],fog:'#41415d',sun:'#d2a7de',ambient:'#c4bbdf',exposure:1.12},
+ 'volcanic-basin':{sky:['#271a27','#63434b','#b27961'],fog:'#976654',sun:'#ffc48d',ambient:'#dab5a3',exposure:1.12},
+ 'mine-canyon':{sky:['#45394b','#958573','#cab895'],fog:'#b3a089',sun:'#ffe4b8',ambient:'#ddc9af',exposure:1.16},
 };
 
 function makeSky(palette) {
@@ -15,6 +24,8 @@ function makeSky(palette) {
   const sky = ctx.createLinearGradient(0, 0, 0, canvas.height);
   palette.sky.forEach((color, i) => sky.addColorStop(i / 2, color));
   ctx.fillStyle = sky; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if(palette.stars){for(let i=0;i<180;i++){ctx.fillStyle=i%3?'#d3dfff80':'#ffffff';ctx.fillRect((i*137+31)%1024,(i*89+17)%576,i%7===0?2:1,i%7===0?2:1);}const planet=ctx.createRadialGradient(790,160,1,805,175,92);planet.addColorStop(0,'#bad7ed');planet.addColorStop(.55,'#647eae');planet.addColorStop(1,'#142241');ctx.fillStyle=planet;ctx.beginPath();ctx.arc(805,175,92,0,Math.PI*2);ctx.fill();}
+  if(palette.stars||palette.cave||palette.underwater){const texture=new CanvasTexture(canvas);texture.colorSpace=SRGBColorSpace;return texture;}
   const sun = ctx.createRadialGradient(790, 128, 2, 790, 128, 150);
   sun.addColorStop(0, palette.sun + 'bb'); sun.addColorStop(.12, palette.sun + '70'); sun.addColorStop(1, palette.sun + '00');
   ctx.fillStyle = sun; ctx.fillRect(630, 0, 320, 300);
@@ -38,7 +49,7 @@ function makeSky(palette) {
 export class BattlefieldEnvironment {
   constructor(theme = 'coast', width = 960, map = theme) {
     this.theme = THEMES[theme] ? theme : 'coast';
-    this.map = ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03','sky-islands','iron-foundry','lava-steps'].includes(map) ? map : this.theme;
+    this.map = [...NEW_MAPS.map(m=>m.id),'coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03','sky-islands','iron-foundry','lava-steps'].includes(map) ? map : this.theme;
     this.ready = false; this.destroyed = false; this.contextLost = false; this.error = null; this.frameCount = 0;
     this.lastTime = -Infinity; this.lowQuality = false;
     this.drawCosts = []; this.frameGaps = []; this.drawSamples = 0; this.fallbackReason = null;
@@ -51,7 +62,7 @@ export class BattlefieldEnvironment {
     this.resize(width);
     this.renderer.outputColorSpace = SRGBColorSpace;
     this.renderer.toneMapping = ACESFilmicToneMapping;
-    const p = THEMES[this.theme]; this.renderer.toneMappingExposure = p.exposure;
+    const p = {...THEMES[this.theme],...MAP_SKIES[this.map]}; this.renderer.toneMappingExposure = p.exposure;
     this.renderer.shadowMap.enabled = true; this.renderer.shadowMap.type = PCFSoftShadowMap;
     this.renderer.shadowMap.autoUpdate = false;
     this.renderer.shadowMap.needsUpdate = true;

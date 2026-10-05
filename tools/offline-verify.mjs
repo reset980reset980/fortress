@@ -3,7 +3,7 @@ import { writeFile } from 'node:fs/promises';
 import { loadPlaywright, findChromium } from './browser-runtime.mjs';
 const { chromium } = await loadPlaywright();
 const browser = await chromium.launch({ executablePath: await findChromium(), headless: true,
-  args: ['--no-sandbox', '--disable-dev-shm-usage', '--enable-unsafe-swiftshader'] });
+  args: [...(process.env.PRODUCTION_LAN?['--host-resolver-rules=MAP fortress.xsw.kr 192.168.68.106']:[]),'--no-sandbox', '--disable-dev-shm-usage', '--enable-unsafe-swiftshader'] });
 const context = await browser.newContext();
 const page = await context.newPage();
 const report = { passed: false, checks: [], errors: [] };
@@ -12,25 +12,25 @@ try {
   await page.goto(process.env.BASE_URL || 'http://localhost:4173');
   await page.waitForFunction(() => navigator.serviceWorker.controller, {}, { timeout: 30000 });
   report.cachedResources = await page.evaluate(async () => {
-    const cache = await caches.open('fortress-afterlight-v15-premium-models-20261005'); return (await cache.keys()).length;
+    const cache = await caches.open('fortress-afterlight-v16-expanded-fronts-20261005'); return (await cache.keys()).length;
   });
-  assert.ok(report.cachedResources >= 78);
-  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v15-premium-models-20261005');const paths=(await c.keys()).map(r=>new URL(r.url).pathname);return ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03','sky-islands','iron-foundry','lava-steps'].every(id=>['glb','png'].every(ext=>paths.includes('/assets/environments/'+id+'-v1.'+ext)));}),true);
-  report.checks.push('All twelve battle maps and fallback images are cached');
-  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v15-premium-models-20261005');return (await c.keys()).filter(r=>new URL(r.url).pathname.startsWith('/sprites/evolution/')).length}),24);
-  report.checks.push('All 24 evolution sprites are cached');
+  assert.ok(report.cachedResources >= 153);
+  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v16-expanded-fronts-20261005');const paths=(await c.keys()).map(r=>new URL(r.url).pathname);return ['coast','desert','frost','shore-02','shore-03','dune-02','dune-03','frost-02','frost-03','sky-islands','iron-foundry','lava-steps','cloud-garden','broken-bridge','mine-canyon','neon-docks','crystal-cavern','glacier-rift','volcanic-basin','sea-fortress','desert-ruins','abyss-base','orbital-station','scrap-graveyard'].every(id=>['glb','png'].every(ext=>paths.includes('/assets/environments/'+id+'-v1.'+ext)));}),true);
+  report.checks.push('All twenty-four battle maps and fallback images are cached');
+  assert.equal(await page.evaluate(async()=>{const c=await caches.open('fortress-afterlight-v16-expanded-fronts-20261005');return (await c.keys()).filter(r=>new URL(r.url).pathname.startsWith('/sprites/evolution/')).length}),72);
+  report.checks.push('All 72 evolution sprites are cached');
   // An old tab can recreate its old cache after the new worker activates. Put
   // a stale executable response ahead of the current cache to exercise that
   // real upgrade race. Offline fetches must still use only the new version.
   await page.evaluate(async () => {
-    const paths = (await caches.keys()).filter(k => k.startsWith('fortress-afterlight-') && k !== 'fortress-afterlight-v15-premium-models-20261005');
+    const paths = (await caches.keys()).filter(k => k.startsWith('fortress-afterlight-') && k !== 'fortress-afterlight-v16-expanded-fronts-20261005');
     await Promise.all(paths.map(k => caches.delete(k)));
-    const current = await caches.open('fortress-afterlight-v15-premium-models-20261005');
+    const current = await caches.open('fortress-afterlight-v16-expanded-fronts-20261005');
     const entries = await Promise.all((await current.keys()).map(async request => [request, await current.match(request)]));
-    await caches.delete('fortress-afterlight-v15-premium-models-20261005');
+    await caches.delete('fortress-afterlight-v16-expanded-fronts-20261005');
     const old = await caches.open('fortress-afterlight-v2-20261004');
     await old.put('/src/battle.js', new Response('throw new Error("Stale pre-3D cache was served");', { headers: { 'Content-Type': 'text/javascript' } }));
-    const replacement = await caches.open('fortress-afterlight-v15-premium-models-20261005');
+    const replacement = await caches.open('fortress-afterlight-v16-expanded-fronts-20261005');
     await Promise.all(entries.map(([request, response]) => replacement.put(request, response)));
   });
   await context.setOffline(true); await page.reload();

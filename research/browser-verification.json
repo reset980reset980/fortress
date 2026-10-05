@@ -1,6 +1,6 @@
 {
   "checks": [
-    "Fresh profile locks 8 missions",
+    "Fresh profile locks 17 missions",
     "Tank selection saved",
     "Selected tank and WebGL/audio run in browser",
     "Keyboard movement consumes fuel",
@@ -15,5 +15,25 @@
   "consoleErrors": [],
   "pageErrors": [],
   "requestsFailed": [],
+  "navigationAborts": [
+    "http://localhost:4173/assets/environments/sea-fortress-v1.png",
+    "http://localhost:4173/assets/environments/frost-03-v1.png",
+    "http://localhost:4173/assets/environments/desert-ruins-v1.png",
+    "http://localhost:4173/assets/environments/glacier-rift-v1.png",
+    "http://localhost:4173/assets/environments/neon-docks-v1.png",
+    "http://localhost:4173/assets/environments/coast-v1.png",
+    "http://localhost:4173/assets/environments/shore-03-v1.png",
+    "http://localhost:4173/assets/environments/frost-v1.png",
+    "http://localhost:4173/assets/environments/frost-02-v1.png",
+    "http://localhost:4173/assets/environments/shore-02-v1.png",
+    "http://localhost:4173/assets/environments/dune-03-v1.png",
+    "http://localhost:4173/assets/environments/volcanic-basin-v1.png",
+    "http://localhost:4173/assets/environments/broken-bridge-v1.png",
+    "http://localhost:4173/assets/environments/dune-02-v1.png",
+    "http://localhost:4173/assets/environments/mine-canyon-v1.png",
+    "http://localhost:4173/assets/environments/desert-v1.png",
+    "http://localhost:4173/assets/environments/crystal-cavern-v1.png",
+    "http://localhost:4173/assets/environments/cloud-garden-v1.png"
+  ],
   "passed": true
 }

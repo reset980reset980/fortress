@@ -2,15 +2,15 @@ import {loadPlaywright,findChromium} from './browser-runtime.mjs';
 const {chromium}=await loadPlaywright();
 import {writeFile} from 'node:fs/promises';
 import assert from 'node:assert/strict';
-const browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--disable-background-networking','--enable-unsafe-swiftshader']});
+const browser=await chromium.launch({executablePath:await findChromium(),headless:true,args:[...(process.env.PRODUCTION_LAN?['--host-resolver-rules=MAP fortress.xsw.kr 192.168.68.106']:[]),'--no-sandbox','--disable-dev-shm-usage','--disable-background-networking','--enable-unsafe-swiftshader']});
 const report={checks:[],consoleErrors:[],pageErrors:[],requestsFailed:[]};
 const context=await browser.newContext({viewport:{width:1440,height:1100}});
 const page=await context.newPage();
-page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text())});page.on('requestfailed',r=>report.requestsFailed.push(r.url()));
+page.on('pageerror',e=>report.pageErrors.push(e.message));page.on('console',m=>{if(m.type()==='error')report.consoleErrors.push(m.text())});page.on('requestfailed',r=>{if(r.failure()?.errorText==='net::ERR_ABORTED'){(report.navigationAborts||=[]).push(r.url());return;}report.requestsFailed.push({url:r.url(),error:r.failure()?.errorText});});
 const base=process.env.BASE_URL||'http://localhost:4173';
 try{
  await page.goto(base);await page.locator('#deploy-button').waitFor();
- assert.equal(await page.locator('[data-mission][disabled]').count(),8);report.checks.push('Fresh profile locks 8 missions');
+ assert.equal(await page.locator('[data-mission][disabled]').count(),17);report.checks.push('Fresh profile locks 17 missions');
  await page.screenshot({path:'research/menu-desktop.png',fullPage:true});
  await page.click('[data-page="hangar"]');await page.click('[data-select-tank="warden"]');assert.equal(await page.evaluate(()=>FortressAfterlight.profile.tank),'warden');report.checks.push('Tank selection saved');
  await page.screenshot({path:'research/hangar-desktop.png'});

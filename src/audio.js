@@ -186,7 +186,8 @@ export class AudioDirector {
     const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : null;
     const power = clamp(options.power ?? .65);
     source.buffer = buffer;
-    const rate = ['impact', 'fire'].includes(name) ? 1.09 - power * .18 : 1;
+    const timbre={mortar:.77,mole:.82,hive:1.18,venom:.93,glacier:1.13,bolt:1.25,ricochet:1.06,solar:.88}[options.weapon]||1;
+    const rate = ['impact', 'fire'].includes(name) ? (1.09 - power * .18)*timbre : 1;
     source.playbackRate.value = rate;
     const level = { fire: .66, impact: .72, shield: .52, repair: .44, ui: .30,
       charge: .31, victory: .70, defeat: .62 }[name] * clamp(options.volume ?? 1);
@@ -228,7 +229,7 @@ export class AudioDirector {
     if(this.movementVoice?.type===type)return true;
     this.stopMovement();
     const buffer=ctx.createBuffer(1,48000,24000),data=buffer.getChannelData(0);let seed=721,low=0;
-    for(let n=0;n<data.length;n++){const t=n/24000;seed=(seed*16807)%2147483647;const noise=seed/1073741823.5-1;low+=.08*(noise-low);const tread=Math.pow(Math.max(0,Math.sin(t*Math.PI*2*18)),10);data[n]=type==='arc'?Math.sin(t*Math.PI*2*96)*.2+Math.sin(t*Math.PI*2*192)*.09+low*.08:Math.sin(t*Math.PI*2*(type==='striker'?72:48))*.22+low*.35+noise*tread*.18;}
+    for(let n=0;n<data.length;n++){const t=n/24000;seed=(seed*16807)%2147483647;const noise=seed/1073741823.5-1;low+=.08*(noise-low);const tread=Math.pow(Math.max(0,Math.sin(t*Math.PI*2*18)),10);data[n]=['arc','solar','glacier'].includes(type)?Math.sin(t*Math.PI*2*96)*.2+Math.sin(t*Math.PI*2*192)*.09+low*.08:Math.sin(t*Math.PI*2*(['striker','hive'].includes(type)?72:type==='mole'?36:48))*.22+low*.35+noise*tread*.18;}
     const source=ctx.createBufferSource(),gain=ctx.createGain(),panner=ctx.createStereoPanner?.();source.buffer=buffer;source.loop=true;source.connect(gain);if(panner){gain.connect(panner);panner.pan.value=clamp(pan,-1,1);panner.connect(this.sfxGain);}else gain.connect(this.sfxGain);gain.gain.setValueAtTime(0,ctx.currentTime);gain.gain.linearRampToValueAtTime(type==='arc'?.20:.30,ctx.currentTime+.08);source.onended=()=>{source.disconnect();gain.disconnect();panner?.disconnect();};source.start();this.movementVoice={source,gain,panner,type};return true;
   }
 

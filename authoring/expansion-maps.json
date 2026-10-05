@@ -1,0 +1,529 @@
+[
+  {
+    "id": "cloud-garden",
+    "map": "cloud-garden",
+    "name": "공중 정원",
+    "region": "공중 전선",
+    "theme": "coast",
+    "layout": [
+      [
+        80,
+        350,
+        230
+      ],
+      [
+        1090,
+        1360,
+        230
+      ],
+      [
+        100,
+        520,
+        420
+      ],
+      [
+        920,
+        1340,
+        420
+      ],
+      [
+        580,
+        860,
+        330
+      ],
+      [
+        60,
+        650,
+        620
+      ],
+      [
+        790,
+        1380,
+        620
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 0.8,
+    "index": 12,
+    "seed": 14000,
+    "wind": 18,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "broken-bridge",
+    "map": "broken-bridge",
+    "name": "붕괴 교량",
+    "region": "공중 전선",
+    "theme": "coast",
+    "layout": [
+      [
+        80,
+        480,
+        310
+      ],
+      [
+        960,
+        1360,
+        310
+      ],
+      [
+        480,
+        960,
+        380
+      ],
+      [
+        60,
+        570,
+        570
+      ],
+      [
+        870,
+        1380,
+        570
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1,
+    "index": 13,
+    "seed": 14137,
+    "wind": 19,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "mine-canyon",
+    "map": "mine-canyon",
+    "name": "폐광 협곡",
+    "region": "공중 전선",
+    "theme": "desert",
+    "layout": [
+      [
+        70,
+        390,
+        340
+      ],
+      [
+        1050,
+        1370,
+        340
+      ],
+      [
+        170,
+        570,
+        490
+      ],
+      [
+        870,
+        1270,
+        490
+      ],
+      [
+        580,
+        860,
+        620
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.35,
+    "index": 14,
+    "seed": 14274,
+    "wind": 20,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "neon-docks",
+    "map": "neon-docks",
+    "name": "네온 도크",
+    "region": "산업 전선",
+    "theme": "frost",
+    "layout": [
+      [
+        80,
+        400,
+        440
+      ],
+      [
+        1040,
+        1360,
+        440
+      ],
+      [
+        440,
+        650,
+        560
+      ],
+      [
+        790,
+        1000,
+        560
+      ],
+      [
+        610,
+        830,
+        370
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.2,
+    "index": 15,
+    "seed": 14411,
+    "wind": 21,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "crystal-cavern",
+    "map": "crystal-cavern",
+    "name": "수정 동굴",
+    "region": "산업 전선",
+    "theme": "frost",
+    "layout": [
+      [
+        70,
+        360,
+        540
+      ],
+      [
+        1080,
+        1370,
+        540
+      ],
+      [
+        410,
+        610,
+        430
+      ],
+      [
+        830,
+        1030,
+        430
+      ],
+      [
+        650,
+        790,
+        350
+      ],
+      [
+        450,
+        990,
+        150
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.45,
+    "index": 16,
+    "seed": 14548,
+    "wind": 22,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "glacier-rift",
+    "map": "glacier-rift",
+    "name": "빙하 균열",
+    "region": "산업 전선",
+    "theme": "frost",
+    "layout": [
+      [
+        80,
+        360,
+        290
+      ],
+      [
+        1080,
+        1360,
+        290
+      ],
+      [
+        390,
+        600,
+        420
+      ],
+      [
+        840,
+        1050,
+        420
+      ],
+      [
+        610,
+        830,
+        580
+      ],
+      [
+        100,
+        500,
+        650
+      ],
+      [
+        940,
+        1340,
+        650
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 0.7,
+    "index": 17,
+    "seed": 14685,
+    "wind": 23,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "volcanic-basin",
+    "map": "volcanic-basin",
+    "name": "화산 분지",
+    "region": "심층 전선",
+    "theme": "desert",
+    "layout": [
+      [
+        60,
+        420,
+        470
+      ],
+      [
+        1020,
+        1380,
+        470
+      ],
+      [
+        480,
+        630,
+        590
+      ],
+      [
+        810,
+        960,
+        590
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1,
+    "index": 18,
+    "seed": 14822,
+    "wind": 24,
+    "platforms": true,
+    "hazard": "lava"
+  },
+  {
+    "id": "sea-fortress",
+    "map": "sea-fortress",
+    "name": "해상 요새",
+    "region": "심층 전선",
+    "theme": "coast",
+    "layout": [
+      [
+        80,
+        350,
+        360
+      ],
+      [
+        1090,
+        1360,
+        360
+      ],
+      [
+        450,
+        650,
+        450
+      ],
+      [
+        790,
+        990,
+        450
+      ],
+      [
+        100,
+        540,
+        620
+      ],
+      [
+        900,
+        1340,
+        620
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.15,
+    "index": 19,
+    "seed": 14959,
+    "wind": 25,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "desert-ruins",
+    "map": "desert-ruins",
+    "name": "사막 유적",
+    "region": "심층 전선",
+    "theme": "desert",
+    "layout": [
+      [
+        70,
+        370,
+        510
+      ],
+      [
+        1070,
+        1370,
+        510
+      ],
+      [
+        390,
+        550,
+        360
+      ],
+      [
+        890,
+        1050,
+        360
+      ],
+      [
+        610,
+        830,
+        550
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 0.85,
+    "index": 20,
+    "seed": 15096,
+    "wind": 26,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "abyss-base",
+    "map": "abyss-base",
+    "name": "심해 기지",
+    "region": "심층 전선",
+    "theme": "frost",
+    "layout": [
+      [
+        60,
+        410,
+        460
+      ],
+      [
+        1030,
+        1380,
+        460
+      ],
+      [
+        460,
+        650,
+        600
+      ],
+      [
+        790,
+        980,
+        600
+      ],
+      [
+        610,
+        830,
+        320
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.3,
+    "index": 21,
+    "seed": 15233,
+    "wind": 27,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "orbital-station",
+    "map": "orbital-station",
+    "name": "궤도 정거장",
+    "region": "궤도 전선",
+    "theme": "frost",
+    "layout": [
+      [
+        70,
+        360,
+        270
+      ],
+      [
+        1080,
+        1370,
+        270
+      ],
+      [
+        420,
+        630,
+        400
+      ],
+      [
+        810,
+        1020,
+        400
+      ],
+      [
+        610,
+        830,
+        560
+      ],
+      [
+        80,
+        420,
+        650
+      ],
+      [
+        1020,
+        1360,
+        650
+      ]
+    ],
+    "gravity": 0.58,
+    "hardness": 1.4,
+    "index": 22,
+    "seed": 15370,
+    "wind": 28,
+    "platforms": true,
+    "hazard": null
+  },
+  {
+    "id": "scrap-graveyard",
+    "map": "scrap-graveyard",
+    "name": "고철 묘지",
+    "region": "궤도 전선",
+    "theme": "desert",
+    "layout": [
+      [
+        60,
+        380,
+        530
+      ],
+      [
+        1060,
+        1380,
+        530
+      ],
+      [
+        420,
+        590,
+        440
+      ],
+      [
+        850,
+        1020,
+        440
+      ],
+      [
+        630,
+        810,
+        600
+      ]
+    ],
+    "gravity": 1,
+    "hardness": 1.1,
+    "index": 23,
+    "seed": 15507,
+    "wind": 29,
+    "platforms": true,
+    "hazard": null
+  }
+]

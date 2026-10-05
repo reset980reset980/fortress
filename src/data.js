@@ -1,3 +1,4 @@
+import {NEW_TANKS,NEW_MAPS} from './expansion.js';
 export const TANKS = [
   { id: 'bastion', name: '바스티온', role: '균형형 전차', description: '안정적인 장갑과 화력. 처음 출격하는 지휘관에게.', color: '#65c9ff', hp: 240, attack: 1, mobility: 1 },
   { id: 'striker', name: '스트라이커', role: '고속 돌격 전차', description: '빠른 기동으로 사선을 바꾸고 약점을 파고듭니다.', color: '#ffc168', hp: 210, attack: 1.08, mobility: 1.32 },
@@ -39,4 +40,8 @@ export const ARENAS=[
 {id:'iron-foundry',index:10,name:'철골 공중 공장',region:'산업 전선',map:'iron-foundry',theme:'frost',seed:12001,wind:18,platforms:true},
 {id:'lava-steps',index:11,name:'용암 계단',region:'화산 전선',map:'lava-steps',theme:'desert',seed:13001,wind:20,platforms:true}
 ];
-export const BATTLE_MAPS=[...MISSIONS,...ARENAS];
+TANKS.push(...NEW_TANKS);
+const operationNames=['공중의 정원','끊어진 교량','갱도의 메아리','도크의 잔불','수정의 심장','빙하를 가르다','분지의 경고','바다 위 성채','유적의 태양'];
+NEW_MAPS.slice(0,9).forEach((map,i)=>MISSIONS.push({...map,id:`expedition-${i+1}`,index:i+9,name:operationNames[i],briefing:`${map.name} 전선에 진입합니다. ${i<3?'파괴된 발판 아래로 낙하해도 전투가 이어집니다.':i<6?'적의 특수탄과 지형의 높이를 함께 살피세요.':'새로운 사선을 확보하고 개량한 장비를 활용하세요.'}`,objective:'특수 전차 방어대 격파',difficulty:.55+i*.035,reward:520+i*55,enemies:[enemy(190+i*10,NEW_TANKS[i%8].id,NEW_TANKS[i%8].color,.78+i*.025),enemy(165+i*7,NEW_TANKS[(i+3)%8].id,NEW_TANKS[(i+3)%8].color,.75)]}));
+ARENAS.push(...NEW_MAPS);
+export const BATTLE_MAPS=[...new Map([...MISSIONS,...ARENAS].map(m=>[m.map,m])).values()];

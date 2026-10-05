@@ -1,5 +1,7 @@
+import {NEW_MAPS} from './expansion.js';
 export function makePlatforms(kind='sky-islands'){
- const specs=kind==='iron-foundry'?[[80,340,230],[1100,1360,230],[80,500,430],[940,1360,430],[560,880,340],[80,620,610],[820,1360,610]]:kind==='lava-steps'?[[90,330,260],[1110,1350,260],[90,490,460],[950,1350,460],[580,860,380],[60,600,625],[840,1380,625]]:[[80,340,240],[1100,1360,240],[90,480,430],[960,1350,430],[580,860,340],[60,600,620],[840,1380,620]];
+ const authored=NEW_MAPS.find(m=>m.id===kind)?.layout;
+ const specs=authored|| (kind==='iron-foundry'?[[80,340,230],[1100,1360,230],[80,500,430],[940,1360,430],[560,880,340],[80,620,610],[820,1360,610]]:kind==='lava-steps'?[[90,330,260],[1110,1350,260],[90,490,460],[950,1350,460],[580,860,380],[60,600,625],[840,1380,625]]:[[80,340,240],[1100,1360,240],[90,480,430],[960,1350,430],[580,860,340],[60,600,620],[840,1380,620]]);
  return specs.map(([left,right,top])=>({left,right,top,thickness:32,solid:new Uint8Array(right-left+1).fill(1)}));
 }
 export function surfaceAt(x,terrain,platforms=[],below=-Infinity){let surface=terrain[Math.max(0,Math.min(terrain.length-1,Math.round(x)))];for(const p of platforms)if(x>=p.left&&x<=p.right&&p.solid[Math.round(x)-p.left]&&p.top>=below&&p.top<surface)surface=p.top;return surface;}

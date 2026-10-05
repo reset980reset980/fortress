@@ -1,0 +1,714 @@
+{
+  "passed": true,
+  "errors": [],
+  "maps": [
+    {
+      "map": "coast",
+      "loaded": "coast",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "coast",
+        "frames": 2,
+        "triangles": 51144,
+        "drawCalls": 11,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "bastion",
+      "labels": {
+        "shell": "고폭탄",
+        "cluster": "관통 집속탄",
+        "arc": "중장갑 관통탄"
+      }
+    },
+    {
+      "map": "shore-02",
+      "loaded": "shore-02",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "shore-02",
+        "frames": 2,
+        "triangles": 43784,
+        "drawCalls": 11,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "striker",
+      "labels": {
+        "shell": "속사 경량탄",
+        "cluster": "쌍열 확산탄",
+        "arc": "돌격탄"
+      }
+    },
+    {
+      "map": "shore-03",
+      "loaded": "shore-03",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "shore-03",
+        "frames": 2,
+        "triangles": 48552,
+        "drawCalls": 11,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "arc",
+      "labels": {
+        "shell": "플라즈마탄",
+        "cluster": "이온 분열탄",
+        "arc": "충전 플라즈마"
+      }
+    },
+    {
+      "map": "desert",
+      "loaded": "desert",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "desert",
+        "frames": 2,
+        "triangles": 52668,
+        "drawCalls": 9,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "warden",
+      "labels": {
+        "shell": "충격탄",
+        "cluster": "진압 분열탄",
+        "arc": "중량 충격탄"
+      }
+    },
+    {
+      "map": "dune-02",
+      "loaded": "dune-02",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "dune-02",
+        "frames": 2,
+        "triangles": 41144,
+        "drawCalls": 6,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "mortar",
+      "labels": {
+        "shell": "박격포탄",
+        "cluster": "공중 분열탄",
+        "arc": "중박격포"
+      }
+    },
+    {
+      "map": "dune-03",
+      "loaded": "dune-03",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "dune-03",
+        "frames": 2,
+        "triangles": 51312,
+        "drawCalls": 9,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "mole",
+      "labels": {
+        "shell": "굴착탄",
+        "cluster": "붕괴 분열탄",
+        "arc": "심층 드릴탄"
+      }
+    },
+    {
+      "map": "frost",
+      "loaded": "frost",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "frost",
+        "frames": 2,
+        "triangles": 52152,
+        "drawCalls": 11,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "hive",
+      "labels": {
+        "shell": "로켓",
+        "cluster": "삼연장 로켓",
+        "arc": "고열 로켓"
+      }
+    },
+    {
+      "map": "frost-02",
+      "loaded": "frost-02",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "frost-02",
+        "frames": 2,
+        "triangles": 42308,
+        "drawCalls": 8,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "venom",
+      "labels": {
+        "shell": "산성탄",
+        "cluster": "독가스 분열탄",
+        "arc": "농축 독가스탄"
+      }
+    },
+    {
+      "map": "frost-03",
+      "loaded": "frost-03",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "frost-03",
+        "frames": 2,
+        "triangles": 50988,
+        "drawCalls": 11,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 0,
+      "tank": "glacier",
+      "labels": {
+        "shell": "빙결탄",
+        "cluster": "냉각 분열탄",
+        "arc": "극저온탄"
+      }
+    },
+    {
+      "map": "cloud-garden",
+      "loaded": "cloud-garden",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "cloud-garden",
+        "frames": 2,
+        "triangles": 11738,
+        "drawCalls": 6,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "bolt",
+      "labels": {
+        "shell": "레일탄",
+        "cluster": "분열 철갑탄",
+        "arc": "관통 레일탄"
+      }
+    },
+    {
+      "map": "broken-bridge",
+      "loaded": "broken-bridge",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "broken-bridge",
+        "frames": 2,
+        "triangles": 3182,
+        "drawCalls": 8,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "ricochet",
+      "labels": {
+        "shell": "도탄",
+        "cluster": "도탄 분열탄",
+        "arc": "이중 도탄"
+      }
+    },
+    {
+      "map": "mine-canyon",
+      "loaded": "mine-canyon",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "mine-canyon",
+        "frames": 2,
+        "triangles": 5690,
+        "drawCalls": 7,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "solar",
+      "labels": {
+        "shell": "열탄",
+        "cluster": "광자 분열탄",
+        "arc": "충전 광탄"
+      }
+    },
+    {
+      "map": "neon-docks",
+      "loaded": "neon-docks",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "neon-docks",
+        "frames": 2,
+        "triangles": 7346,
+        "drawCalls": 4,
+        "textures": 0,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "bastion",
+      "labels": {
+        "shell": "고폭탄",
+        "cluster": "관통 집속탄",
+        "arc": "중장갑 관통탄"
+      }
+    },
+    {
+      "map": "crystal-cavern",
+      "loaded": "crystal-cavern",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "crystal-cavern",
+        "frames": 2,
+        "triangles": 2798,
+        "drawCalls": 7,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 6,
+      "tank": "striker",
+      "labels": {
+        "shell": "속사 경량탄",
+        "cluster": "쌍열 확산탄",
+        "arc": "돌격탄"
+      }
+    },
+    {
+      "map": "glacier-rift",
+      "loaded": "glacier-rift",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "glacier-rift",
+        "frames": 2,
+        "triangles": 3974,
+        "drawCalls": 7,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "arc",
+      "labels": {
+        "shell": "플라즈마탄",
+        "cluster": "이온 분열탄",
+        "arc": "충전 플라즈마"
+      }
+    },
+    {
+      "map": "volcanic-basin",
+      "loaded": "volcanic-basin",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "volcanic-basin",
+        "frames": 2,
+        "triangles": 6606,
+        "drawCalls": 7,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 4,
+      "tank": "warden",
+      "labels": {
+        "shell": "충격탄",
+        "cluster": "진압 분열탄",
+        "arc": "중량 충격탄"
+      }
+    },
+    {
+      "map": "sea-fortress",
+      "loaded": "sea-fortress",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "sea-fortress",
+        "frames": 2,
+        "triangles": 2994,
+        "drawCalls": 9,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 6,
+      "tank": "mortar",
+      "labels": {
+        "shell": "박격포탄",
+        "cluster": "공중 분열탄",
+        "arc": "중박격포"
+      }
+    },
+    {
+      "map": "desert-ruins",
+      "loaded": "desert-ruins",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "desert-ruins",
+        "frames": 2,
+        "triangles": 8234,
+        "drawCalls": 5,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "mole",
+      "labels": {
+        "shell": "굴착탄",
+        "cluster": "붕괴 분열탄",
+        "arc": "심층 드릴탄"
+      }
+    },
+    {
+      "map": "sky-islands",
+      "loaded": "sky-islands",
+      "stats": {
+        "ready": true,
+        "theme": "coast",
+        "map": "sky-islands",
+        "frames": 2,
+        "triangles": 5918,
+        "drawCalls": 7,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "hive",
+      "labels": {
+        "shell": "로켓",
+        "cluster": "삼연장 로켓",
+        "arc": "고열 로켓"
+      }
+    },
+    {
+      "map": "iron-foundry",
+      "loaded": "iron-foundry",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "iron-foundry",
+        "frames": 2,
+        "triangles": 6258,
+        "drawCalls": 4,
+        "textures": 0,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "venom",
+      "labels": {
+        "shell": "산성탄",
+        "cluster": "독가스 분열탄",
+        "arc": "농축 독가스탄"
+      }
+    },
+    {
+      "map": "lava-steps",
+      "loaded": "lava-steps",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "lava-steps",
+        "frames": 2,
+        "triangles": 6094,
+        "drawCalls": 8,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "glacier",
+      "labels": {
+        "shell": "빙결탄",
+        "cluster": "냉각 분열탄",
+        "arc": "극저온탄"
+      }
+    },
+    {
+      "map": "abyss-base",
+      "loaded": "abyss-base",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "abyss-base",
+        "frames": 2,
+        "triangles": 4746,
+        "drawCalls": 5,
+        "textures": 0,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "bolt",
+      "labels": {
+        "shell": "레일탄",
+        "cluster": "분열 철갑탄",
+        "arc": "관통 레일탄"
+      }
+    },
+    {
+      "map": "orbital-station",
+      "loaded": "orbital-station",
+      "stats": {
+        "ready": true,
+        "theme": "frost",
+        "map": "orbital-station",
+        "frames": 2,
+        "triangles": 2374,
+        "drawCalls": 5,
+        "textures": 0,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 7,
+      "tank": "ricochet",
+      "labels": {
+        "shell": "도탄",
+        "cluster": "도탄 분열탄",
+        "arc": "이중 도탄"
+      }
+    },
+    {
+      "map": "scrap-graveyard",
+      "loaded": "scrap-graveyard",
+      "stats": {
+        "ready": true,
+        "theme": "desert",
+        "map": "scrap-graveyard",
+        "frames": 2,
+        "triangles": 28262,
+        "drawCalls": 8,
+        "textures": 3,
+        "width": 925,
+        "height": 514,
+        "fallbackReason": null,
+        "error": null
+      },
+      "platforms": 5,
+      "tank": "solar",
+      "labels": {
+        "shell": "열탄",
+        "cluster": "광자 분열탄",
+        "arc": "충전 광탄"
+      }
+    }
+  ],
+  "tanks": [
+    {
+      "tank": "bastion",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "striker",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "arc",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "warden",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "mortar",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "mole",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "hive",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "venom",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "glacier",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "bolt",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "ricochet",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "solar",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "bastion",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "striker",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "arc",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "warden",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "mortar",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "mole",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "hive",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "venom",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "glacier",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "bolt",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "ricochet",
+      "craters": 1,
+      "phase": "projectile"
+    },
+    {
+      "tank": "solar",
+      "craters": 1,
+      "phase": "projectile"
+    }
+  ],
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 844,
+      "height": 390
+    }
+  ]
+}

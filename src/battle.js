@@ -3,6 +3,7 @@ import {evolutionImage,evolutionStage} from './evolution.js';
 import {makePlatforms,surfaceAt,solidAt,breakPlatforms,drawPlatforms} from './platforms.js';
 import {drawModifications} from './appearance.js';
 import { MISSIONS, TANKS, WEAPONS } from './data.js';
+import {weaponFor,SIGNATURES} from './expansion.js';
 
 export const WORLD_WIDTH = 1440;
 export const WORLD_HEIGHT = 800;
@@ -35,30 +36,35 @@ export function createTerrain(seed, theme = 'coast') {
   return height;
 }
 
-export function launchVelocity(angle, power) {
-  const speed = 145 + clamp(power, 10, 100) * 6.5;
+export function launchVelocity(angle, power, multiplier=1) {
+  const speed = (145 + clamp(power, 10, 100) * 6.5)*multiplier;
   return { vx: Math.cos(angle * DEG) * speed, vy: -Math.sin(angle * DEG) * speed };
 }
 
 export function stepBallistic(projectile, dt, wind) {
+  const gravity=projectile.gravity??GRAVITY;
   projectile.x += projectile.vx * dt + wind * 0.5 * dt * dt;
-  projectile.y += projectile.vy * dt + GRAVITY * 0.5 * dt * dt;
+  projectile.y += projectile.vy * dt + gravity * 0.5 * dt * dt;
   projectile.vx += wind * dt;
-  projectile.vy += GRAVITY * dt;
+  projectile.vy += gravity * dt;
   projectile.age = (projectile.age || 0) + dt;
   return projectile;
 }
 
-export function simulateShot({ x, y, angle, power, wind = 0, terrain, platforms = [], step = 1 / 60 }) {
-  const velocity = launchVelocity(angle, power);
-  const p = { x: x + Math.cos(angle * DEG) * 35, y: y - Math.sin(angle * DEG) * 35, ...velocity, age: 0 };
+export function bounceProjectile(p,previous,definition={}){
+  if((p.bounces||0)>=(definition.bounces||0)||p.age-(p.lastBounce??-1)<.12)return false;
+  p.x=previous.x;p.y=previous.y-Math.sign(p.vy)*2;p.vy=-p.vy*.72;p.vx*=.88;p.bounces=(p.bounces||0)+1;p.lastBounce=p.age;return true;
+}
+export function simulateShot({ x, y, angle, power, wind = 0, terrain, platforms = [], step = 1 / 60,definition={},gravity=1 }) {
+  const velocity = launchVelocity(angle, power,definition.speed||1);
+  const p = { x: x + Math.cos(angle * DEG) * 36, y: y - Math.sin(angle * DEG) * 36, ...velocity, age: 0,gravity:GRAVITY*gravity*(definition.gravity||1) };
   const points = [{ x: p.x, y: p.y }];
   for (let i = 0; i < Math.ceil(8 / step); i++) {
-    stepBallistic(p, step, wind);
+    const previous={x:p.x,y:p.y};stepBallistic(p, step, wind);
     if (i % 3 === 0) points.push({ x: p.x, y: p.y });
     if (p.x < -90 || p.x > WORLD_WIDTH + 90 || p.y > WORLD_HEIGHT + 100) break;
     const ground = terrain[clamp(Math.round(p.x), 0, WORLD_WIDTH)];
-    if (solidAt(p.x,p.y,terrain,platforms) && p.age > 0.055) break;
+    if (solidAt(p.x,p.y,terrain,platforms) && p.age > 0.055&&!bounceProjectile(p,previous,definition)) break;
   }
   return { x: p.x, y: p.y, time: p.age, points };
 }
@@ -68,9 +74,9 @@ export function simulateWeaponShot(options) {
     const shot = simulateShot(options);
     return { ...shot, branches: [], impacts: [{ x: shot.x, y: shot.y }] };
   }
-  const { x, y, angle, power, terrain, platforms = [], wind = 0 } = options;
+  const { x, y, angle, power, terrain, platforms = [], wind = 0,definition={},gravity=1 } = options;
   const step = options.step || 1 / 60;
-  const p = { x: x + Math.cos(angle * DEG) * 36, y: y - Math.sin(angle * DEG) * 36, ...launchVelocity(angle, power), age: 0 };
+  const p = { x: x + Math.cos(angle * DEG) * 36, y: y - Math.sin(angle * DEG) * 36, ...launchVelocity(angle, power,definition.speed||1), age: 0,gravity:GRAVITY*gravity*(definition.gravity||1) };
   const points = [{ x: p.x, y: p.y }];
   let didSplit = false;
   for (let i = 0; i < Math.ceil(8 / step); i++) {
@@ -82,12 +88,12 @@ export function simulateWeaponShot(options) {
   const branches = [], impacts = [];
   if (didSplit) {
     for (let spread = -1; spread <= 1; spread++) {
-      const bomblet = { x: p.x, y: p.y, vx: p.vx * 0.84 + spread * 95, vy: Math.max(20, p.vy + 30 + Math.abs(spread) * 15), age: p.age };
+      const bomblet = { x: p.x, y: p.y, vx: p.vx * 0.84 + spread * (definition.spread||95), vy: Math.max(20, p.vy + 30 + Math.abs(spread) * 15), age: p.age,gravity:p.gravity };
       const branch = [{ x: bomblet.x, y: bomblet.y }];
       for (let i = 0; i < Math.ceil(8 / step); i++) {
-        stepBallistic(bomblet, step, wind);
+        const previous={x:bomblet.x,y:bomblet.y};stepBallistic(bomblet, step, wind);
         if (i % 3 === 0) branch.push({ x: bomblet.x, y: bomblet.y });
-        if (bomblet.x < -90 || bomblet.x > WORLD_WIDTH + 90 || solidAt(bomblet.x,bomblet.y,terrain,platforms) || bomblet.age > 9) break;
+        if (bomblet.x < -90 || bomblet.x > WORLD_WIDTH + 90 || bomblet.age > 9 || (solidAt(bomblet.x,bomblet.y,terrain,platforms)&&!bounceProjectile(bomblet,previous,definition))) break;
       }
       branches.push(branch);
       impacts.push({ x: bomblet.x, y: bomblet.y });
@@ -130,6 +136,8 @@ export class Battle {
     if(this.platforms.length)this.terrain.fill(730);
     if(this.mission.mode==='duel'){for(let x=0;x<=WORLD_WIDTH/2;x++)this.terrain[WORLD_WIDTH-x]=this.terrain[x];}
     this.palette = THEMES[this.mission.theme] || THEMES.coast;
+    const surfaces={'neon-docks':['#39445b','#172132','#db9eea'],'orbital-station':['#53637d','#202d43','#c4d7ed'],'abyss-base':['#355568','#192f40','#72c9d6'],'crystal-cavern':['#716080','#29273d','#c8a6ec'],'glacier-rift':['#779fba','#344d68','#d0f2ff'],'volcanic-basin':['#574842','#252327','#d99164']};
+    if(surfaces[this.mission.map]){const [upper,lower,surface]=surfaces[this.mission.map];this.palette={...this.palette,soil:[upper,lower],surface};}
     this.phase = 'aim';
     this.round = 1;
     this.angle = 45;
@@ -139,7 +147,8 @@ export class Battle {
     this.fuelMax = Math.round(100 * this.tankType.mobility + (this.upgrades.fuel || 0) * 14);
     this.fuel = this.fuelMax;
     this.ammo = { shell: Infinity, cluster: 3 + (this.upgrades.ammo || 0), arc: 2 + (this.upgrades.ammo || 0) };
-    this.abilities = { shield: 1 + (this.upgrades.shield || 0), repair: 1 + Math.floor((this.upgrades.repair || 0) / 2), scan: 1 };
+    this.abilities = { shield: 1 + (this.upgrades.shield || 0), repair: 1 + Math.floor((this.upgrades.repair || 0) / 2), scan: 1,signature:1 };
+    this.zones=[];this.signatureCooldown=0;
     this.scanning = false;
     this.movement = 0;
     this.paused = false;
@@ -197,6 +206,7 @@ export class Battle {
   }
 
   actors() { return [this.player, ...this.enemies]; }
+  weaponDefinition(slot,actor=this.player){return weaponFor(actor.type,slot,WEAPONS[slot]);}
   groundAt(x,below=-Infinity) { return surfaceAt(x,this.terrain,this.platforms,below); }
   canControl() { return !this.destroyed && !this.paused && this.phase === 'aim' && !this.player.falling && this.player.hp > 0; }
   setAngle(angle) {
@@ -234,6 +244,17 @@ export class Battle {
     if (!this.canControl() || !this.abilities[ability]) return false;
     if (ability === 'repair' && this.player.hp >= this.maxHp) return false;
     this.abilities[ability]--;
+    if(ability==='signature'){
+      const signature=SIGNATURES[this.player.type];this.signatureCooldown=3;
+      if(signature.kind==='fuel')this.fuel=Math.min(this.fuelMax*1.5,this.fuel+70);
+      if(signature.kind==='charge')this.player.charged=true;
+      if(signature.kind==='shield'||signature.kind==='anchor'){this.player.shield=1;this.player.anchored=true;}
+      if(signature.kind==='scan')this.scanning=true;
+      if(signature.kind==='reload'){this.ammo.cluster++;this.ammo.arc++;}
+      if(signature.kind==='cleanse'){this.player.poison=null;this.player.frozen=0;this.player.immuneUntil=this.round+2;}
+      if(signature.kind==='dig'){breakPlatforms(this.platforms,this.player.x,this.player.y+35,45);this.fuel=Math.min(this.fuelMax,this.fuel+40);}
+      this.status=`${signature.label} 가동 · 3라운드 재충전`;this.onEvent('shield',{x:this.player.x,y:this.player.y,color:this.player.color,intensity:.6});
+    }
     if (ability === 'shield') {
       this.player.shield = 1;
       this.status = '방어막 활성화 · 이번 적 턴의 피해 55% 감소';
@@ -279,7 +300,7 @@ export class Battle {
     this.draw();
   }
   getSnapshot() {
-    return { phase: this.phase, falling:!!this.player.falling, playerHp: Math.round(this.player.hp), playerMaxHp: this.maxHp, enemies: this.enemies.map(e => ({ id: e.id, hp: Math.round(e.hp), maxHp: e.maxHp, name: e.name })), angle: this.angle, power: this.power, wind: this.wind, round: this.round, fuel: Math.round(this.fuel), fuelMax: this.fuelMax, weapon: this.weapon, ammo: { ...this.ammo }, abilities: { ...this.abilities }, status: this.status, text: this.status, intensity: this.intensity, paused: this.paused, scanning: this.scanning, activeId: this.shotBy?.id || (this.phase === 'aim' ? 'player' : null), storm: this.round >= 16, damageDealt: Math.round(this.damageDealt) };
+    return { phase: this.phase, falling:!!this.player.falling, playerHp: Math.round(this.player.hp), playerMaxHp: this.maxHp, enemies: this.enemies.map(e => ({ id: e.id, hp: Math.round(e.hp), maxHp: e.maxHp, name: e.name })), angle: this.angle, power: this.power, wind: this.wind, round: this.round, fuel: Math.round(this.fuel), fuelMax: this.fuelMax, weapon: this.weapon, ammo: { ...this.ammo }, weaponLabels:Object.fromEntries(Object.keys(WEAPONS).map(id=>[id,this.weaponDefinition(id).label])),signatureLabel:SIGNATURES[this.player.type].label,signatureCooldown:this.signatureCooldown,zones:this.zones.map(z=>({...z})), abilities: { ...this.abilities }, status: this.status, text: this.status, intensity: this.intensity, paused: this.paused, scanning: this.scanning, activeId: this.shotBy?.id || (this.phase === 'aim' ? 'player' : null), storm: this.round >= 16, damageDealt: Math.round(this.damageDealt) };
   }
   emitState() { if (!this.destroyed) this.onState(this.getSnapshot()); }
   destroy() {
@@ -293,18 +314,21 @@ export class Battle {
   }
 
   launch(actor, angle, power, weapon = 'shell') {
+    const definition=this.weaponDefinition(weapon,actor);
+    if(actor.id!=='player'){actor.ammo||={cluster:3,arc:2};if(weapon!=='shell')actor.ammo[weapon]=Math.max(0,actor.ammo[weapon]-1);}
     actor.angle = angle;
     actor.facing = Math.cos(angle * DEG) < 0 ? -1 : 1;
     actor.recoil = 1;
     actor.recoilPower=weapon==='arc'?1:.75;
-    const velocity = launchVelocity(angle, power);
-    this.projectiles.push({ x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, ...velocity, age: 0, weapon, source: actor, trail: [], split: weapon !== 'cluster', damageScale: 1 });
+    const velocity = launchVelocity(angle, power,definition.speed||1);
+    this.projectiles.push({ x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, ...velocity, age: 0, weapon, definition,gravity:GRAVITY*(this.mission.gravity||1)*(definition.gravity||1),source: actor, trail: [], split: weapon !== 'cluster', damageScale: actor.charged?1.3:1 });
+    actor.charged=false;
     this.addCombatBurst(actor.x+Math.cos(angle*DEG)*36,actor.y-13-Math.sin(angle*DEG)*36,weapon,'fire');
     this.phase = 'projectile';
     this.status = actor.id === 'player' ? '포탄 비행 중' : `${actor.name}의 반격`;
     this.intensity = 0.7;
     this.impactTimer = -1;
-    this.onEvent('fire', { x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, intensity: weapon === 'arc' ? 0.9 : 0.55, angle:-angle*DEG,color: WEAPONS[weapon].color, weapon, enemy: actor.id !== 'player' });
+    this.onEvent('fire', { x: actor.x + Math.cos(angle * DEG) * 36, y: actor.y - 13 - Math.sin(angle * DEG) * 36, intensity: weapon === 'arc' ? 0.9 : 0.55, angle:-angle*DEG,color: definition.color, weapon,tankWeapon:actor.type, enemy: actor.id !== 'player' });
     this.burst(actor.x + Math.cos(angle * DEG) * 36, actor.y - 13 - Math.sin(angle * DEG) * 36, WEAPONS[weapon].color, 10, 95);
     this.emitState();
   }
@@ -400,6 +424,7 @@ export class Battle {
   }
 
   moveActor(actor, distance) {
+    if(actor.frozen)distance*=.55;
     const next = clamp(actor.x + distance, 65, WORLD_WIDTH - 65);
     if (Math.abs(next - actor.x) < 0.1) return false;
     if (this.actors().some(a => a !== actor && a.hp > 0 && Math.abs(a.x - next) < 65)) return false;
@@ -415,14 +440,15 @@ export class Battle {
     const newProjectiles = [];
     for (let index = this.projectiles.length - 1; index >= 0; index--) {
       const p = this.projectiles[index];
+      const definition=p.definition||this.weaponDefinition(p.weapon,p.source);
       const prevX = p.x, prevY = p.y;
       stepBallistic(p, dt, this.wind);
-      if(p.age-(p.fxAge||0)>.035){p.fxAge=p.age;this.onEvent('trail',{x:p.x,y:p.y,angle:Math.atan2(p.vy,p.vx),color:WEAPONS[p.weapon].color,weapon:p.weapon,intensity:p.weapon==='arc'?1.2:.8});}
+      if(p.age-(p.fxAge||0)>.035){p.fxAge=p.age;this.onEvent('trail',{x:p.x,y:p.y,angle:Math.atan2(p.vy,p.vx),color:definition.color,weapon:p.weapon,intensity:p.weapon==='arc'?1.2:.8});}
       p.trail.push({ x: p.x, y: p.y });
       if (p.trail.length > 25) p.trail.shift();
       if (!p.split && p.vy >= -18 && p.age > 0.38) {
         p.split = true;
-        for (let i = -1; i <= 1; i++) newProjectiles.push({ x: p.x, y: p.y, vx: p.vx * 0.84 + i * 95, vy: Math.max(20, p.vy + 30 + Math.abs(i) * 15), age: p.age, weapon: 'cluster', source: p.source, trail: [], split: true, damageScale: 1 });
+        for (let i = -1; i <= 1; i++) newProjectiles.push({ x: p.x, y: p.y, vx: p.vx * 0.84 + i * (definition.spread||95), vy: Math.max(20, p.vy + 30 + Math.abs(i) * 15), age: p.age, weapon: 'cluster', definition,gravity:p.gravity,source: p.source, trail: [], split: true, damageScale:p.damageScale });
         this.projectiles.splice(index, 1);
         this.burst(p.x, p.y, '#ffbd9f', 18, 120);
         this.onEvent('cluster', { x: p.x, y: p.y, intensity: 0.3, color: '#ffa99b' });
@@ -435,6 +461,7 @@ export class Battle {
       }
       const hitTank = this.actors().find(actor => actor.hp > 0 && (actor !== p.source || p.age > 0.25) && Math.hypot(p.x - actor.x, p.y - (actor.y - 4)) < 24);
       if (hitTank || (p.x >= 0 && p.x <= WORLD_WIDTH && solidAt(p.x,p.y,this.terrain,this.platforms) && p.age > 0.04)) {
+        if(!hitTank&&bounceProjectile(p,{x:prevX,y:prevY},definition)){this.burst(p.x,p.y,definition.color,12,80);this.onEvent('impact',{x:p.x,y:p.y,color:definition.color,intensity:.25,weapon:p.weapon});continue;}
         let impactX = p.x, impactY = p.y;
         if (!hitTank) {
           for (let n = 0; n < 5; n++) {
@@ -451,21 +478,27 @@ export class Battle {
   }
 
   impact(projectile, x, y, directTarget) {
-    const weapon = WEAPONS[projectile.weapon];
+    const weapon = projectile.definition||this.weaponDefinition(projectile.weapon,projectile.source);
     const radius = weapon.radius;
-    const damage = weapon.damage * projectile.source.attack;
+    const damage = weapon.damage * projectile.source.attack*(projectile.damageScale||1);
     const oldY = this.actors().map(actor => actor.y);
     for (const actor of this.actors()) {
       if (actor.hp <= 0) continue;
       const distance = Math.hypot(actor.x - x, actor.y - 2 - y);
       if (distance < radius + 20 || actor === directTarget) {
         let amount = Math.round(damage * (actor === directTarget ? 1.16 : clamp(1 - distance / (radius + 24), 0.16, 1)));
-        if (actor.shield) amount = Math.round(amount * (projectile.weapon === 'arc' ? 0.65 : 0.45));
+        if (actor.shield) amount = Math.round(amount * (weapon.shieldPierce??(projectile.weapon === 'arc' ? 0.65 : 0.45)));
         this.hurt(actor, amount, projectile.source.id === 'player', actor === directTarget ? '직격' : '',Math.sign(actor.x-projectile.source.x)||1);
+        if(actor.hp>0){
+          if(weapon.poison&&actor.type!=='venom'&&!(actor.immuneUntil>=this.round))actor.poison={damage:weapon.poison,turns:2,credit:projectile.source.id==='player'};
+          if(weapon.freeze&&actor.type!=='glacier')actor.frozen=1;
+          if(weapon.knockback&&!actor.anchored)this.moveActor(actor,(Math.sign(actor.x-x)||projectile.source.facing)*weapon.knockback);
+        }
       }
     }
-    const craterRadius = projectile.weapon === 'cluster' ? 38 : projectile.weapon === 'arc' ? 52 : 55;
-    const depth = projectile.weapon === 'cluster' ? 25 : projectile.weapon === 'arc' ? 46 : 36;
+    if(weapon.zone){this.zones.push({x,y,radius:weapon.radius+25,kind:weapon.zone,turns:2,credit:projectile.source.id==='player'});if(this.zones.length>16)this.zones.shift();}
+    const craterRadius = (weapon.terrainRadius||(projectile.weapon === 'cluster' ? 38 : projectile.weapon === 'arc' ? 52 : 55))/(this.mission.hardness||1);
+    const depth = (weapon.terrainDepth||(projectile.weapon === 'cluster' ? 25 : projectile.weapon === 'arc' ? 46 : 36))/(this.mission.hardness||1);
     for (let px = Math.max(0, Math.floor(x - craterRadius)); px <= Math.min(WORLD_WIDTH, Math.ceil(x + craterRadius)); px++) {
       const norm = (px - x) / craterRadius;
       const crater = y + Math.sqrt(Math.max(0, 1 - norm * norm)) * depth;
@@ -514,6 +547,7 @@ export class Battle {
     const actor = this.enemyQueue.shift();
     if (!actor) { this.beginPlayerTurn(); return; }
     if (actor.hp <= 0) { this.nextEnemy(); return; }
+    if(this.mission.index>=9&&this.round%3===0){const kind=SIGNATURES[actor.type]?.kind;if(kind==='shield'||kind==='anchor')actor.shield=1;if(kind==='charge')actor.charged=true;if(kind==='cleanse')actor.poison=null;}
     if (Math.abs(actor.x - this.player.x) > 1040) {
       for (let i = 0; i < 18; i++) this.moveActor(actor, -4);
     } else if (this.round % 4 === 0 && this.random() > 0.5) {
@@ -537,15 +571,20 @@ export class Battle {
     let weapon = 'shell';
     if (this.mission.index >= 3 && this.round % 4 === 0) weapon = 'arc';
     if (this.mission.index >= 5 && this.round % 5 === 0) weapon = 'cluster';
+    actor.ammo||={cluster:3,arc:2};if(weapon!=='shell'&&!actor.ammo[weapon])weapon='shell';
     let best = { distance: Infinity, angle: 135, power: 70 };
     const evaluate = (angle, power) => {
-      const shot = simulateWeaponShot({ x: actor.x, y: actor.y - 13, angle, power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon, step: 1 / 45 });
-      const distance = Math.min(...shot.impacts.map(impact => Math.hypot(impact.x - aimX, impact.y - aimY) + (impact.x < 0 || impact.x > WORLD_WIDTH ? 90 : 0))) + shot.time * 4;
-      if (distance < best.distance) best = { distance, angle, power };
+      const shot = simulateWeaponShot({ x: actor.x, y: actor.y - 13, angle, power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon,definition:this.weaponDefinition(weapon,actor),gravity:this.mission.gravity||1, step: 1 / 45 });
+      const distance = Math.min(...shot.points.map(p=>Math.hypot(p.x-aimX,p.y-(aimY-4))),...shot.impacts.map(impact => Math.hypot(impact.x - aimX, impact.y - aimY) + (impact.x < 0 || impact.x > WORLD_WIDTH ? 90 : 0))) + shot.time * 4;
+      const def=this.weaponDefinition(weapon,actor),benefit=this.mission.index>=9?def.damage*.12+(def.poison&&!this.player.poison?def.poison:0)+(def.freeze&&!this.player.frozen?10:0)+(def.terrainRadius&&this.platforms.length?8:0):0;
+      const score=distance-benefit;
+      if (score < best.distance) best = { distance:score, angle, power,weapon };
     };
     const min = actor.x > this.player.x ? 100 : 24;
     const max = actor.x > this.player.x ? 158 : 80;
-    for (let angle = min; angle <= max; angle += 5) for (let power = 25; power <= 100; power += 5) evaluate(angle, power);
+    const candidates=this.mission.index>=9?['shell',...(actor.ammo.cluster>0?['cluster']:[]),...(actor.ammo.arc>0?['arc']:[])]:[weapon];
+    for(const candidate of candidates){weapon=candidate;for (let angle = min; angle <= max; angle += 5) for (let power = 25; power <= 100; power += 5) evaluate(angle, power);}
+    weapon=best.weapon||weapon;
     const coarse = { ...best };
     for (let angle = coarse.angle - 4; angle <= coarse.angle + 4; angle++) for (let power = coarse.power - 4; power <= coarse.power + 4; power++) evaluate(clamp(angle, 18, 162), clamp(power, 10, 100));
     const angleError = (this.random() - 0.5) * 0.45;
@@ -555,7 +594,18 @@ export class Battle {
 
   beginPlayerTurn() {
     this.round++;
-    this.fuel = this.fuelMax;
+    this.fuel = this.fuelMax*(this.player.frozen?.6:1);
+    if(this.signatureCooldown>0&&--this.signatureCooldown===0)this.abilities.signature=1;
+    for(const actor of this.actors()){
+      actor.anchored=false;actor.frozen=Math.max(0,(actor.frozen||0)-1);
+      if(actor.hp<=0)continue;
+      if(actor.poison){this.hurt(actor,actor.poison.damage,actor.poison.credit,'독');if(--actor.poison.turns===0)actor.poison=null;}
+      for(const z of this.zones)if(Math.hypot(actor.x-z.x,actor.y-z.y)<z.radius){if(z.kind==='poison'&&actor.type!=='venom'&&!(actor.immuneUntil>=this.round))this.hurt(actor,10,z.credit,'독가스');if(z.kind==='freeze'&&actor.type!=='glacier')actor.frozen=1;}
+      if(this.mission.hazard==='lava'&&this.round%3===0&&actor.x>530&&actor.x<910&&actor.y>650)this.hurt(actor,16,false,'용암');
+    }
+    for(const z of this.zones)z.turns--;this.zones=this.zones.filter(z=>z.turns>0);
+    if(this.player.frozen)this.fuel=Math.min(this.fuel,this.fuelMax*.6);
+    if(this.checkFinish())return;
     if (this.ammo[this.weapon] <= 0) this.weapon = 'shell';
     this.player.shield = 0;
     this.wind = Math.round((this.random() * 2 - 1) * (this.mission.wind || 15));
@@ -627,6 +677,8 @@ export class Battle {
     this.drawBackground(ctx);
     this.drawTerrain(ctx);
     drawPlatforms(ctx,this.platforms,this.palette);
+    for(const z of this.zones){ctx.save();ctx.fillStyle=z.kind==='poison'?'#a6df7340':'#b4efff40';ctx.strokeStyle=z.kind==='poison'?'#a6df73':'#b4efff';ctx.beginPath();ctx.ellipse(z.x,z.y-10,z.radius,30,0,0,Math.PI*2);ctx.fill();ctx.stroke();ctx.fillStyle='#ffffff';ctx.font='14px sans-serif';ctx.fillText(`${z.kind==='poison'?'독가스':'냉각'} ${z.turns}턴`,z.x-30,z.y-32);ctx.restore();}
+    if(this.mission.hazard==='lava'){ctx.fillStyle='#ff925080';ctx.fillRect(530,710,380,20);ctx.fillStyle='#ffc27e';ctx.font='15px sans-serif';ctx.fillText(`용암 분출 ${3-this.round%3}라운드 후 · 하층 중앙 주의`,550,700);}
     if (this.phase === 'aim') this.drawTrajectory(ctx);
     for (const actor of this.actors()) this.drawTank(ctx, actor);
     for (const p of this.projectiles) this.drawProjectile(ctx, p);
@@ -806,7 +858,7 @@ export class Battle {
   }
 
   drawTrajectory(ctx) {
-    const trajectory = simulateWeaponShot({ x: this.player.x, y: this.player.y - 13, angle: this.angle, power: this.power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon: this.weapon, step: 1 / 60 });
+    const trajectory = simulateWeaponShot({ x: this.player.x, y: this.player.y - 13, angle: this.angle, power: this.power, wind: this.wind, terrain: this.terrain, platforms:this.platforms, weapon: this.weapon,definition:this.weaponDefinition(this.weapon),gravity:this.mission.gravity||1, step: 1 / 60 });
     const points = trajectory.points;
     const count = this.scanning ? points.length : Math.min(15, Math.max(5, Math.floor(points.length * 0.42)));
     for (let i = 1; i < count; i++) {
@@ -944,7 +996,7 @@ export class Battle {
   }
 
   drawProjectile(ctx, projectile) {
-    const color = WEAPONS[projectile.weapon].color;
+    const color = (projectile.definition||this.weaponDefinition(projectile.weapon,projectile.source)).color;
     if (projectile.y < 0 && projectile.x > 20 && projectile.x < WORLD_WIDTH - 20) {
       ctx.save(); ctx.translate(projectile.x, 23);
       ctx.fillStyle = '#081627b0'; ctx.beginPath(); ctx.arc(0, 0, 16, 0, Math.PI * 2); ctx.fill();

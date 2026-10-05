@@ -1,8 +1,8 @@
 {
   "passed": true,
   "checks": [
-    "All twelve battle maps and fallback images are cached",
-    "All 24 evolution sprites are cached",
+    "All twenty-four battle maps and fallback images are cached",
+    "All 72 evolution sprites are cached",
     "Campaign menu reloads offline",
     "Blender GLB and textures render offline",
     "Old pre-3D cache cannot override the current offline build",
@@ -10,7 +10,7 @@
     "No browser exceptions"
   ],
   "errors": [],
-  "cachedResources": 78,
+  "cachedResources": 153,
   "environment": {
     "ready": true,
     "theme": "coast",

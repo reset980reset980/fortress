@@ -4,6 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { Battle, createTerrain, launchVelocity, stepBallistic, simulateShot, simulateWeaponShot } from '../src/battle.js';
 import { MISSIONS, TANKS } from '../src/data.js';
+import {NEW_MAPS} from '../src/expansion.js';
 
 // No browser, timers, real canvas, audio, or RAF loop runs in these tests.
 const gradient = { addColorStop() {} };
@@ -38,6 +39,26 @@ function createBattle(options = {}) {
   return { battle, events, results, snapshots, canvas };
 }
 
+test('all expanded maps have distinct mirrored collision geometry and surviving lower floors',()=>{
+ assert.equal(NEW_MAPS.length,12);assert.equal(new Set(NEW_MAPS.map(m=>JSON.stringify(m.layout))).size,12);
+ for(const m of NEW_MAPS){const {battle:b}=createBattle({mission:{...m,mode:'duel',enemies:[{tank:'mortar',hp:240}]}});
+  for(let x=0;x<=1440;x+=5)assert.equal(b.groundAt(x),b.groundAt(1440-x),m.id);
+  const y=b.player.y;for(const p of b.platforms)p.solid.fill(0);advanceUntil(b,()=>b.player.y>y+50&&!b.player.falling);assert.equal(b.player.y,710);assert.ok(b.player.hp>0);assert.equal(b.canControl(),true);b.destroy();
+ }
+});
+test('poison and cold are finite, resistance works, and ground drilling differs from ordinary shells',()=>{
+ const {battle:b}=createBattle({tank:'venom'});const e=b.enemies[0];b.impact({weapon:'shell',source:b.player},e.x,e.y,e);assert.equal(e.poison.turns,2);const hp=e.hp;b.beginPlayerTurn();assert.ok(e.hp<hp);b.beginPlayerTurn();assert.equal(e.poison,null);
+ const ice=createBattle({tank:'glacier'}).battle;ice.impact({weapon:'shell',source:ice.player},ice.enemies[0].x,ice.enemies[0].y,ice.enemies[0]);assert.equal(ice.enemies[0].frozen,1);
+ const drill=createBattle({tank:'mole'}).battle;const y=drill.groundAt(600);drill.impact({weapon:'shell',source:drill.player},600,y);assert.ok(drill.terrain[600]-y>80);b.destroy();ice.destroy();drill.destroy();
+});
+test('low gravity and ricochet alter real projectile motion and signature charge expires on one shot',()=>{
+ const {battle:b}=createBattle({mission:NEW_MAPS.find(m=>m.id==='orbital-station'),tank:'solar'});b.useAbility('signature');assert.equal(b.player.charged,true);b.fire();assert.equal(b.projectiles[0].damageScale,1.3);assert.equal(b.projectiles[0].gravity,350*.58);assert.equal(b.player.charged,false);b.destroy();
+ const {battle:r}=createBattle({tank:'ricochet'});r.setAngle(18);r.setPower(30);r.fire();advanceUntil(r,()=>r.projectiles.some(p=>p.bounces===1));assert.ok(r.projectiles[0].vy<0);r.destroy();
+});
+test('all twelve tank arsenals fire three real weapon slots without invalid damage or resource leakage',()=>{
+ for(const tank of TANKS)for(const weapon of ['shell','cluster','arc']){const {battle:b,events}=createBattle({tank});b.setWeapon(weapon);b.setAngle(90);b.setPower(10);assert.equal(b.fire(),true);advanceUntil(b,()=>b.craters.length>0);assert.ok(events.some(e=>e.type==='impact'));assert.ok(b.actors().every(a=>Number.isFinite(a.hp)&&a.hp>=0));assert.ok(b.projectiles.length<=3);b.destroy();}
+});
+
 function advanceUntil(battle, predicate, frameLimit = 3000) {
   for (let frame = 0; frame < frameLimit; frame++) {
     if (predicate()) return frame;
@@ -50,8 +71,8 @@ function findPlayerShot(battle, target) {
   let best = { distance: Infinity, angle: 45, power: 60 };
   for (let angle = 20; angle <= 80; angle += 2) {
     for (let power = 25; power <= 100; power += 2) {
-      const shot = simulateShot({ x: battle.player.x, y: battle.player.y - 13, angle, power, wind: battle.wind, terrain: battle.terrain });
-      const distance = Math.hypot(shot.x - target.x, shot.y - target.y);
+      const shot = simulateWeaponShot({ x: battle.player.x, y: battle.player.y - 13, angle, power, wind: battle.wind, terrain: battle.terrain,platforms:battle.platforms,weapon:battle.weapon,definition:battle.weaponDefinition(battle.weapon),gravity:battle.mission.gravity||1 });
+      const distance = Math.min(...shot.points.map(p=>Math.hypot(p.x-target.x,p.y-(target.y-4))),...shot.impacts.map(p=>Math.hypot(p.x-target.x,p.y-target.y)));
       if (distance < best.distance) best = { distance, angle, power };
     }
   }
@@ -112,7 +133,7 @@ test('repair, shield, and scan have one charge and shield reduces actual hit dam
   assert.equal(battle.useAbility('shield'), false);
   const hp = battle.player.hp;
   battle.impact({ weapon: 'shell', source: battle.enemies[0] }, battle.player.x, battle.player.y - 2, battle.player);
-  const expected = Math.round(Math.round(77 * battle.enemies[0].attack * 1.16) * 0.45);
+  const expected = Math.round(Math.round(battle.weaponDefinition('shell',battle.enemies[0]).damage * battle.enemies[0].attack * 1.16) * 0.45);
   assert.equal(hp - battle.player.hp, expected);
   assert.ok(events.some(event => event.type === 'shield'));
   assert.ok(events.some(event => event.type === 'repair'));
@@ -176,7 +197,9 @@ test('player, AI, and player turns resolve to a victory with final control locks
   assert.ok(results[0].stars >= 1 && results[0].stars <= 3);
   assert.ok(events.some(event => event.type === 'turn'));
   assert.ok(events.some(event => event.type === 'fire' && event.data.enemy));
-  assert.ok(battle.terrain.some((height, index) => height > initialTerrain[index]));
+  assert.ok(battle.craters.length>0,'Actual shots registered explosion craters');
+  battle.impact({weapon:'shell',source:battle.player},600,battle.groundAt(600));
+  assert.ok(battle.terrain.some((height,index)=>height>initialTerrain[index]),'A ground impact destroys real terrain');
   assert.equal(battle.phase, 'ended');
   assert.equal(battle.fire(), false);
   assert.equal(battle.useAbility('scan'), false);
@@ -195,14 +218,15 @@ test('round 16 storm shrinks the safety zone and eliminates a stalled battle', (
   battle.destroy();
 });
 
-test('all nine campaign missions are solvable with affordable upgrade progression', () => {
-  const levels = [0, 0, 1, 1, 2, 2, 3, 3, 4];
+test('all eighteen campaign missions are solvable with affordable upgrade progression', () => {
+  const levels = [0, 0, 1, 1, 2, 2, 3, 3, 4,4,4,4,4,4,4,5,5,5];
   for (const mission of MISSIONS) {
     const level = levels[mission.index];
-    const { battle, results } = createBattle({ mission, upgrades: { hull: level, attack: level } });
+    const { battle, results } = createBattle({ mission, upgrades: { hull: level, attack: level,ammo:mission.index>=9?3:0,repair:mission.index>=9?3:0,shield:mission.index>=9?3:0 } });
     for (let turn = 0; turn < 20 && !results.length; turn++) {
       if (battle.player.hp < battle.maxHp * 0.7) battle.useAbility('repair');
       if (battle.round === 2) battle.useAbility('shield');
+      battle.useAbility('signature');
       const target = battle.enemies.filter(enemy => enemy.hp > 0).sort((a, b) => a.hp - b.hp)[0];
       battle.setWeapon(battle.ammo.arc > 0 && target.hp > 90 ? 'arc' : 'shell');
       const shot = findPlayerShot(battle, target);
