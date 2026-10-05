@@ -1,0 +1,18 @@
+[Unit]
+Description=FORTRESS persistent account and campaign saves
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=@RELEASE@/server
+ExecStart=/usr/bin/python3 @RELEASE@/server/accounts.py --db /home/reset980/fortress-data/accounts.sqlite3 --caddy
+EnvironmentFile=-/home/reset980/fortress-data/mail.env
+Restart=on-failure
+RestartSec=3
+UMask=0077
+NoNewPrivileges=true
+MemoryMax=512M
+TasksMax=64
+
+[Install]
+WantedBy=default.target
